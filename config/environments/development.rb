@@ -18,12 +18,16 @@ NavalOperations::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+  # turn off color logging messages
+  config.colorize_logging = false
 
   # use our simple logger class so we can see a date time stamp for each entry
   path = File.expand_path( "#{Rails.root}/log/#{Rails.env}.log", __FILE__ )
