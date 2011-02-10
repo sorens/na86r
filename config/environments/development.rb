@@ -1,3 +1,5 @@
+require File.expand_path( '../../simple_logger.rb', __FILE__ )
+
 NavalOperations::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -22,5 +24,12 @@ NavalOperations::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # use our simple logger class so we can see a date time stamp for each entry
+  path = File.expand_path( "#{Rails.root}/log/#{Rails.env}.log", __FILE__ )
+  logfile = File.open( path, 'a' )
+  logfile.sync = true
+  Rails.logger = SimpleLogger.new( logfile )
+  Rails.logger.debug "Configured to use SimpleLogger"
 end
 
