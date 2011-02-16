@@ -39,7 +39,7 @@ module NavalOperations
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     
-    conig.generators do |g|
+    config.generators do |g|
       g.stylesheets false
       g.test_framework nil
       g.helper false
