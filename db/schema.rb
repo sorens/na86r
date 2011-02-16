@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110210082659) do
+ActiveRecord::Schema.define(:version => 20110210165150) do
+
+  create_table "beta_keys", :force => true do |t|
+    t.string   "key"
+    t.integer  "active"
+    t.datetime "activated_at"
+    t.string   "assigned_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
