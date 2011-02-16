@@ -8,11 +8,20 @@ class BetaKey < ActiveRecord::Base
   # length of the key to use
   KEY_LENGTH = 20
   
-  def self.generate(email)
-    key = BetaKey.create( :assigned_to => email, :active => BetaKey::STATE_ENABLED, :key => new_key )
+  def self.generate( email )
+    BetaKey.create( :assigned_to => email, :active => BetaKey::STATE_ENABLED, :key => BetaKey.new_key )
   end
   
   def self.new_key
-    UUIDTools::UUID.random_create.hexdigest[0,KEY_LENGTH]
+    UUIDTools::UUID.random_create.hexdigest[ 0,KEY_LENGTH ]
+  end
+  
+  def self.find_beta_key( email )
+    users = BetaKey.find_all_by_assigned_to( email )
+    if users and 1 == users.length and users.first and BetaKey::STATE_ENABLED == users.first.active
+      return users.first
+    end
+    
+    return nil
   end
 end
