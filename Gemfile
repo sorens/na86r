@@ -8,6 +8,8 @@ gem	'heroku'
 gem	'devise',		'1.2.rc'
 gem	'omniauth'
 gem	'uuidtools'
+gem	'ncurses'
+gem	'rbcurse'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path( '../../lib', __FILE__ )
+require 'naval_game_one'
+
+game = NavalGameOne::Game.new( STDOUT )
+game.start

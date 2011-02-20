@@ -1,0 +1,1 @@
+require 'naval_game_one/game'
