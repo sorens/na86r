@@ -1,2 +1,2 @@
-N A V A L  C O N F L I C T
+N A V A L  G A M E  O N E
 ==========================
