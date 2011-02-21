@@ -1,0 +1,106 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path( '../../lib', __FILE__ )
+require 'naval_game_one'
+require 'rubygems'
+require "ncurses"
+require 'logger'
+
+include Ncurses
+
+MAX_COL = 41
+MAX_ROW = 22
+
+def print_line( win, text, row, col=1 )
+  win.move( row, col )
+  win.addstr( text )
+  refresh( win )
+  # win.move( MAX_ROW-1,2 )
+end
+
+def refresh( win )
+  win.border(*([0]*8))
+  Ncurses.doupdate()
+end
+
+def get_input( win )
+  ch = win.getch()
+  @logger.debug "the ch was [#{ch}] as [#{ch.chr}]"
+  if ch == 27
+    nil
+  else
+    ch.chr
+  end
+end
+
+def print_array( win, array, starty, startx=1 )
+  count = starty
+  array.each do |a|
+    print_line( win, a, count, startx )
+    count = count + 1
+  end
+  count
+end
+
+def print_screen( win, array, starty, startx=1 )
+  print_array( win, array, starty, startx )
+end
+
+def print_start_screen( win )
+  a = []
+  a << "NORTH ATLANTIC 86"
+  a << ""
+  a << "COPYRIGHT 1982"
+  a << "BY GARY GRIGSBY"
+  a << ""
+  loc = print_screen( win, a, 1, 10 )
+
+  b = []
+  Ncurses::attrset( Ncurses::A_BOLD )
+  b << "( 1 ) NEW GAME        SAVED GAME"
+  b << "( 2 ) COLOR           BLACK AND WHITE"
+  b << "( 3 ) SOLITAIRE       TWO PLAYER"
+  b << "( 4 ) SOLITAIRE LEVEL 1   2   3   4"
+  b << "      (1=HARDEST  4=EASIEST)"
+  b << ""
+  b << "SCENARIOS"
+  b << "( 5 ) CAMPAIGN.1   (SEP07-DEC31 1986)"
+  b << "( 6 ) CAMPAIGN.2   (NOV01-DEC31 1986)"
+  b << "( 7 ) CONVOY QR.44 (SEP25-SEP30 1986)"
+  b << "( 8 ) ICELAND      (NOV11-NOV20 1986)"
+  b << ""
+  b << "PRESS A NUMBER TO ALTER THE SETUP. PRESS"
+  b << " THE < SPC > BAR TO BEGIN."
+  print_screen( win, b, loc + 1 )
+  win.move( MAX_ROW-1,2 )
+  
+end
+
+begin
+  @logger = Logger.new( '/tmp/naval.log' )
+  @logger.level = Logger::DEBUG
+  # initialize ncurses
+  Ncurses.initscr
+  Ncurses.cbreak                  # provide unbuffered input
+  Ncurses.noecho                  # turn off input echoing
+  Ncurses.nonl                    # turn off newline translation
+  Ncurses.stdscr.intrflush(false) # turn off flush-on-interrupt
+  # Ncurses.stdscr.keypad(true)     # turn on keypad mode
+
+  win = Ncurses::WINDOW.new( 23,42,0,0 )
+  win.border(*([0]*8))
+  win.noutrefresh()
+  Ncurses.doupdate()
+  
+  print_start_screen( win )
+
+  while( ( ch = get_input( win ) ) != nil )
+    print_line( win, ch.upcase, MAX_ROW-1 )
+  end
+
+ensure
+  Ncurses.echo
+  Ncurses.nocbreak
+  Ncurses.nl
+  Ncurses.endwin
+  @logger.close
+end
