@@ -32,7 +32,15 @@ Given /^I have setup a custom game$/ do
 	game.start
 end
 
-Then /^I should see "([^"]*)"$/ do |message|
+Then /^I should see \"([^\"]*)"$/ do |message|
   output.messages.should include( message )
 end
 
+Given /^I setup a default game$/ do
+  @game = NavalGameOne::Game.new( output )
+  @game.start
+end
+
+Given /^I run game$/ do
+  @game.run
+end
