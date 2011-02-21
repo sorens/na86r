@@ -20,6 +20,19 @@ When /^I start a new game$/ do
   game.start
 end
 
+Given /^I have setup an easy game$/ do
+  game = NavalGameOne::Game.new( output )
+  game.setup( :new, :color, :solitaire, :four )
+	game.start
+end
+
+Given /^I have setup a custom game$/ do
+  game = NavalGameOne::Game.new( output )
+  game.setup( :saved, :black_and_white, :two_player, :one, :campaign2 )
+	game.start
+end
+
 Then /^I should see "([^"]*)"$/ do |message|
   output.messages.should include( message )
 end
+
