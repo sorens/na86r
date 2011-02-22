@@ -54,7 +54,9 @@ module NavalGameOne
 		
 		private
 		def setup_squadrons( squadrons )
-			@squadrons = squadrons
+			@squadrons = []
+			@squadrons << squadrons
+			# puts "squadrons: #{@squadrons.inspect}"
 		end
 		
 		class NotEnoughUnitsInRaid < Exception
