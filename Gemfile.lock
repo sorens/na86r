@@ -121,7 +121,6 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
-    rbcurse (1.1.5)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     ruby-openid (2.1.8)
@@ -146,6 +145,5 @@ DEPENDENCIES
   ncurses
   omniauth
   rails (= 3.0.3)
-  rbcurse
   sqlite3-ruby
   uuidtools
