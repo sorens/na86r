@@ -16,10 +16,8 @@ module NavalGameOne
 		def add_aircraft( type, count, role=:combat )
 			if ! squadrons.key?( type )
 				squadrons[type] = 0
-				puts "initializing [#{type}]"
 			end
 			squadrons[type] += count
-			puts "[#{type}] is now [#{squadrons[type]}]"
 			if :combat == role
 			elsif :transport == role
 			elsif :search == role
