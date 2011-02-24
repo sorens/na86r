@@ -55,7 +55,7 @@ module NavalGameOne
 		private
 		def setup_squadrons( squadrons )
 			@squadrons = []
-			@squadrons << squadrons
+			@squadrons.concat( squadrons )
 			# puts "squadrons: #{@squadrons.inspect}"
 		end
 		
