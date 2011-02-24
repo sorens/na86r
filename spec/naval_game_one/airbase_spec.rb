@@ -45,7 +45,7 @@ module NavalGameOne
 		it "should remove aircraft when it creates a raid" do
 			@airbase.create_raid( target, strike_aircraft, 100 )
 			@airbase.raids.length.should equal(1)
-			@airbase.raids[0].squadrons[0][1].should equal( 10 )
+			@airbase.raids[0].squadrons[1].should equal( 10 )
 			@airbase.total_combat_aircraft().should equal( 30 )
 			@airbase.raids[0].standoff_range.should equal( 100 )
 		end
