@@ -7,7 +7,7 @@ module NavalGameOne
 			@base = base
 			setup_squadrons( squadrons )
 			@target = target
-			@designated_name = rand( 400 ) + 1
+			@designated_name ||= rand( 400 ) + 1
 			@standoff_range = standoff_range
 		end
 		
