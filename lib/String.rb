@@ -10,4 +10,9 @@ class String
       ($1 ? $1 : $3 + "-") + "\n"
     end
   end
+
+  def starts_with?( prefix )
+    prefix = prefix.to_s
+    self[ 0, prefix.length ] == prefix
+  end
 end
