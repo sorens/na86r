@@ -31,17 +31,24 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
-
 ######################################################
 ############## D E V E L O P M E N T #################
 #################### T E S T #########################
 ######################################################
+# Bundle gems for the local environment. Make sure to
+# put test-only gems in this group so their generators
+# and rake tasks are available in development mode:
+group :development, :test do
+  # gem 'webrat'
+  gem "rspec-rails", "~> 2.4"
+  gem "cucumber"
+  gem "cucumber-rails"
+  gem "capybara"
+  gem "factory_girl"
+  gem "launchy"
+  gem "vcr"
+  gem "fakeweb"
+end
 
 ######################################################
 ############## D E V E L O P M E N T #################
