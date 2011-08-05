@@ -1,4 +1,4 @@
 module NavalGameOne
-	class TaskForce
-	end
+  class TaskForce
+  end
 end

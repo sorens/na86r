@@ -181,19 +181,19 @@ module NavalGameOne
       end
     end
   
-		# describe "#run" do
-		#         let( :output )    { double( 'output' ).as_null_object }
-		#         let( :game )      { Game.new( output ) }
-		#       	
-		# 		it "should print the score screen" do
-		# 			output.should_receive( :puts ).with( '7 SEP 86  AM' )
-		# 			output.should_receive( :puts ).with( 'SCORE:' )
-		# 			output.should_receive( :puts ).with( 'NATO		0' )
-		# 			output.should_receive( :puts ).with( 'SOVIET	0' )
-		# 			output.should_receive( :puts ).with( 'CLEAR' )
-		# 			output.should_receive( :puts ).with( 'PRESS <C> TO CONTINUE' )
-		# 		end
-		# end
+    # describe "#run" do
+    #         let( :output )    { double( 'output' ).as_null_object }
+    #         let( :game )      { Game.new( output ) }
+    #         
+    #     it "should print the score screen" do
+    #       output.should_receive( :puts ).with( '7 SEP 86  AM' )
+    #       output.should_receive( :puts ).with( 'SCORE:' )
+    #       output.should_receive( :puts ).with( 'NATO    0' )
+    #       output.should_receive( :puts ).with( 'SOVIET  0' )
+    #       output.should_receive( :puts ).with( 'CLEAR' )
+    #       output.should_receive( :puts ).with( 'PRESS <C> TO CONTINUE' )
+    #     end
+    # end
 
-	end
+  end
 end

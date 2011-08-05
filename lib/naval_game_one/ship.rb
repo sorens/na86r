@@ -1,4 +1,4 @@
 module NavalGameOne
-	class Ship < Unit
-	end
+  class Ship < Unit
+  end
 end
