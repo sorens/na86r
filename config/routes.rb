@@ -2,12 +2,13 @@ NavalOperations::Application.routes.draw do
   get "welcome/index"
 
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'beta' }, :path_names => { :sign_up => 'register', :sign_in => 'login', :sign_out => 'logout' }, :skip => :sessions do
-    get		'register'	=> 'beta#new',					:as => :new_user_registration
-    post	'register'	=> 'beta#create',				:as => :user_registration
-    get		'login'			=> "sessions#new",			:as => :new_user_session
-    post	'login'			=> 'sessions#create',		:as => :user_session
-    get		'logout'		=> 'sessions#destroy',	:as => :destroy_user_session
+    get    'register'  => 'beta#new',          :as => :new_user_registration
+    post   'register'  => 'beta#create',       :as => :user_registration
+    get    'login'     => "sessions#new",      :as => :new_user_session
+    post   'login'     => 'sessions#create',   :as => :user_session
+    get    'logout'    => 'sessions#destroy',  :as => :destroy_user_session
   end
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

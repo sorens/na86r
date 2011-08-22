@@ -3,12 +3,12 @@ source 'http://rubygems.org'
 ######################################################
 ################ C O M M O N  G E M S ################
 ######################################################
-gem	'rails',		'3.0.3'
-gem	'heroku'
-gem	'devise',		'1.2.rc'
-gem	'omniauth'
-gem	'uuidtools'
-gem	'ncurses'
+gem   'rails',      '3.0.9'
+gem   'heroku'
+gem   'devise',     '1.2.rc'
+gem   'omniauth',   '>=0.2.6'
+gem   'uuidtools'
+gem   'ncurses'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
