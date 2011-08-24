@@ -1,4 +1,4 @@
-module NavalGameOne
+module NavalConflict
   class Raid
     
     attr_accessor :base, :squadrons, :target, :designated_name, :standoff_range

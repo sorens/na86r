@@ -2,7 +2,7 @@
 $LOAD_PATH.unshift File.expand_path( '../../lib', __FILE__ )
 require 'naval_game_one'
 
-@game = NavalGameOne::Game.new( STDOUT )
+@game = NavalConflict::Game.new( STDOUT )
 @game.start
 
 def interpret_setup_command( chr )

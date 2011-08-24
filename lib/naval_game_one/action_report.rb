@@ -1,6 +1,6 @@
 require 'string'
 
-module NavalGameOne
+module NavalConflict
   class ActionReport
     attr_accessor :target, 
     :action, 

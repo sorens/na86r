@@ -1,4 +1,4 @@
-module NavalGameOne
+module NavalConflict
   class Airbase
     
     attr_accessor :name, :squadrons, :max_allowed_combat_aircraft, :aircraft_roles, :raids

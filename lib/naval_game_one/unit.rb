@@ -1,4 +1,4 @@
-module NavalGameOne
+module NavalConflict
   class Unit
     
     attr_accessor :name, :classification, :id, :player
