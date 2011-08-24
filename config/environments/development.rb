@@ -1,6 +1,6 @@
 require File.expand_path( '../../simple_logger.rb', __FILE__ )
 
-NavalOperations::Application.configure do
+NavalConflict::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on

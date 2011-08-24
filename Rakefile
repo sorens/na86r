@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-NavalOperations::Application.load_tasks
+NavalConflict::Application.load_tasks

@@ -1,4 +1,4 @@
-NavalOperations::Application.routes.draw do
+NavalConflict::Application.routes.draw do
   get "welcome/index"
 
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'beta' }, :path_names => { :sign_up => 'register', :sign_in => 'login', :sign_out => 'logout' }, :skip => :sessions do
