@@ -1,7 +1,0 @@
-require 'naval_game_one/game'
-require 'naval_game_one/raid'
-require 'naval_game_one/airbase'
-require 'naval_game_one/task_force'
-require 'naval_game_one/unit'
-require 'naval_game_one/ship'
-require 'naval_game_one/action_report'

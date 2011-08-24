@@ -1,1 +1,1 @@
-require 'naval_game_one'
+require 'naval_conflict'
