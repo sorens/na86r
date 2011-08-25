@@ -1,5 +1,7 @@
 class BetaController < Devise::RegistrationsController
   def create
+    Rails.logger.info "user [#{params[:user][:email]}]" unless params[:user][:email].blank?
+    
     if params[:user][:beta_key].blank?
       redirect_to( new_registration_path(resource_name), :alert => "invalid beta key." )
     elsif params[:user][:email].blank?
