@@ -9,6 +9,10 @@ NavalConflict::Application.routes.draw do
     get    'logout'    => 'sessions#destroy',  :as => :destroy_user_session
   end
   
+  namespace :admin do
+    resources :beta_keys
+  end
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,39 @@
+<% content_for :title, "Beta Keys: (#{beta_keys.count})"%>
+
+<%= link_to 'New Key', new_admin_beta_key_path %>
+
+<table class="formatted">
+<tr>
+  <th>ID</th>
+  <th>Key</th>
+  <th>Assigned</th>
+  <th>State</th>
+  <th>Activated</th>
+  <th></th>
+</tr>
+
+<% if beta_keys and beta_keys.length > 0 %>
+  <% beta_keys.each do |bk| %>
+<tr onclick="location.href='<%= edit_admin_beta_key_path( bk ) %>'">
+  <td><%= bk.id %></td>
+  <td><%= bk.key %></td>
+  <td><%= bk.assigned_to %></td>
+  <td>
+    <%= case bk.active
+        when BetaKey::STATE_DISABLED
+          "disabled"
+        when BetaKey::STATE_ENABLED
+          "enabled"
+        when BetaKey::STATE_USED
+          "activated"
+        end
+    %>
+  </td>
+  <td><%= bk.activated_at %></td>
+  <td>
+    <%= link_to 'x', [:admin,bk], :confirm => "Are you sure?", :method => :delete %>
+  </td>
+</tr>
+  <% end %>
+<% end %>
+</table>

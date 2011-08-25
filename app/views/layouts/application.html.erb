@@ -1,33 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-	<head>
-		<title><%= yield( :title ) or 'NAVCON' %></title>
-		<%= stylesheet_link_tag :all %>
-		<%= javascript_include_tag :defaults %>
-		<%= csrf_meta_tag %>
-		<%= yield(:head) %>
-	</head>
-	<body>
-	<div id="container">  
-		<div id="user_nav">  
-		  <% if user_signed_in? %>  
-		    Signed in as <%= current_user.email %>. Not you?  
-		    <%= link_to_unless_current "Sign out", destroy_user_session_path %>  
-		  <% else %>  
-		    <%= link_to_unless_current "Sign up", new_user_registration_path %> or  
-		    <%= link_to_unless_current "Sign in", new_user_session_path %>  
-		  <% end %>  
-		</div>  
-		<br/>
-		<% flash.each do |name, msg| %>
-			<%= content_tag :div, msg, :id => "flash_#{name}" %>
-		<% end %>
+  <head>
+    <title><%= yield( :title ) or 'NAVCON' %></title>
+    <%= stylesheet_link_tag :all %>
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+  <div id="container">
+    <div id="user_nav">
+      <%= link_to "home", welcome_index_path %> | 
+      <% if user_signed_in? %>
+        <% if current_user.email == "steve@orens.com" %>
+          <%= link_to "admin", admin_beta_keys_path %> | 
+        <% end %>
+        Signed in as <%= current_user.email %>. Not you?  
+        <%= link_to_unless_current "Sign out", destroy_user_session_path %>  
+      <% else %>  
+        <%= link_to_unless_current "Sign up", new_user_registration_path %> or  
+        <%= link_to_unless_current "Sign in", new_user_session_path %>  
+      <% end %> 
+    </div>  
+    <br/>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
 
-		<% if show_title? %>
-			<h1><%= yield(:title) %></h1>
-		<% end %>
+    <% if show_title? %>
+      <h1><%= yield(:title) %></h1>
+    <% end %>
 
-		<%= yield %>
-	</div>
-	</body>
+    <%= yield %>
+  </div>
+  </body>
 </html>

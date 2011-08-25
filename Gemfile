@@ -9,6 +9,8 @@ gem   'devise',     '1.2.rc'
 gem   'omniauth',   '>=0.2.6'
 gem   'uuidtools'
 gem   'ncurses'
+gem   'decent_exposure'
+gem   'simple_form'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
