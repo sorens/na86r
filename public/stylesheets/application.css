@@ -35,7 +35,7 @@ a
 #flash_notice, #flash_error, #flash_alert {
   padding: 5px 8px;
   margin: 10px 0;
-  width: 400px;
+  width: 97%;
 }
 
 #flash_notice {
@@ -90,6 +90,19 @@ a
 {
     float: right;
     font-size: 12px;
+}
+
+#content
+{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.title
+{
+    text-align: center;
+    border: 1px solid black;
+    margin: 2px;
 }
 
 .simple_form

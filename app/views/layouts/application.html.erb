@@ -26,11 +26,11 @@
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     <% end %>
-
     <% if show_title? %>
+    <div class="title">
       <h1><%= yield(:title) %></h1>
+    </div>
     <% end %>
-
     <%= yield %>
   </div>
   </body>
