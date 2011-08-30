@@ -1,20 +1,17 @@
-class User < ActiveRecord::Base
+class AdminUser < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
-         :registerable,
-         :recoverable, 
-         :rememberable, 
-         :trackable, 
-         :validatable,
-         :token_authenticatable
+         :recoverable, :rememberable, :trackable, :validatable
 
-  before_save :ensure_authentication_token
-  
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessor   :beta_key
+
+  after_create { |admin| admin.send_reset_password_instructions }
 
   scope :recent, order( "created_at DESC" )  
 
+  def password_required?
+    new_record? ? false : super
+  end
 end

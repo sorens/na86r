@@ -8,6 +8,8 @@ class BetaKey < ActiveRecord::Base
   # length of the key to use
   KEY_LENGTH = 20
   
+  scope :recent, order( "created_at DESC" )  
+
   def self.generate( email )
     BetaKey.create( :assigned_to => email, :active => BetaKey::STATE_ENABLED, :key => BetaKey.new_key )
   end

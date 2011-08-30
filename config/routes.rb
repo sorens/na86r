@@ -1,4 +1,8 @@
 NavalConflict::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   get "welcome/index"
 
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'beta' }, :path_names => { :sign_up => 'register', :sign_in => 'login', :sign_out => 'logout' }, :skip => :sessions do
@@ -9,7 +13,7 @@ NavalConflict::Application.routes.draw do
     get    'logout'    => 'sessions#destroy',  :as => :destroy_user_session
   end
   
-  namespace :admin do
+  namespace :admina do
     resources :beta_keys
   end
   

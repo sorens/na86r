@@ -11,6 +11,7 @@ gem   'uuidtools'
 gem   'ncurses'
 gem   'decent_exposure'
 gem   'simple_form'
+gem   'activeadmin'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
