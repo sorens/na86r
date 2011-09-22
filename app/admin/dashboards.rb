@@ -1,20 +1,4 @@
 ActiveAdmin::Dashboards.build do
-  
-  section "Users" do
-    ul do
-      User.recent.limit(10).collect do |u|
-        li link_to( u.email, admin_user_path( u ) )
-      end
-    end
-  end
-  
-  section "Beta Keys" do
-    ul do
-      BetaKey.recent.limit(10).collect do |bk|
-        li link_to( "#{bk.assigned_to} [#{bk.key}]", admin_beta_key_path( bk ) ) 
-      end
-    end
-  end
 
   # Define your dashboard sections here. Each block will be
   # rendered on the dashboard in the context of the view. So just

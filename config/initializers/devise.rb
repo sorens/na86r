@@ -34,7 +34,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  # config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [ :email ]
+
+  # Configure which authentication keys should have whitespace stripped.
+  # These keys will have whitespace before and after removed upon creating or
+  # modifying a user and when used to authenticate or find a user. Default is :email.
+  config.strip_whitespace_keys = [ :email ]
 
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true
@@ -48,10 +53,22 @@ Devise.setup do |config|
   # The realm used in Http Basic Authentication. "Application" by default.
   # config.http_authentication_realm = "Application"
 
+  # It will change confirmation, password recovery and other workflows
+  # to behave the same regardless if the e-mail provided was right or wrong.
+  # Does not affect registerable.
+  # config.paranoid = true
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
-  config.stretches = 10
+  #
+  # Limiting the stretches to just one in testing will increase the performance of
+  # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
+  # a value less than 10 in other environments.
+  config.stretches = Rails.env.test? ? 1 : 10
+
+  # Setup a pepper to generate the encrypted password.
+  # config.pepper = "1206d69f49a54edfd04da6ef16a6c3aa9807fa968a8724e56acb679ecde46c050b1e97a126643ab3af479773f5839822e2720239f5bc00b00d6c0f3fc3dfa2a8"
 
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
@@ -61,6 +78,9 @@ Devise.setup do |config|
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
   # config.confirm_within = 2.days
+
+  # Defines which key will be used when confirming an account
+  # config.confirmation_keys = [ :email ]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
@@ -76,12 +96,18 @@ Devise.setup do |config|
   # to false if you are not using database authenticatable.
   config.use_salt_as_remember_token = true
 
-  # ==> Configuration for :validatable
-  # Range for password length. Default is 6..20.
-  # config.password_length = 6..20
+  # Options to be passed to the created cookie. For instance, you can set
+  # :secure => true in order to force SSL only cookies.
+  # config.cookie_options = {}
 
-  # Regex to use to validate the email address
-  # config.email_regexp = /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i
+  # ==> Configuration for :validatable
+  # Range for password length. Default is 6..128.
+  # config.password_length = 6..128
+
+  # Email regex used to validate email formats. It simply asserts that
+  # an one (and only one) @ exists in the given string. This is mainly
+  # to give user feedback and not to assert the e-mail validity.
+  # config.email_regexp = /\A[^@]+@[^@]+\z/
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -93,6 +119,9 @@ Devise.setup do |config|
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
   # :none            = No lock strategy. You should handle locking by yourself.
   # config.lock_strategy = :failed_attempts
+
+  # Defines which key will be used when locking and unlocking an account
+  # config.unlock_keys = [ :email ]
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email
@@ -107,6 +136,16 @@ Devise.setup do |config|
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
+
+  # ==> Configuration for :recoverable
+  #
+  # Defines which key will be used when recovering the password for an account
+  # config.reset_password_keys = [ :email ]
+
+  # Time interval you can reset your password with a reset password key.
+  # Don't put a too small interval or your users won't have the time to
+  # change their passwords.
+  config.reset_password_within = 2.hours
 
   # ==> Configuration for :encryptable
   # Allow you to use another encryption algorithm besides bcrypt (default). You can use
@@ -150,11 +189,12 @@ Devise.setup do |config|
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists.
   #
-  # The :"*/*" format below is required to match Internet Explorer requests.
-  # config.navigational_formats = [:"*/*", :html]
+  # The :"*/*" and "*/*" formats below is required to match Internet
+  # Explorer requests.
+  # config.navigational_formats = [:"*/*", "*/*", :html]
 
-  # The default HTTP method used to sign out a resource. Default is :get.
-  # config.sign_out_via = :get
+  # The default HTTP method used to sign out a resource. Default is :delete.
+  config.sign_out_via = :delete
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

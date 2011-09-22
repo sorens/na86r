@@ -3,20 +3,22 @@ source 'http://rubygems.org'
 ######################################################
 ################ C O M M O N  G E M S ################
 ######################################################
-gem   'rails',      '3.0.9'
+gem   'rails',      '3.1.0'
 gem   'heroku'
-gem   'devise',     '1.2.rc'
-gem   'omniauth',   '>=0.2.6'
+#gem   'devise'
+#gem   'omniauth',   '>=0.2.6'
 gem   'uuidtools'
-gem   'ncurses'
+#gem   'ncurses'
 gem   'decent_exposure'
 gem   'simple_form'
 gem   'activeadmin'
+gem   'sass-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
+#gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'sqlite3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -33,6 +35,17 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+
+# Rails 3.1 stuff...
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+#  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
+  gem 'uglifier'
+end
+
+gem 'jquery-rails'
 
 ######################################################
 ############## D E V E L O P M E N T #################
@@ -60,6 +73,10 @@ end
 ######################################################
 #################### T E S T #########################
 ######################################################
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+end
 
 ######################################################
 ################## S T A G I N G #####################

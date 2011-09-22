@@ -13,7 +13,6 @@ NavalConflict::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_view.debug_rjs             = false
   config.action_controller.perform_caching = false   #set to true and restart server to enable caching
   config.action_controller.page_cache_directory = "#{Rails.public_path}/cache/"
 
@@ -27,6 +26,12 @@ NavalConflict::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
+  # Do not compress assets
+  config.assets.compress = false
+
+  # Expands the lines which load the assets
+  config.assets.debug = true
+
   # turn off color logging messages
   config.colorize_logging = false
   
