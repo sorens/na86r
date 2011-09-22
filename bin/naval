@@ -6,43 +6,43 @@ require 'naval_conflict'
 @game.start
 
 def interpret_setup_command( chr )
-	case chr
-	when '1'
-		@game.toggle_game
-		@game.start
-	when '2'
-		@game.toggle_screen
-		@game.start
-	when '3'
-		@game.toggle_player
-		@game.start
-	when '4'
-		@game.toggle_level
-		@game.start
-	when '5'
-		@game.scenario = :campaign1
-		@game.start
-	when '6'
-		@game.scenario = :campaign2
-		@game.start
-	when '7'
-		@game.scenario = :convoy_qr44
-		@game.start
-	when '8'
-		@game.scenario = :iceland
-		@game.start
-	when ' '
-	end
+  case chr
+  when '1'
+    @game.toggle_game
+    @game.start
+  when '2'
+    @game.toggle_screen
+    @game.start
+  when '3'
+    @game.toggle_player
+    @game.start
+  when '4'
+    @game.toggle_level
+    @game.start
+  when '5'
+    @game.scenario = :campaign1
+    @game.start
+  when '6'
+    @game.scenario = :campaign2
+    @game.start
+  when '7'
+    @game.scenario = :convoy_qr44
+    @game.start
+  when '8'
+    @game.scenario = :iceland
+    @game.start
+  when ' '
+  end
 end
 
 begin
-	system("stty raw -echo")
-	while ( (str = STDIN.getc) != 32 )
-		system("stty -raw echo")
-		# p "You pressed: [#{str.chr.upcase}]"
-		interpret_setup_command( str.chr )
-		system("stty raw -echo")
-	end
+  system("stty raw -echo")
+  while ( (str = STDIN.getc) != 32 )
+    system("stty -raw echo")
+    # p "You pressed: [#{str.chr.upcase}]"
+    interpret_setup_command( str.chr )
+    system("stty raw -echo")
+  end
 ensure
   system("stty -raw echo")
 end
