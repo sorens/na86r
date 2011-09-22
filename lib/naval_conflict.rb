@@ -1,7 +1,0 @@
-require 'naval_conflict/game'
-require 'naval_conflict/raid'
-require 'naval_conflict/airbase'
-require 'naval_conflict/task_force'
-require 'naval_conflict/unit'
-require 'naval_conflict/ship'
-require 'naval_conflict/action_report'
