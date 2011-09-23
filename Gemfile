@@ -5,7 +5,7 @@ source 'http://rubygems.org'
 ######################################################
 gem   'rails',      '3.1.0'
 gem   'heroku'
-#gem   'devise'
+gem   'devise'
 #gem   'omniauth',   '>=0.2.6'
 gem   'uuidtools'
 #gem   'ncurses'
