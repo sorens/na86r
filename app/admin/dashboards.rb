@@ -35,4 +35,9 @@ ActiveAdmin::Dashboards.build do
   #
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
 
+  section "Navigation" do
+    ul do
+      li link_to "Naval Conflict", welcome_index_path
+    end
+  end
 end
