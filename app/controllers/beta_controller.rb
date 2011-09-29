@@ -7,20 +7,20 @@ class BetaController < Devise::RegistrationsController
     elsif params[:user][:email].blank?
       redirect_to( new_registration_path(resource_name), :alert => "please enter a valid email address." )
     else
-      key = BetaKey.find_beta_key( params[:user][:email] )
-      if key.nil? or key.key.nil?
+      bk = BetaKey.find_beta_key( params[:user][:email] )
+      if bk.nil? or bk.key.nil?
         redirect_to( new_registration_path(resource_name), :alert => "{#{params[:user][:email]}} has not been invited." )
       else
-        if key.key != params[:user][ :beta_key ]
+        if bk.key != params[:user][ :beta_key ]
+          bk.active = BetaKey::STATE_DISABLED
+          bk.save!
           redirect_to( new_registration_path(resource_name), :alert => "your email does not match your beta key. deactivating your beta key." )
-          key.active = BetaKey::STATE_DISABLED
-          key.save!
         else
           super
-          key.active = BetaKey::STATE_USED
-          key.activated_at = DateTime.now
-          key.save!
-          flash[ :notice ] = "welcome."
+          bk.active = BetaKey::STATE_USED
+          bk.activated_at = DateTime.now
+          bk.save!
+          redirect_to welcome_index_path, :notice => "welcome."
         end
       end
     end
