@@ -18,9 +18,6 @@ gem   'meta_search',    '>= 1.1.0.pre'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'sqlite3'
-
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -56,6 +53,8 @@ gem 'jquery-rails'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
+  #gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'sqlite3'
   # gem 'webrat'
   gem "rspec-rails", "~> 2.4"
   gem "cucumber"
@@ -86,3 +85,6 @@ end
 ######################################################
 ################ P R O D U C T I O N #################
 ######################################################
+group :production do
+  gem 'pg'
+end
