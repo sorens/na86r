@@ -21,19 +21,41 @@ class Unit < ActiveRecord::Base
   STATUS_IN_PIPELINE  = "in_pipeline"
   STATUS_DESTROYED    = "destroyed"
   STATUS_CRASHED      = "crashed"
+  STATUS_IN_PORT      = "in_port"
   
-  #
+  #unit types
+  TYPE_SHIP_COMBAT              = "ship_combat"
+  TYPE_SHIP_TRANSPORT           = "ship_transport"
+  TYPE_SHIP_SUBMARINE           = "ship_submarine"
+  TYPE_AIRCRAFT_COMBAT          = "aircraft_combat"
+  TYPE_AIRCRAFT_UTIL            = "aircraft_util"
+  TYPE_AIRCRAFT_TRANSPORT       = "aircraft_transport"
+  TYPE_BASE_FLIGHT_OPERATIONS   = "base_flight_ops"
+  TYPE_BASE_NAVAL               = "base_naval"
+  
+  # max damage is special, it's based on the cargo capacity
+  # of our unit in this version
   def max_damage
     cargo_capacity
   end
   
-  #
+  # we need a method to apply damage so that we can set the
+  # unit status appropriately
   def apply_damage( value )
-    # Rails.logger.debug "applying damage [#{value}]"
-    self.current_damage= value
-    # Rails.logger.debug "current_damage is now [#{current_damage}]"
-    self.status= STATUS_SUNK if ( self.current_damage >= self.max_damage )
-    # Rails.logger.debug "status is now [#{status}]"
+    self.current_damage = value
+    if self.utype == TYPE_SHIP_COMBAT or self.utype == TYPE_SHIP_TRANSPORT
+      self.status= STATUS_SUNK if ( self.current_damage >= self.max_damage )
+    elsif self.utype == TYPE_SHIP_SUBMARINE
+      self.status = STATUS_SUNK if value > 0
+    elsif self.utype == TYPE_AIRCRAFT_COMBAT or self.utype == TYPE_AIRCRAFT_UTIL or self.utype == TYPE_AIRCRAFT_TRANSPORT
+      self.status = STATUS_DESTROYED if value > 0
+    end
+  end
+  
+  # is this unit active?
+  def active?
+    return false if self.status == STATUS_SUNK or self.status == STATUS_DESTROYED
+    return true
   end
   
   # be sure to load our JSON data into

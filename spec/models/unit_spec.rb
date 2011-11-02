@@ -19,11 +19,19 @@ describe Unit do
       :uclass => "CVN",
       :maker => nil,
       :number => "68",
-      :utype => "SHIP",
+      :utype => Unit::TYPE_SHIP_COMBAT,
       :version => 1,
-      :data => "{\"max_speed\":30, \"cargo_capacity\":72, \"main_gun\":0, \"anti_aircraft\":0, \"missile_defense\":75, \"task_force\":16, \"arrival_days\":7, \"status\":\"in_pipeline\", \"defense_factor\":97}"
+      :data => "{\"max_speed\":30, 
+                \"cargo_capacity\":72, 
+                \"main_gun\":0, 
+                \"anti_aircraft\":0, 
+                \"missile_defense\":75, 
+                \"task_force\":16, 
+                \"arrival_days\":7, 
+                \"status\":\"in_pipeline\", 
+                \"defense_factor\":97}"
+      }
     }
-  }
   
   before( :each ) do
     @unit = Unit.new( options )
@@ -93,8 +101,22 @@ describe Unit do
     @unit.arrival_days.should >= 0
   end
   
-  it "should withstand sinking if damage taken is less than maximum allowed damage" do
+  it "should withstand sinking if damage taken is less than maximum allowed damage and it is combat ship" do
+    @unit.apply_damage 1
+    @unit.utype = Unit::TYPE_SHIP_COMBAT
     @unit.status.should_not == Unit::STATUS_SUNK
+  end
+  
+  it "should withstand sinking if damage taken is less than maximum allowed damage and it is transport ship" do
+    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
+    @unit.apply_damage 1
+    @unit.status.should_not == Unit::STATUS_SUNK
+  end
+  
+  it "should sink if damage taken is greater than 1 and it is a submarine" do
+    @unit.utype = Unit::TYPE_SHIP_SUBMARINE
+    @unit.apply_damage 1
+    @unit.status.should == Unit::STATUS_SUNK
   end
   
   it "should sink if damage taken is greater than maximum allowed damage" do
