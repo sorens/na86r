@@ -1,6 +1,7 @@
 # Rails #
 ###################
 .bundle
+tmp/*
 tmp/**/*
 
 # Compiled source #
