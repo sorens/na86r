@@ -38,6 +38,7 @@ a
   padding: 5px 8px;
   margin: 10px 0;
   width: 97%;
+  color: #000;
 }
 
 #flash_notice
@@ -46,10 +47,16 @@ a
   border: solid 1px #6C6;
 }
 
-#flash_error, #flash_alert 
+#flash_alert 
 {
   background-color: #FCC;
   border: solid 1px #C66;
+}
+
+#flash_error
+{
+  background-color: #F00;
+  border: solid 1px #C00;
 }
 
 .fieldWithErrors
