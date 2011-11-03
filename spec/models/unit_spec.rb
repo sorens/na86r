@@ -19,7 +19,7 @@ describe Unit do
       :uclass => "CVN",
       :maker => nil,
       :number => "68",
-      :utype => Unit::TYPE_SHIP_COMBAT,
+      :utype => Unit::TYPE_SHIP_AIRCRAFT_CARRIER,
       :version => 1,
       :data => "{\"max_speed\":30, 
                 \"cargo_capacity\":72, 
@@ -29,7 +29,10 @@ describe Unit do
                 \"task_force\":16, 
                 \"arrival_days\":7, 
                 \"status\":\"in_pipeline\", 
-                \"defense_factor\":97}"
+                \"defense_factor\":97,
+                \"current_cargo_troops\":0,
+                \"current_cargo_supplies\":0,
+                \"current_cargo_aircraft\":0}"
       }
     }
   
@@ -159,6 +162,32 @@ describe Unit do
   
   it "should raise NoMethodError for an unknown field" do
     lambda { @unit.blah }.should raise_error( NoMethodError )
+  end
+  
+  it "should not have more troops than cargo capacity" do
+    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
+    lambda { @unit.load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+  end
+  
+  it "should not have more supplies than cargo capacity" do
+    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
+    lambda { @unit.load_supplies( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+  end
+  
+  it "should not have more troops and supplies than cargo capacity" do
+    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
+    lambda { @unit.load_supplies( 100 ).load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+  end
+  
+  it "transports should now allow aircraft to be loaded" do
+    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
+    lambda { @unit.load_aircraft( 1 ) }.should raise_error( Exceptions::CannotLoad )
+  end
+  
+  it "aircraft carriers should not allow troops or supplies to be loaded" do
+    @unit.utype = Unit::TYPE_SHIP_AIRCRAFT_CARRIER
+    lambda { @unit.load_supplies( 1 ) }.should raise_error( Exceptions::CannotLoad )
+    lambda { @unit.load_troops( 1 ) }.should raise_error( Exceptions::CannotLoad )
   end
   
 end
