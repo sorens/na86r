@@ -43,8 +43,9 @@ NavalConflict::Application.configure do
   config.colorize_logging = false
   
   # use our simple logger class so we can see a date time stamp for each entry
-  # path = File.expand_path( "#{Rails.root}/log/#{Rails.env}.log", __FILE__ )
-  path = File.expand_path( "~/logs/#{Rails.application.class.parent_name}_#{Rails.env}.log", __FILE__ )
+  log_dir = File.expand_path( "~/Library/Logs/#{Rails.application.class.parent_name}" )
+  FileUtils.mkdir_p( log_dir )
+  path = File.join( log_dir, "#{Rails.env}.log" )
   logfile = File.open( path, 'a' )
   logfile.sync = true
   Rails.logger = SimpleLogger.new( logfile )
