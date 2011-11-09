@@ -37,7 +37,9 @@ describe Unit do
     }
   
   before( :each ) do
-    @unit = Unit.new( options )
+    @user = User.new( :email => "a@b.com" )
+    @user.reset_password!( "1234567", "1234567" )
+    @unit = @user.units.new( options )
   end
   
   it "is valid" do
@@ -68,8 +70,8 @@ describe Unit do
     JSON.parse( @unit.data ).empty?.should == false
   end
   
-  it "should belong to only one player" do
-    pending
+  it "should belong a player" do
+    @unit.user.should be_valid
   end
   
   it "should have a maximum speed" do
@@ -139,7 +141,7 @@ describe Unit do
     @unit.status.should == Unit::STATUS_IN_PIPELINE
   end
   
-  it "can be added to a single task force just once" do
+  it "can be assigned to a base or task force or ship" do
     pending
   end
   

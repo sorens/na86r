@@ -1,4 +1,6 @@
 class Unit < ActiveRecord::Base
+  belongs_to :user
+  
   include Parsed
   include Exceptions
   
@@ -65,7 +67,7 @@ class Unit < ActiveRecord::Base
   
   # be sure to load our JSON data into
   # into a hash that we can easily utilize
-  def initialize( options = {} )
+  def initialize( user, options = {} )
 
     # initialize our module
     parsed_initialize
@@ -86,7 +88,7 @@ class Unit < ActiveRecord::Base
     add_attribute CURRENT_CARGO_A
     
     # call our super
-    super( options )
+    super( user, options )
     # load our parsed data
     load_parsed_data
     # if this is a first time setup, make sure we set an initial
