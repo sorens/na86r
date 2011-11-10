@@ -49,3 +49,7 @@ Thumbs.db
 # RVN #
 #######
 .rvmrc*
+
+# Redcar #
+##########
+.redcar/*
