@@ -32,6 +32,15 @@ class Group < ActiveRecord::Base
     end
   end
   
+  # does this unit include the specified unit
+  def include?( unit )
+    result = false
+    if self.units
+      result = true if self.units.include? unit
+    end
+    result
+  end
+  
   private
   
   def group_init
