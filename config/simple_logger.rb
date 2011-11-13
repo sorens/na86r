@@ -26,8 +26,11 @@ class SimpleLogger < Logger
     when ::String
       msg
     when ::Exception
-      "#{ msg.message } (#{ msg.class }): " <<
-      (msg.backtrace || []).join(" | ")
+      if REMOVE_ALL_LINEFEEDS
+        "#{ msg.message } (#{ msg.class }): " << (msg.backtrace || []).join(" | ")
+      else
+        "#{ msg.message } (#{ msg.class }): " << (msg.backtrace || []).join( "\n" )
+      end
     else
       msg.inspect
     end
