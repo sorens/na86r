@@ -41,7 +41,10 @@ NavalConflict::Application.configure do
 
   # turn off color logging messages
   config.colorize_logging = false
-  
+
+  # only info-level log output for now
+  config.log_level = :info
+
   # use our simple logger class so we can see a date time stamp for each entry
   log_dir = File.expand_path( "~/Library/Logs/#{Rails.application.class.parent_name}" )
   FileUtils.mkdir_p( log_dir )
@@ -49,5 +52,6 @@ NavalConflict::Application.configure do
   logfile = File.open( path, 'a' )
   logfile.sync = true
   Rails.logger = SimpleLogger.new( logfile )
-  Rails.logger.debug "Configured to use SimpleLogger"
+  Rails.logger.level = 1  # :info level
+  Rails.logger.debug "#{Rails.env} environment configured to use SimpleLogger"
 end

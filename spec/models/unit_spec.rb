@@ -1,195 +1,255 @@
 require 'spec_helper'
 
-# create_table "units", :force => true do |t|
-#   t.string   "guid"
-#   t.string   "name"
-#   t.string   "uclass"
-#   t.string   "maker"
-#   t.string   "number"
-#   t.string   "utype"
-#   t.integer  "version"
-#   t.text     "data"
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-# end
-
 describe Unit do
-  let( :options )   { options = { :guid => "CVN68", 
+  let( :options_ship_carrier )   { options = { :guid => "CVN68", 
       :name => "Nimitz", 
       :uclass => "CVN",
       :maker => nil,
       :number => "68",
       :utype => Unit::TYPE_SHIP_AIRCRAFT_CARRIER,
       :version => 1,
-      :data => "{\"max_speed\":30, 
-                \"cargo_capacity\":72, 
-                \"main_gun\":0, 
-                \"anti_aircraft\":0, 
-                \"missile_defense\":75, 
-                \"task_force\":16, 
-                \"arrival_days\":7, 
-                \"status\":\"in_pipeline\", 
-                \"defense_factor\":97,
-                \"current_cargo_troops\":0,
-                \"current_cargo_supplies\":0,
+      :data => "{\"max_speed\":30, \"cargo_capacity\":72, \"main_gun\":0, \"anti_aircraft\":0, 
+                \"missile_defense\":75, \"initial_task_force\":16, \"arrival_days\":7, \"status\":\"in_pipeline\", 
+                \"defense_factor\":97, \"current_cargo_troops\":0, \"current_cargo_supplies\":0, 
                 \"current_cargo_aircraft\":0}"
       }
     }
+    
+  let( :options_ship_transport ) { options = { :guid => "LPD247",
+      :name => "Fearless", 
+      :uclass => "LPD",
+      :maker => nil,
+      :number => "247",
+      :utype => Unit::TYPE_SHIP_TRANSPORT,
+      :version => 1,
+      :data => "{\"max_speed\":20, \"cargo_capacity\":6, \"main_gun\":0, \"anti_aircraft\":0, 
+                \"missile_defense\":22, \"initial_task_force\":14, \"arrival_days\":15, \"status\":\"in_pipeline\", 
+                \"defense_factor\":14, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
+                \"current_cargo_aircraft\":0}"
+      }
+    }
+
+  let( :options_ship_submarine ) { options = { :guid => "SSN279",
+      :name => "Swiftsure", 
+      :uclass => "SSN",
+      :maker => nil,
+      :number => "279",
+      :utype => Unit::TYPE_SHIP_SUBMARINE,
+      :version => 1,
+      :data => "{\"max_speed\":30, \"cargo_capacity\":0, \"main_gun\":0, \"anti_aircraft\":0, 
+                \"missile_defense\":0, \"initial_task_force\":21, \"arrival_days\":0, \"status\":\"available\", 
+                \"defense_factor\":30, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
+                \"current_cargo_aircraft\":0}"
+      }
+    }
+    
+  let( :options_ship_combat ) { options = { :guid => "CGN154",
+      :name => "Texas", 
+      :uclass => "CGN",
+      :maker => nil,
+      :number => "154",
+      :utype => Unit::TYPE_SHIP_COMBAT,
+      :version => 1,
+      :data => "{\"max_speed\":35, \"cargo_capacity\":0, \"main_gun\":0, \"anti_aircraft\":2, 
+                \"missile_defense\":30, \"initial_task_force\":16, \"arrival_days\":7, \"status\":\"in_pipeline\", 
+                \"defense_factor\":14, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
+                \"current_cargo_aircraft\":0}"
+      }
+    }
+
+    # need to add max_damage field
+    
+    let( :options_group_port ) { options = { :gtype => Group::TYPE_GROUP_PORT, :name => "Scapa Flow"} }
+    let( :options_group_combat ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "16", :mission => Group::TASK_FORCE_MISSION_COMBAT } }
+    let( :options_group_transport ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "14", :mission => Group::TASK_FORCE_MISSION_TRANSPORT } }
+    let( :options_group_submarine ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "21", :mission => Group::TASK_FORCE_MISSION_SUBMARINE } }
+    let( :options_group_bombardment ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "14", :mission => Group::TASK_FORCE_MISSION_BOMBARDMENT } }
   
   before( :each ) do
-    @user = User.new( :email => "a@b.com" )
-    @user.reset_password!( "1234567", "1234567" )
-    @unit = @user.units.new( options )
+    @ship_combat = Unit.create( options_ship_combat )
+    @ship_carrier = Unit.create( options_ship_carrier )
+    @ship_transport = Unit.create( options_ship_transport )
+    @ship_submarine = Unit.create( options_ship_submarine )
+    @group_port = Group.create( options_group_port )
+    @group_transport = Group.create( options_group_transport )
+    @group_combat = Group.create( options_group_combat )
   end
   
   it "is valid" do
-    @unit.should be_valid
+    @ship_combat.should be_valid
   end
   
   it "should have a name" do
-    @unit.name.should == "Nimitz"
+    @ship_carrier.name.should == "Nimitz"
   end
   
   it "should have a uclass" do
-    @unit.uclass.should == "CVN"
+    @ship_carrier.uclass.should == "CVN"
   end
   
   it "should have an id" do
-    @unit.number.should == "68"
+    @ship_carrier.number.should == "68"
   end
   
   it "should have a guid" do
-    @unit.guid.should == "CVN68"
+    @ship_carrier.guid.should == "CVN68"
   end
   
   it "should have data" do
-    @unit.data.length.should > 0
+    @ship_carrier.data.length.should > 0
   end
   
   it "should have valid JSON data" do
-    JSON.parse( @unit.data ).empty?.should == false
+    JSON.parse( @ship_carrier.data ).empty?.should == false
   end
   
-  it "should belong a player" do
-    @unit.user.should be_valid
+  it "should belong to a player" do
+    pending
   end
   
   it "should have a maximum speed" do
-    @unit.max_speed.should == 30
+    @ship_carrier.max_speed.should == 30
   end
   
   it "should have a current damage" do
-    @unit.current_damage.should >= 0
+    @ship_carrier.current_damage.should >= 0
   end
   
   it "should have a defense factor" do
-    @unit.defense_factor.should >= 0
+    @ship_carrier.defense_factor.should >= 0
   end
   
   it "should have a main gun value" do
-    @unit.main_gun.should >= 0
+    @ship_carrier.main_gun.should >= 0
   end
   
   it "should have an anti aircraft value" do
-    @unit.anti_aircraft.should >= 0
+    @ship_carrier.anti_aircraft.should >= 0
   end
   
   it "should have a missile defense value" do
-    @unit.missile_defense.should >= 0
+    @ship_carrier.missile_defense.should >= 0
   end
   
-  it "should have a task force value" do
-    @unit.task_force.should >= 0
+  it "should have an initial task force value" do
+    @ship_carrier.initial_task_force.should >= 0
   end
   
   it "should have an arrival days value" do
-    @unit.arrival_days.should >= 0
+    @ship_carrier.arrival_days.should >= 0
   end
   
   it "should withstand sinking if damage taken is less than maximum allowed damage and it is combat ship" do
-    @unit.apply_damage 1
-    @unit.utype = Unit::TYPE_SHIP_COMBAT
-    @unit.status.should_not == Unit::STATUS_SUNK
+    @ship_combat.apply_damage 1
+    @ship_combat.status.should_not == Unit::STATUS_SUNK
   end
   
   it "should withstand sinking if damage taken is less than maximum allowed damage and it is transport ship" do
-    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
-    @unit.apply_damage 1
-    @unit.status.should_not == Unit::STATUS_SUNK
+    @ship_transport.apply_damage 1
+    @ship_transport.status.should_not == Unit::STATUS_SUNK
   end
   
   it "should sink if damage taken is greater than 1 and it is a submarine" do
-    @unit.utype = Unit::TYPE_SHIP_SUBMARINE
-    @unit.apply_damage 1
-    @unit.status.should == Unit::STATUS_SUNK
+    @ship_submarine.apply_damage 1
+    @ship_submarine.status.should == Unit::STATUS_SUNK
   end
   
   it "should sink if damage taken is greater than maximum allowed damage" do
-    @unit.apply_damage 100
-    @unit.status.should == Unit::STATUS_SUNK
+    @ship_combat.apply_damage 100
+    @ship_combat.status.should == Unit::STATUS_SUNK
   end
   
   it "should have a cargo capacity" do
-    @unit.cargo_capacity.should == 72
-  end
-  
-  it "should have a maximum allowed damage equal to its cargo capacity" do
-    @unit.max_damage.should == @unit.cargo_capacity
+    @ship_carrier.cargo_capacity.should == 72
   end
   
   it "should have a status" do
-    @unit.status.should == Unit::STATUS_IN_PIPELINE
+    @ship_combat.status.should == Unit::STATUS_IN_PIPELINE
   end
   
-  it "can be assigned to a base or task force or ship" do
-    pending
+  it "ship can be assigned to a port" do
+    @ship_combat.attach( @group_port )
+    @group_port.units.include?( @ship_combat ).should be_true
   end
   
-  it "can only be added to a transport task force if it is either a troop or supply ship" do
-    pending
+  it "a transport/supply ship can be added to a task force with a transport mission" do
+    @ship_transport.attach( @group_transport )
+    @group_transport.units.include?( @ship_transport ).should be_true
   end
   
-  it "can only be added to a combat task force if it is an aircraft carrier" do
-    pending
+  it "a transport/supply ship cannot be added to a task force that does not have transport mission" do
+    @ship_transport.attach( @group_combat )
+    @group_transport.units.include?( @ship_transport ).should be_false
   end
   
-  it "can only be added to an underwater task force if it is a submarine" do
-    pending
+  it "an aircraft carrier can be added to a task force with a combat mission" do
+    @ship_carrier.attach( @group_combat )
+    @group_combat.units.include?( @ship_carrier ).should be_true
+  end
+
+  it "an aircraft carrier can not be added to a task force with a transport mission" do
+    @ship_carrier.attach( @group_transport )
+    @group_transport.units.include?( @ship_carrier ).should be_false
+  end
+  
+  it "an aircraft carrier can not be added to a task force with a bombardment mission" do
+    @ship_carrier.attach( @group_bombardment )
+    @group_bombardment.units.include?( @ship_carrier ).should be_false
+  end
+  
+  it "an aircraft carrier can not be added to a task force with a submarine mission" do
+    @ship_carrier.attach( @group_submarine )
+    @group_submarine.units.include?( @ship_carrier ).should be_false
+  end
+  
+  it "a submarine can be added to a task force with a submarine mission" do
+    @ship_submarine.attach( @group_submarine )
+    @group_submarine.untis.include?( @ship_submarine ).should be_true
+  end
+  
+  it "a submarine can not be added to a task force with a combat mission" do
+    @ship_submarine.attach( @group_submarine )
+    @group_submarine.untis.include?( @ship_submarine ).should be_true
+  end
+  
+  it "a submarine can not be added to a task force with a bombardment mission" do
+    @ship_submarine.attach( @group_bombardment )
+    @group_bombardment.untis.include?( @ship_submarine ).should be_true
+  end
+  
+  it "a submarine can not be added to a task force with a transport mission" do
+    @ship_submarine.attach( @group_transport )
+    @group_transport.untis.include?( @ship_submarine ).should be_true
   end
   
   it "should have valid JSON data after updating a field" do
-    @unit.max_speed = 1
-    JSON.parse( @unit.data ).empty?.should == false
+    @ship_combat.max_speed = 1
+    JSON.parse( @ship_combat.data ).empty?.should == false
   end
   
   it "should raise NoMethodError for an unknown field" do
-    lambda { @unit.blah }.should raise_error( NoMethodError )
+    lambda { @ship_combat.blah }.should raise_error( NoMethodError )
   end
   
   it "should not have more troops than cargo capacity" do
-    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
-    lambda { @unit.load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+    lambda { @ship_transport.load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
   end
   
   it "should not have more supplies than cargo capacity" do
-    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
-    lambda { @unit.load_supplies( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+    lambda { @ship_transport.load_supplies( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
   end
   
   it "should not have more troops and supplies than cargo capacity" do
-    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
-    lambda { @unit.load_supplies( 100 ).load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
+    lambda { @ship_transport.load_supplies( 100 ).load_troops( 100 ) }.should raise_error( Exceptions::NotEnoughCargoCapacity )
   end
   
   it "transports should now allow aircraft to be loaded" do
-    @unit.utype = Unit::TYPE_SHIP_TRANSPORT
-    lambda { @unit.load_aircraft( 1 ) }.should raise_error( Exceptions::CannotLoad )
+    lambda { @ship_transport.load_aircraft( 1 ) }.should raise_error( Exceptions::CannotLoad )
   end
   
   it "aircraft carriers should not allow troops or supplies to be loaded" do
-    @unit.utype = Unit::TYPE_SHIP_AIRCRAFT_CARRIER
-    lambda { @unit.load_supplies( 1 ) }.should raise_error( Exceptions::CannotLoad )
-    lambda { @unit.load_troops( 1 ) }.should raise_error( Exceptions::CannotLoad )
+    lambda { @ship_carrier.load_supplies( 1 ) }.should raise_error( Exceptions::CannotLoad )
+    lambda { @ship_carrier.load_troops( 1 ) }.should raise_error( Exceptions::CannotLoad )
   end
-  
+
 end
