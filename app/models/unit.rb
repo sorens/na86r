@@ -58,7 +58,7 @@ class Unit < ActiveRecord::Base
   # unit status appropriately
   def apply_damage( value )
     self.current_damage += value
-    Rails.logger.info "[#{self.guid.upcase}] takes[#{value}] damage, current damage is now [#{self.current_damage}]"
+    Rails.logger.info "[#{self.display_name}] takes[#{value}] damage, current damage is now [#{self.current_damage}]"
     # update our status
     update_ship_status()
   end
@@ -71,22 +71,22 @@ class Unit < ActiveRecord::Base
   
   #
   def load_supplies( value )
-    raise CannotLoad.new( "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise NotEnoughCargoCapacity.new( "supplies" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise CannotLoad.new( self, "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
+    raise NotEnoughCargoCapacity.new( self, "supplies" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_supplies = value
   end
   
   #
   def load_troops( value )
-    raise CannotLoad.new( "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise NotEnoughCargoCapacity.new( "troops" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise CannotLoad.new( self, "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
+    raise NotEnoughCargoCapacity.new( self, "troops" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_troops = value
   end
   
   #
   def load_aircraft( value )
-    raise CannotLoad.new( "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
-    raise NotEnoughCargoCapacity.new( "aircraft" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise CannotLoad.new( self, "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
+    raise NotEnoughCargoCapacity.new( self, "aircraft" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_aircraft = value
   end
   
@@ -95,17 +95,31 @@ class Unit < ActiveRecord::Base
     self.current_cargo_troops + self.current_cargo_supplies + self.current_cargo_aircraft
   end
   
-  #
+  # attach this unit to the specified group
   def attach( group )
     if group
-      unless group.units.include? self
-        if can_unit_join_group?( group )
-          group.units << self
-          group.save
-          Rails.logger.info "[#{self.guid.upcase}] is not a member of [#{group.name.upcase}/#{group.mission.upcase}]"
-        end
+      raise UnitAlreadyAttached.new( self, group ) if group.units.include? self
+      if can_unit_join_group?( group )
+        group.units << self
+        group.save
+        Rails.logger.info "[#{self.display_name}] attached to [#{group.display_name}]"
       end
     end
+  end
+  
+  # dettach this unit from the specified group
+  def unattach( group )
+    if group
+      raise UnitNotAttached.new( self, group ) unless group.units.include? self
+      group.units.delete self
+      group.save
+      Rails.logger.info "[#{self.display_name}] unattached from [#{group.display_name}]"
+    end
+  end
+  
+  # display the unit's as an upcase GUID
+  def display_name
+    "#{self.guid.upcase}"
   end
   
   private
@@ -186,6 +200,7 @@ class Unit < ActiveRecord::Base
         end
       end
     end
+    Rails.logger.info "[#{self.display_name}] can #{result ? '' : 'not '}attach to [#{group.display_name}]"
     result
   end
   
@@ -215,6 +230,6 @@ class Unit < ActiveRecord::Base
     elsif self.utype == TYPE_AIRCRAFT_COMBAT or self.utype == TYPE_AIRCRAFT_UTIL or self.utype == TYPE_AIRCRAFT_TRANSPORT
       self.status = STATUS_DESTROYED if self.current_damage > 0
     end
-    Rails.logger.info "[#{self.guid.upcase}] status is now [#{self.status.upcase}]" if current_status != self.status
+    Rails.logger.info "[#{self.display_name}] status is now [#{self.status.upcase}]" if current_status != self.status
   end
 end

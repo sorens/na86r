@@ -57,13 +57,11 @@ describe Unit do
       }
     }
 
-    # need to add max_damage field
-    
-    let( :options_group_port ) { options = { :gtype => Group::TYPE_GROUP_PORT, :name => "Scapa Flow"} }
-    let( :options_group_combat ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "16", :mission => Group::TASK_FORCE_MISSION_COMBAT } }
-    let( :options_group_transport ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "14", :mission => Group::TASK_FORCE_MISSION_TRANSPORT } }
-    let( :options_group_submarine ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "21", :mission => Group::TASK_FORCE_MISSION_SUBMARINE } }
-    let( :options_group_bombardment ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "14", :mission => Group::TASK_FORCE_MISSION_BOMBARDMENT } }
+  let( :options_group_port ) { options = { :gtype => Group::TYPE_GROUP_PORT, :name => "Scapa Flow"} }
+  let( :options_group_combat ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "TF16", :mission => Group::TASK_FORCE_MISSION_COMBAT } }
+  let( :options_group_transport ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "TF14", :mission => Group::TASK_FORCE_MISSION_TRANSPORT } }
+  let( :options_group_submarine ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "TF21", :mission => Group::TASK_FORCE_MISSION_SUBMARINE } }
+  let( :options_group_bombardment ) { options = { :gtype => Group::TYPE_GROUP_TASK_FORCE, :name => "TF14", :mission => Group::TASK_FORCE_MISSION_BOMBARDMENT } }
   
   before( :each ) do
     @ship_combat = Unit.create( options_ship_combat )
@@ -73,6 +71,8 @@ describe Unit do
     @group_port = Group.create( options_group_port )
     @group_transport = Group.create( options_group_transport )
     @group_combat = Group.create( options_group_combat )
+    @group_bombardment = Group.create( options_group_bombardment )
+    @group_submarine = Group.create( options_group_submarine )
   end
   
   it "is valid" do
@@ -204,22 +204,22 @@ describe Unit do
   
   it "a submarine can be added to a task force with a submarine mission" do
     @ship_submarine.attach( @group_submarine )
-    @group_submarine.untis.include?( @ship_submarine ).should be_true
+    @group_submarine.units.include?( @ship_submarine ).should be_true
   end
   
   it "a submarine can not be added to a task force with a combat mission" do
-    @ship_submarine.attach( @group_submarine )
-    @group_submarine.untis.include?( @ship_submarine ).should be_true
+    @ship_submarine.attach( @group_combat )
+    @group_combat.units.include?( @ship_submarine ).should be_false
   end
   
   it "a submarine can not be added to a task force with a bombardment mission" do
     @ship_submarine.attach( @group_bombardment )
-    @group_bombardment.untis.include?( @ship_submarine ).should be_true
+    @group_bombardment.units.include?( @ship_submarine ).should be_false
   end
   
   it "a submarine can not be added to a task force with a transport mission" do
     @ship_submarine.attach( @group_transport )
-    @group_transport.untis.include?( @ship_submarine ).should be_true
+    @group_transport.units.include?( @ship_submarine ).should be_false
   end
   
   it "should have valid JSON data after updating a field" do
@@ -252,4 +252,18 @@ describe Unit do
     lambda { @ship_carrier.load_troops( 1 ) }.should raise_error( Exceptions::CannotLoad )
   end
 
+  it "should not allow the same unit to be added more than once" do
+    @ship_combat.attach( @group_port ) # first time should succeed
+    lambda { @ship_combat.attach( @group_port ) }.should raise_error( Exceptions::UnitAlreadyAttached ) # second time should fail
+  end
+  
+  it "should allow a unit to be removed" do
+    @ship_combat.attach( @group_port )
+    @ship_combat.unattach( @group_port )
+    @group_port.units.include?( @ship_combat ).should be_false
+  end
+  
+  it "should not allow a unit to be removed if it is not attached" do
+    lambda {@ship_combat.unattach( @group_port )}.should raise_error( Exceptions::UnitNotAttached )
+  end
 end

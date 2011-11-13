@@ -2,6 +2,8 @@
 # Basically, anything that will hold units of some type
 #
 # TODO: need to add attr fields for aircraft in schema
+# TODO: fix the user association
+# TODO: conditions?
 class Group < ActiveRecord::Base
   has_many :units
   
@@ -19,6 +21,16 @@ class Group < ActiveRecord::Base
   TASK_FORCE_MISSION_EVACUATION     = "evacuation"
   TASK_FORCE_MISSION_SUBMARINE      = "submarine"
   TASK_FORCE_MISSION_RETURN         = "return"
+  
+  # display the name of the group as combination
+  # of it's name and mission (if it has a mission)
+  def display_name
+    unless self.mission.nil?
+      "#{self.name.upcase}/#{self.mission.upcase}"
+    else
+      "#{self.name.upcase}"
+    end
+  end
   
   private
   
