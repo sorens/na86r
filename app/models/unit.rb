@@ -231,5 +231,10 @@ class Unit < ActiveRecord::Base
       self.status = STATUS_DESTROYED if self.current_damage > 0
     end
     Rails.logger.info "[#{self.display_name}] status is now [#{self.status.upcase}]" if current_status != self.status
+    
+    if self.status == STATUS_SUNK
+      # sunken ships must be removed from their current group
+      self.unattach( self.group ) if self.group
+    end
   end
 end

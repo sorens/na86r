@@ -159,6 +159,12 @@ describe Unit do
     @ship_combat.status.should == Unit::STATUS_SUNK
   end
   
+  it "should automatically unattach from group when sunk" do
+    @ship_combat.attach( @group_combat )
+    @ship_combat.apply_damage 100
+    @group_combat.include?( @ship_combat ).should be_false
+  end
+  
   it "should have a cargo capacity" do
     @ship_carrier.cargo_capacity.should == 72
   end
