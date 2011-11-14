@@ -144,6 +144,14 @@ describe Unit do
     @ship_combat.status.should_not == Unit::STATUS_SUNK
   end
   
+  it "should accumulate damage from multiple hits" do
+    @ship_combat.apply_damage 1
+    @ship_combat.apply_damage 1
+    @ship_combat.apply_damage 1
+    @ship_combat.apply_damage 1
+    @ship_combat.current_damage.should == 4
+  end
+  
   it "should withstand sinking if damage taken is less than maximum allowed damage and it is transport ship" do
     @ship_transport.apply_damage 1
     @ship_transport.status.should_not == Unit::STATUS_SUNK
