@@ -71,17 +71,12 @@ describe Group do
   
   it "should have a condition of active eletronic warfare" do
     @group_combat.active_ew()
-    @group_combat.condition.should == Group::CONDITION_ACTIVE_EW
-  end
-  
-  it "should have a condition of active eletronic warfare" do
-    @group_combat.active_ew()
-    @group_combat.condition.should == Group::CONDITION_ACTIVE_EW
+    @group_combat.sensor_state.should == Group::SENSOR_STATE_ACTIVE_EW
   end
   
   it "should have a condition of passive eletronic warfare" do
     @group_combat.passive_ew()
-    @group_combat.condition.should == Group::CONDITION_PASSIVE_EW
+    @group_combat.sensor_state.should == Group::SENSOR_STATE_PASSIVE_EW
   end
   
   it "is a task force, it should have an endurance" do

@@ -10,6 +10,7 @@ class Unit < ActiveRecord::Base
   after_initialize  :unit_init
   after_save        :unit_save
   
+  # fields that our data provides
   MAIN_GUN            = "main_gun"
   ANTI_AIRCRAFT       = "anti_aircraft"
   MISSILE_DEFENSE     = "missile_defense"
@@ -19,22 +20,33 @@ class Unit < ActiveRecord::Base
   INITIAL_TASK_FORCE  = "initial_task_force"
   ARRIVAL_DAYS        = "arrival_days"
   CURRENT_DAMAGE      = "current_damage"
-  STATUS              = "status"
   MAX_DAMAGE          = "max_damage"
   CURRENT_CARGO_S     = "current_cargo_supplies"
   CURRENT_CARGO_T     = "current_cargo_troops"
   CURRENT_CARGO_A     = "current_cargo_aircraft"
   
+  # build an array of the fields that method_missing will
+  # use to access our data
+  ATTRIBUTE_ARRAY = [ MAIN_GUN, ANTI_AIRCRAFT, MISSILE_DEFENSE, MAX_SPEED,
+    CARGO_CAPACITY, DEFENSE_FACTOR, INITIAL_TASK_FORCE, ARRIVAL_DAYS, CURRENT_DAMAGE,
+    MAX_DAMAGE, CURRENT_CARGO_S, CURRENT_CARGO_T, CURRENT_CARGO_A]
+  
   # unit status
-  STATUS_AVAILABLE    = "available"
+  STATUS_UNKOWN       = "unknown"
   STATUS_SUNK         = "sunk"
+  STATUS_AVAILABLE    = "available"
   STATUS_CRIPPLED     = "crippled"
   STATUS_SCUTTLED     = "scuttled"
-  STATUS_UNKOWN       = "unknown"
   STATUS_IN_PIPELINE  = "in_pipeline"
   STATUS_DESTROYED    = "destroyed"
   STATUS_CRASHED      = "crashed"
   STATUS_IN_PORT      = "in_port"
+  
+  scope :sunk,        where( 'status = ?', STATUS_SUNK )
+  scope :available,   where( 'status = ?', STATUS_AVAILABLE )
+  scope :crippled,    where( 'status = ?', STATUS_CRIPPLED )
+  scope :scuttled,    where( 'status = ?', STATUS_SCUTTLED )
+  scope :in_pipeline, where( 'status = ?', STATUS_IN_PIPELINE )
   
   #unit types
   TYPE_SHIP_COMBAT              = "ship_combat"
@@ -61,6 +73,7 @@ class Unit < ActiveRecord::Base
     Rails.logger.info "[#{self.display_name}] takes[#{value}] damage, current damage is now [#{self.current_damage}]"
     # update our status
     update_ship_status()
+    self.save
   end
   
   # is this unit active?
@@ -74,6 +87,7 @@ class Unit < ActiveRecord::Base
     raise CannotLoad.new( self, "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
     raise NotEnoughCargoCapacity.new( self, "supplies" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_supplies = value
+    self.save
   end
   
   #
@@ -81,6 +95,7 @@ class Unit < ActiveRecord::Base
     raise CannotLoad.new( self, "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
     raise NotEnoughCargoCapacity.new( self, "troops" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_troops = value
+    self.save
   end
   
   #
@@ -88,6 +103,7 @@ class Unit < ActiveRecord::Base
     raise CannotLoad.new( self, "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
     raise NotEnoughCargoCapacity.new( self, "aircraft" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
     self.current_cargo_aircraft = value
+    self.save
   end
   
   #
@@ -102,7 +118,7 @@ class Unit < ActiveRecord::Base
       if can_unit_join_group?( group )
         group.units << self
         group.save
-        Rails.logger.info "[#{self.display_name}] attached to [#{group.display_name}]"
+        Rails.logger.info "[#{self.display_name}] attached to [#{group.display_name}] [#{self.group_id}]"
       end
     end
   end
@@ -131,20 +147,9 @@ class Unit < ActiveRecord::Base
     # initialize our module
     parsed_initialize
     # add the attributes that we're expecting
-    add_attribute MAIN_GUN
-    add_attribute ANTI_AIRCRAFT
-    add_attribute MISSILE_DEFENSE
-    add_attribute MAX_SPEED
-    add_attribute CARGO_CAPACITY
-    add_attribute DEFENSE_FACTOR
-    add_attribute INITIAL_TASK_FORCE
-    add_attribute ARRIVAL_DAYS
-    add_attribute CURRENT_DAMAGE
-    add_attribute STATUS
-    add_attribute MAX_DAMAGE
-    add_attribute CURRENT_CARGO_S
-    add_attribute CURRENT_CARGO_T
-    add_attribute CURRENT_CARGO_A
+    ATTRIBUTE_ARRAY.each do |abute|
+      add_attribute( abute )
+    end
     
     # load our parsed data
     load_parsed_data

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110052213) do
+ActiveRecord::Schema.define(:version => 20111115061205) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -59,12 +59,21 @@ ActiveRecord::Schema.define(:version => 20111110052213) do
     t.string   "name"
     t.string   "gtype"
     t.string   "mission"
-    t.integer  "user_id"
     t.integer  "sensor_state"
     t.integer  "location_x"
     t.integer  "location_y"
     t.integer  "condition"
     t.integer  "endurance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "player_id"
+  end
+
+  create_table "players", :force => true do |t|
+    t.string   "ptype"
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -81,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20111110052213) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.string   "status"
   end
 
   create_table "users", :force => true do |t|

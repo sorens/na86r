@@ -6,6 +6,7 @@
 # TODO: conditions?
 class Group < ActiveRecord::Base
   has_many :units
+  belongs_to :player
   
   after_initialize    :group_init
 
@@ -22,9 +23,9 @@ class Group < ActiveRecord::Base
   TASK_FORCE_MISSION_SUBMARINE      = "submarine"
   TASK_FORCE_MISSION_RETURN         = "return"
   
-  # condition
-  CONDITION_PASSIVE_EW              = 0
-  CONDITION_ACTIVE_EW               = 1
+  # sensor_state
+  SENSOR_STATE_PASSIVE_EW           = 0
+  SENSOR_STATE_ACTIVE_EW            = 1
   
   # display the name of the group as combination
   # of it's name and mission (if it has a mission)
@@ -48,14 +49,14 @@ class Group < ActiveRecord::Base
   # set the task force's electronic warfare systems to ACTIVE
   def active_ew()
     return unless self.gtype == TYPE_GROUP_TASK_FORCE
-    self.condition = CONDITION_ACTIVE_EW
+    self.sensor_state = SENSOR_STATE_ACTIVE_EW
     self.save
   end
   
   # set the task force's electronic warfare systems to PASSIVE
   def passive_ew()
     return unless self.gtype == TYPE_GROUP_TASK_FORCE
-    self.condition = CONDITION_PASSIVE_EW
+    self.sensor_state = SENSOR_STATE_PASSIVE_EW
     self.save
   end
   

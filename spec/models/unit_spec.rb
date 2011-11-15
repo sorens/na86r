@@ -8,8 +8,9 @@ describe Unit do
       :number => "68",
       :utype => Unit::TYPE_SHIP_AIRCRAFT_CARRIER,
       :version => 1,
+      :status => Unit::STATUS_IN_PIPELINE,
       :data => "{\"max_speed\":30, \"cargo_capacity\":72, \"main_gun\":0, \"anti_aircraft\":0, 
-                \"missile_defense\":75, \"initial_task_force\":16, \"arrival_days\":7, \"status\":\"in_pipeline\", 
+                \"missile_defense\":75, \"initial_task_force\":16, \"arrival_days\":7, 
                 \"defense_factor\":97, \"current_cargo_troops\":0, \"current_cargo_supplies\":0, 
                 \"current_cargo_aircraft\":0}"
       }
@@ -22,8 +23,9 @@ describe Unit do
       :number => "247",
       :utype => Unit::TYPE_SHIP_TRANSPORT,
       :version => 1,
+      :status => Unit::STATUS_IN_PIPELINE,
       :data => "{\"max_speed\":20, \"cargo_capacity\":6, \"main_gun\":0, \"anti_aircraft\":0, 
-                \"missile_defense\":22, \"initial_task_force\":14, \"arrival_days\":15, \"status\":\"in_pipeline\", 
+                \"missile_defense\":22, \"initial_task_force\":14, \"arrival_days\":15, 
                 \"defense_factor\":14, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
                 \"current_cargo_aircraft\":0}"
       }
@@ -36,8 +38,9 @@ describe Unit do
       :number => "279",
       :utype => Unit::TYPE_SHIP_SUBMARINE,
       :version => 1,
+      :status => Unit::STATUS_AVAILABLE,
       :data => "{\"max_speed\":30, \"cargo_capacity\":0, \"main_gun\":0, \"anti_aircraft\":0, 
-                \"missile_defense\":0, \"initial_task_force\":21, \"arrival_days\":0, \"status\":\"available\", 
+                \"missile_defense\":0, \"initial_task_force\":21, \"arrival_days\":0, 
                 \"defense_factor\":30, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
                 \"current_cargo_aircraft\":0}"
       }
@@ -50,8 +53,9 @@ describe Unit do
       :number => "154",
       :utype => Unit::TYPE_SHIP_COMBAT,
       :version => 1,
+      :status => Unit::STATUS_IN_PIPELINE,
       :data => "{\"max_speed\":35, \"cargo_capacity\":0, \"main_gun\":0, \"anti_aircraft\":2, 
-                \"missile_defense\":30, \"initial_task_force\":16, \"arrival_days\":7, \"status\":\"in_pipeline\", 
+                \"missile_defense\":30, \"initial_task_force\":16, \"arrival_days\":7, 
                 \"defense_factor\":14, \"current_cargo_troops\":0, \"current_cargo_supplies\":0,
                 \"current_cargo_aircraft\":0}"
       }
