@@ -64,6 +64,8 @@ group :development, :test do
   gem "launchy"
   gem "vcr"
   gem "fakeweb"
+  gem "ZenTest", "~> 4.4.2"
+  gem "autotest-rails", "~> 4.1.0"
 end
 
 ######################################################
@@ -76,6 +78,13 @@ end
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem 'guard'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+  gem "guard-rspec"  
+  gem "spork", "> 0.9.0.rc"  
+  gem "guard-spork"
 end
 
 ######################################################
