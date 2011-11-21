@@ -33,7 +33,8 @@ class Group < ActiveRecord::Base
     unless self.mission.nil?
       "#{self.name.upcase}/#{self.mission.upcase}"
     else
-      "#{self.name.upcase}"
+      "#{self.name.upcase}" if self.name
+      "unknown group".upcase if self.name.nil?
     end
   end
   
