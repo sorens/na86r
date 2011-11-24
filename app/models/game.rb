@@ -14,9 +14,6 @@ class Game < ActiveRecord::Base
   validates_presence_of   :guid
   validate                :valid_scenario?
   
-  # guid length
-  GUID_LENGTH = 20
-  
   private
   
   def valid_scenario?
@@ -24,14 +21,12 @@ class Game < ActiveRecord::Base
       errors.add( :scenario_id, (I18n.t "game.scenario.not_assigned") )
     else
       begin
-        unless self.scenario
-          errors.add( :scenario_id, (I18n.t "game.scenario.not_found") )
-        end
+        Scenario.find(self.scenario_id)
       rescue
         errors.add( :scenario_id, (I18n.t "game.scenario.not_found") )
       end
     end
-    Rails.logger.info errors if errors 
+    Rails.logger.info errors.messages unless errors.messages.empty?
   end
   
   def before_validation
@@ -44,7 +39,7 @@ class Game < ActiveRecord::Base
   
   def generate_guid
     if self.guid.blank?
-      self.guid = UUIDTools::UUID.random_create.hexdigest[ 0,GUID_LENGTH ]
+      self.guid = Guid.generate_20_guid
       Rails.logger.info "game guid generated [#{self.guid}]"
     end
   end

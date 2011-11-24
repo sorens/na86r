@@ -44,6 +44,17 @@ Spork.prefork do
   
     # config.include Devise::TestHelpers, :type => :controller
     # config.extend ControllerMacros, :type => :controller
+
+    config.after(:each) do
+      Group.delete_all
+      Unit.delete_all
+      Scenario.delete_all
+      AdminUser.delete_all
+      BetaKey.delete_all
+      Game.delete_all
+      Player.delete_all
+      User.delete_all
+    end
   end
 end
 

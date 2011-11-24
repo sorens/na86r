@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :player
+  has_many :scenario, :foreign_key => :owner_id
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

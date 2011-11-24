@@ -37,7 +37,6 @@ describe Group do
   }
     
   before( :each ) do
-    @user = User.create
     @ship_combat = Unit.create( options_ship_combat )
     @group_port = Group.create( options_group_port )
     @group_transport = Group.create( options_group_transport )

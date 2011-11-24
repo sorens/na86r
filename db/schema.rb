@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111121064947) do
+ActiveRecord::Schema.define(:version => 20111124212826) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -85,6 +85,15 @@ ActiveRecord::Schema.define(:version => 20111121064947) do
     t.integer  "user_id"
     t.integer  "game_id"
     t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scenarios", :force => true do |t|
+    t.string   "guid"
+    t.integer  "owner_id"
+    t.text     "data"
+    t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

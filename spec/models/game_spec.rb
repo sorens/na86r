@@ -12,12 +12,12 @@ require 'spec_helper'
 # end
 
 describe Game do
-  # let( :options_group_port ) { options = { :gtype => Group::TYPE_GROUP_PORT, :name => "Scapa Flow"} }
+  # let( :var ) { options = { } }
   
   before( :all ) do
     @user = User.create
-    @game = Game.create( :scenario_id => 1 )
-    Rails.logger.info "g: [#{@game.inspect}]"
+    @scenario = Scenario.create
+    @game = Game.create( :scenario_id => @scenario.id )
   end
   
   before( :each ) do
