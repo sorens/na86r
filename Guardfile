@@ -6,6 +6,7 @@ guard 'spork', :cucumber => false, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/environment.rb')
   watch(%r{^config/environments/.+\.rb$})
   watch(%r{^config/initializers/.+\.rb$})
+  watch(%r{^config/locales/.+\.yml$})
   watch('Gemfile')
   watch('Gemfile.lock')
   watch('spec/spec_helper.rb')
@@ -26,6 +27,7 @@ guard 'rspec', :version => 2, :cli => '--drb' do
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('spec/spec_helper.rb')                        { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
+  watch(%r{^config/locales/.+\.yml$})
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
