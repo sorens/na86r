@@ -49,6 +49,12 @@ module NavalConflict
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Enable IdentityMap for Active Record, to disable set to false or remove the lines below.  
+    # from http://asciicasts.com/episodes/265-rails-3-1-overview
+    config.active_record.identity_map = true
+    ActiveRecord::IdentityMap.enabled = true
+
+    # generator config, don't output test files
     config.generators do |g|
       g.stylesheets false
       g.test_framework nil
