@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+  game:
+      scenario:
+          not_assigned: "There is no scenario assigned to this game."
+          not_found: "The scenario was not found."
