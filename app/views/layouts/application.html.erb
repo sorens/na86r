@@ -1,37 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title><%= yield( :title ) or 'NAVCON' %></title>
-    <%= stylesheet_link_tag 'application' %>
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tag %>
-    <%= yield(:head) %>
-  </head>
-  <body>
-  <div id="container">
-    <div id="user_nav">
-      <%= link_to "home", welcome_index_path %> | 
-      <% if user_signed_in? %>
-        <% if current_user.email == "steve@orens.com" %>
-          <%= link_to "admin", admin_beta_keys_path %> | 
-        <% end %>
-        Signed in as <%= current_user.email %>. Not you?  
-        <%= link_to_unless_current "Sign out", destroy_user_session_path %>  
-      <% else %>  
-        <%= link_to_unless_current "Sign up", new_user_registration_path %> or  
-        <%= link_to_unless_current "Sign in", new_user_session_path %>  
-      <% end %> 
-    </div>  
-    <br/>
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    <% end %>
-    <% if show_title? %>
-    <div class="title">
-      <h1><%= yield(:title) %></h1>
+<head>
+  <title><%= yield( :title ) or 'NAVCON' %></title>
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= csrf_meta_tag %>
+  <%= yield(:head) %>
+  <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style></head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="container">
+        <%= render :partial => "/shared/topbar" %>
+      </div>
     </div>
-    <% end %>
-    <%= yield %>
+  </div>
+  <div class="container-fluid">
+    <div class="sidebar">
+      <div class="well">
+          <%= render :partial => "/shared/sidebar" %>
+      </div>
+    </div>
+    <div class="content">
+      <%= render :partial => "/shared/alert_notice"%>
+      <%= yield %>
+    </div>
   </div>
   </body>
 </html>

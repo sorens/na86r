@@ -1,0 +1,9 @@
+<%= link_to "Naval Conflict", welcome_index_path, :class => "brand" %>
+<% if user_signed_in? %>
+  <p class="pull-right">Logged in as <%= current_user.email %> <%= link_to_unless_current "[Logout]", destroy_user_session_path %></p>
+<% else %>
+  <ul class="nav">
+    <li><%= link_to_unless_current "Sign up", new_user_registration_path %></li>
+  </ul>
+  <p class="pull-right"><%= render :partial => "/shared/login" %></p>
+<% end %> 

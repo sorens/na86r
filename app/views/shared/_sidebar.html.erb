@@ -1,0 +1,12 @@
+<% unless current_user %>
+<h3>welcome</h3>
+<p><strong>Naval Conflict</strong> is a modern port of <%= link_to "North Atlantic '86", "http://en.wikipedia.org/wiki/North_Atlantic_'86" %>.</p>
+<% end %>
+<% if current_user and current_user.email == "steve@orens.com" %>
+<h5>debug</h5>
+<ul>
+  <li><%= link_to "admin", admin_dashboard_path %></li>
+  <li><%= link_to "test alert msgs", '/?notice=Hey!&alert=Ruh+roh!&error=Fail!' %></li>
+  
+</ul>
+<% end %>

@@ -1,0 +1,7 @@
+<% unless current_page? :controller=> 'sessions', :action => 'new' or current_page? :controller=> 'beta', :action => 'new' %>
+<%= form_for resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "inline"} do |f| %>
+    <%= f.email_field :email, :placeholder => 'email address' %>
+    <%= f.password_field :password, :placeholder => 'password' %>
+    <%= f.submit "Login", :class => "btn primary" %>
+<% end %>
+<% end %>
