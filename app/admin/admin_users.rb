@@ -1,10 +1,51 @@
 ActiveAdmin.register AdminUser do
+  filter :email
+  
   index do
     column :email
-    column :current_sign_in_at
-    column :last_sign_in_at
+    column :current_sign_in_at do |a|
+      a.current_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M') 
+    end
+    column :last_sign_in_at do |a|
+      a.last_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M') 
+    end
     column :sign_in_count
     default_actions
+  end
+
+  show :title => :email do |a|
+    attributes_table do
+      row :id
+      row :email
+      row :sign_in_count
+      row :current_sign_in_at do
+        a.current_sign_in_at.strftime('%Y-%m-%d %H:%M') unless a.current_sign_in_at.nil?
+      end
+      row :last_sign_in_at do
+        a.last_sign_in_at.strftime('%Y-%m-%d %H:%M') unless a.last_sign_in_at.nil?
+      end
+      row :current_sign_in_ip
+      row :last_sign_in_ip
+      row :created_at do
+        a.created_at.localtime.strftime('%Y-%m-%d %H:%M') unless a.created_at.nil?
+      end
+      row :updated_at do
+        a.updated_at.localtime.strftime('%Y-%m-%d %H:%M') unless a.updated_at.nil?
+      end
+    end
+  end
+  
+  form do |f|
+    if f.object.new_record?
+      f.inputs "New Admin" do
+        f.input :email
+      end
+    else
+      f.inputs "Edit Admin" do
+        f.input :email
+      end
+    end
+    f.buttons
   end
   
   controller do

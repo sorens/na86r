@@ -1,49 +1,56 @@
 ActiveAdmin.register BetaKey do
+  
+  filter :key
+  filter :assigned_to
+  
+  scope :all, :default => :true
+  scope :disabled
+  scope :enabled
+  scope :unknown
+  scope :activated
+  
   index do
     column :assigned_to
-    column :activated_at
-    column :active do |post|
-      case post.active
-        when BetaKey::STATE_DISABLED
-          "disabled"
-        when BetaKey::STATE_ENABLED
-          "enabled"
-        when BetaKey::STATE_USED
-          "activated"
-        end
+    column :activated_at do |a|
+      unless a.activated_at.nil?
+        a.activated_at.localtime.strftime('%Y-%m-%d %H:%M')
+      else
+        status_tag( "not set", :warning )
+      end
+    end
+    column :active do |a|
+      status_tag( a.state_name, ((a.active == BetaKey::STATE_ENABLED or a.active == BetaKey::STATE_UNKNOWN) ? :warning : (a.active == BetaKey::STATE_DISABLED) ? :error : :ok) )
     end
     column :key
     default_actions
   end
   
-  # member_action :new, :method => :post do
-  #   beta_key = BetaKey.new
-  #   render :partial => "new", :locals => { :beta_key => beta_key }
-  # end
-  # 
-  # if new_record?
-  #   form :partial => "new"
-  # else
-  #   form :partial => "edit"
-  # end
+  show :title => :assigned_to do |a|
+    attributes_table do
+      row :id
+      row :key
+      row :assigned_to
+      row :active do
+      status_tag( a.state_name, ((a.active == BetaKey::STATE_ENABLED or a.active == BetaKey::STATE_UNKNOWN) ? :warning : (a.active == BetaKey::STATE_DISABLED) ? :error : :ok) )
+      end
+    end
+  end
   
-  # form do |f|
-  #   if f.object.new_record?
-  #     f.inputs "New Beta Key" do
-  #       f.input :assigned_to
-  #     end
-  #     f.buttons
-  #   end
-  # end
+  form do |f|
+    if f.object.new_record?
+      f.inputs "New Beta Key" do
+        f.input :assigned_to
+      end
+    else
+      f.inputs "Edit Beta Key" do
+        f.input :assigned_to
+        f.input :key
+        f.input :active, :as => :select, :collection => BetaKey::STATE, :label_method => lambda { |i| BetaKey::STATE_NAME[i] }
+      end
+    end
+    f.buttons
+  end
 
-  # 
-  # form do |f|
-  #   f.inputs "Edit Beta Key" do
-  #     f.input :assigned_to
-  #   end
-  #   f.buttons
-  # end
-  
   controller do
     def create
       email = params[:beta_key][:assigned_to]
