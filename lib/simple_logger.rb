@@ -1,6 +1,7 @@
 require "logger"
 
-REMOVE_ALL_LINEFEEDS = true
+REMOVE_ALL_LINEFEEDS ||= true
+DEFAULT_LOG_LOCATION ||= "~/Library/Logs"
 
 class SimpleLogger < Logger
   def format_message(severity, timestamp, progname, msg)
@@ -36,5 +37,16 @@ class SimpleLogger < Logger
     end
   end
   
+  def self.load
+    require File.expand_path( __FILE__ )
+    # use our simple logger class so we can see a date time stamp for each entry
+    log_dir = File.join( File.expand_path( DEFAULT_LOG_LOCATION ), Rails.application.class.parent_name )
+    FileUtils.mkdir_p( log_dir )
+    path = File.join( log_dir, "#{Rails.env}.log" )
+    logfile = File.open( path, 'a' )
+    logfile.sync = true
+    Rails.logger = SimpleLogger.new( logfile )
+    Rails.logger.info "configured to use simple_logger"
+  end
 
 end

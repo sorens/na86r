@@ -1,4 +1,5 @@
-require File.expand_path( '../../simple_logger.rb', __FILE__ )
+#load our simple_logger
+SimpleLogger.load
 
 NavalConflict::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -37,14 +38,7 @@ NavalConflict::Application.configure do
   config.colorize_logging = false
   
   config.time_zone = "Pacific Time (US & Canada)"
-
-  # use our simple logger class so we can see a date time stamp for each entry
-  log_dir = File.expand_path( "~/Library/Logs/#{Rails.application.class.parent_name}" )
-  FileUtils.mkdir_p( log_dir )
-  path = File.join( log_dir, "#{Rails.env}.log" )
-  logfile = File.open( path, 'a' )
-  logfile.sync = true
-  Rails.logger = SimpleLogger.new( logfile )
-  Rails.logger.debug "Configured to use SimpleLogger"
 end
 
+#load the environmental override
+EnvironmentOverride.load

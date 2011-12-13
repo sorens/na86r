@@ -1,4 +1,5 @@
-require File.expand_path( '../../simple_logger.rb', __FILE__ )
+#load our simple_logger
+SimpleLogger.load
 
 NavalConflict::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -44,14 +45,7 @@ NavalConflict::Application.configure do
 
   # only info-level log output for now
   config.log_level = :info
-
-  # use our simple logger class so we can see a date time stamp for each entry
-  log_dir = File.expand_path( "~/Library/Logs/#{Rails.application.class.parent_name}" )
-  FileUtils.mkdir_p( log_dir )
-  path = File.join( log_dir, "#{Rails.env}.log" )
-  logfile = File.open( path, 'a' )
-  logfile.sync = true
-  Rails.logger = SimpleLogger.new( logfile )
-  Rails.logger.level = 1  # :info level
-  Rails.logger.debug "#{Rails.env} environment configured to use SimpleLogger"
 end
+
+#load the environmental override
+EnvironmentOverride.load

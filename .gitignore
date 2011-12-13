@@ -3,6 +3,7 @@
 .bundle
 tmp/*
 tmp/**/*
+config/overrides/*
 
 # Compiled source #
 ###################
