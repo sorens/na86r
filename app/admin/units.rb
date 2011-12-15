@@ -1,5 +1,7 @@
 ActiveAdmin.register Unit do
   
+  menu :parent => "Game"
+  
   filter :group
   filter :guid
   filter :name

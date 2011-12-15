@@ -1,5 +1,7 @@
 ActiveAdmin.register BetaKey do
   
+  menu :parent => "Users"
+  
   filter :key
   filter :assigned_to
   
