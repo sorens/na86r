@@ -1,5 +1,5 @@
 class Scenario < ActiveRecord::Base
-  belongs_to        :owner, :class_name => :user
+  belongs_to        :owner, :class_name => 'User'
   before_validation :before_validation
   before_save       :before_save_game
 
@@ -11,7 +11,7 @@ class Scenario < ActiveRecord::Base
   SCENARIO_STATE_IN_PROGRESS    = 1
   SCENARIO_STATE_PENDING        = 2
   SCENARIO_STATE_APPROVED       = 3
-
+  
   def before_validation
     generate_guid
   end
