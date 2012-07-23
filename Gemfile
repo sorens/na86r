@@ -60,8 +60,6 @@ group :development, :test do
   gem 'sqlite3'
   # gem 'webrat'
   gem "rspec-rails", "~> 2.4"
-  gem "cucumber"
-  gem "cucumber-rails"
   gem "capybara"
   gem "factory_girl"
   gem "launchy"
@@ -90,6 +88,8 @@ group :test do
   gem "guard-rspec"  
   gem "spork", "> 0.9.0.rc"  
   gem "guard-spork"
+  gem "cucumber"
+  gem "cucumber-rails", "~> 1.0", require: false
 end
 
 ######################################################
