@@ -7,11 +7,14 @@ class Game < ActiveRecord::Base
   
   # todo game states
   
-  before_validation :before_validation
-  before_save       :before_save_game
+  # use ModelUUID to generate the uuid
+  include ModelUUID
+  
+  before_validation :ensure_uuid
+  before_save       :ensure_uuid
 
-  validates_uniqueness_of :guid
-  validates_presence_of   :guid
+  validates_uniqueness_of :uuid
+  validates_presence_of   :uuid
   validate                :valid_scenario?
   
   private
@@ -29,18 +32,10 @@ class Game < ActiveRecord::Base
     Rails.logger.info errors.messages unless errors.messages.empty?
   end
   
-  def before_validation
-    generate_guid
-  end
-  
-  def before_save_game
-    generate_guid
-  end
-  
-  def generate_guid
-    if self.guid.blank?
-      self.guid = Guid.generate_20_guid
-      Rails.logger.info "game guid generated [#{self.guid}]"
+  # ensure that we have the uuid
+  def ensure_uuid
+    if self.uuid.blank?
+      self.uuid = generate_uuid
     end
   end
   

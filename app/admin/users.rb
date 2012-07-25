@@ -4,12 +4,14 @@ ActiveAdmin.register User do
   menu :parent => "Users"
   
   index do
+    column :id
     column :email
+    column :uuid
     column :current_sign_in_at do |a|
-      a.current_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M')
+      a.current_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M') unless a.current_sign_in_at.nil?
     end
     column :last_sign_in_at do |a|
-      a.last_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M')
+      a.last_sign_in_at.localtime.strftime('%Y-%m-%d %H:%M') unless a.last_sign_in_at.nil?
     end
     column :sign_in_count
     default_actions
@@ -19,6 +21,7 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :email
+      row :uuid
       row :sign_in_count
       row :current_sign_in_at
       row :last_sign_in_at

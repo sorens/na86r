@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214074935) do
+ActiveRecord::Schema.define(:version => 20120725025012) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20111214074935) do
   end
 
   create_table "games", :force => true do |t|
-    t.string   "guid"
+    t.string   "uuid"
     t.integer  "time"
     t.integer  "scenario_id"
     t.integer  "state"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20111214074935) do
   end
 
   create_table "scenarios", :force => true do |t|
-    t.string   "guid"
+    t.string   "uuid"
     t.integer  "owner_id"
     t.text     "data"
     t.integer  "state"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20111214074935) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
+    t.string   "uuid"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

@@ -1,14 +1,5 @@
 require 'spec_helper'
 
-# create_table "scenarios", :force => true do |t|
-#   t.string   "guid"
-#   t.integer  "owner_id"
-#   t.text     "data"
-#   t.integer  "state"
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-# end
-
 describe Scenario do
   # let( :options ) { options = { :data => "1" } }
   
@@ -25,7 +16,7 @@ describe Scenario do
   end
   
   it "should have a valid guid" do
-    @scenario.guid.should_not be_nil
+    @scenario.uuid.should_not be_nil
   end
   
   it "should have an owner" do
