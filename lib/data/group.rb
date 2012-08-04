@@ -1,20 +1,18 @@
-# A Group is a collection of ships (task force), a port or an airfield. 
+# A Group is a collection of ships (task force), a port or an airfield.
 # Basically, anything that will hold units of some type
 #
 # TODO: need to add attr fields for aircraft in schema
 # TODO: fix the user association
 # TODO: conditions?
-class Group < ActiveRecord::Base
-  has_many :units
-  belongs_to :player
-  
-  after_initialize    :group_init
+class Group
+
+  attr_accessor :units, :name, :mission, :sensor_state, :gtype, :location_x, :location_y, :endurance
 
   # group types
   TYPE_GROUP_PORT                   = "port"
   TYPE_GROUP_AIRFIELD               = "airfield"
   TYPE_GROUP_TASK_FORCE             = "task_force"
-  
+
   # task force missions
   TASK_FORCE_MISSION_COMBAT         = "combat"
   TASK_FORCE_MISSION_BOMBARDMENT    = "bombardment"
@@ -22,11 +20,11 @@ class Group < ActiveRecord::Base
   TASK_FORCE_MISSION_EVACUATION     = "evacuation"
   TASK_FORCE_MISSION_SUBMARINE      = "submarine"
   TASK_FORCE_MISSION_RETURN         = "return"
-  
+
   # sensor_state
   SENSOR_STATE_PASSIVE_EW           = 0
   SENSOR_STATE_ACTIVE_EW            = 1
-  
+
   # display the name of the group as combination
   # of it's name and mission (if it has a mission)
   def display_name
@@ -37,33 +35,57 @@ class Group < ActiveRecord::Base
       "unknown group".upcase if self.name.nil?
     end
   end
-  
-  # does this unit include the specified unit
-  def include?( unit )
-    result = false
-    if self.units
-      result = true if self.units.include? unit
-    end
-    result
-  end
-  
+
   # set the task force's electronic warfare systems to ACTIVE
   def active_ew()
     return unless self.gtype == TYPE_GROUP_TASK_FORCE
     self.sensor_state = SENSOR_STATE_ACTIVE_EW
-    self.save
   end
-  
+
   # set the task force's electronic warfare systems to PASSIVE
-  def passive_ew()
+  def passive_ew()	
     return unless self.gtype == TYPE_GROUP_TASK_FORCE
     self.sensor_state = SENSOR_STATE_PASSIVE_EW
-    self.save
   end
-  
-  private
-  
-  def group_init
-    self.units ||= Array.new
+
+  # does this group include the unit?
+  def include_unit?( unit )
+  	@units.include? unit
+  end
+
+  # add the unit to the group
+  def add_unit( unit )
+  	unless unit.nil?
+  		unless self.include_unit? unit
+  			# only if it doens't include the unit already
+  			self.units << unit
+  		end
+  	end
+  end
+
+  # remove the unit from the group
+  def remove_unit( unit )
+  	unless unit.nil?
+  		if self.include_unit? unit
+  			self.units.delete unit
+  		end
+  	end
+  end
+
+  # initialize
+  def initialize( options=nil )
+  	@units ||= Array.new
+  	@location_x = 0
+  	@location_y = 0
+  	@endurance = 0
+  	if options and options.is_a? Hash
+  		@name = options[:name]
+  		@mission = options[:mission]
+  		@sensor_state = options[:sensor_state]
+  		@gtype = options[:gtype]
+  		@location_x = options[:location_x]
+  		@location_y = options[:location_y]
+  		@endurance = options[:endurance]
+  	end
   end
 end

@@ -11,6 +11,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
+  require '/Users/sorens/.rvm/gems/ruby-1.9.2-p320@rails3/gems/guard-rspec-1.2.1/lib/guard/rspec/formatters/notification_rspec'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -46,8 +47,6 @@ Spork.prefork do
     # config.extend ControllerMacros, :type => :controller
 
     config.after(:each) do
-      Group.delete_all
-      Unit.delete_all
       Scenario.delete_all
       AdminUser.delete_all
       BetaKey.delete_all
@@ -56,11 +55,24 @@ Spork.prefork do
       User.delete_all
     end
   end
+
+  #  module Kernel
+  #   def require_with_trace(*args)
+  #     start = Time.now.to_f
+  #     @indent ||= 0
+  #     @indent += 2
+  #     require_without_trace(*args)
+  #     @indent -= 2
+  #     Kernel::puts "#{' '*@indent}#{((Time.now.to_f - start)*1000).to_i} #{args[0]}"
+  #   end
+  #   alias_method_chain :require, :trace
+  # end
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-
+  #Dir[Rails.root.join("lib/data/*.rb")].each {|f| load f}
+  load File.join( Rails.root, "Sporkfile.rb" ) if File.exists? File.join( Rails.root, "Sporkfile.rb" )
 end
 
 # --- Instructions ---

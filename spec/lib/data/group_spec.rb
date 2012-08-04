@@ -1,0 +1,125 @@
+require 'spec_helper'
+
+describe Group do
+
+  let( :group_port_params ) { options =
+    {
+      :gtype => Group::TYPE_GROUP_PORT,
+      :name => "Scapa Flow"
+    }
+  }
+
+  let( :group_combat_params ) { options = 
+    { 
+      :gtype => Group::TYPE_GROUP_TASK_FORCE, 
+      :name => "TF16", 
+      :mission => Group::TASK_FORCE_MISSION_COMBAT, 
+      :endurance => 60, 
+      :location_x => 1, 
+      :location_y => 1 
+    } 
+  }
+
+  let( :group_transport_params ) { options = 
+    { 
+      :gtype => Group::TYPE_GROUP_TASK_FORCE, 
+      :name => "TF14", 
+      :mission => Group::TASK_FORCE_MISSION_TRANSPORT, 
+      :endurance => 60, 
+      :location_x => 1, 
+      :location_y => 1 
+    } 
+  }
+  
+  let( :group_submarine_params ) { options = 
+    { 
+      :gtype => Group::TYPE_GROUP_TASK_FORCE, 
+      :name => "TF21", 
+      :mission => Group::TASK_FORCE_MISSION_SUBMARINE, 
+      :endurance => 60, 
+      :location_x => 1, 
+      :location_y => 1 
+    } 
+  }
+  
+  let( :group_bombardment_params ) { options = 
+    { 
+      :gtype => Group::TYPE_GROUP_TASK_FORCE, 
+      :name => "TF14", 
+      :mission => Group::TASK_FORCE_MISSION_BOMBARDMENT, 
+      :endurance => 60, 
+      :location_x => 1, 
+      :location_y => 1 
+    } 
+  }
+
+  let( :ship_combat_params ) { options = 
+    { 
+      :name => "Texas",
+      :hull_symbol => "CGN",
+      :hull_number => "164",
+      :maker => nil,
+      :utype => Unit::TYPE_SHIP_COMBAT,
+      :version => 1,
+      :status => Unit::STATUS_IN_PIPELINE,
+      :max_speed => 35,
+      :cargo_capacity => 0,
+      :main_gun => 0,
+      :anti_aircraft => 2,
+      :missile_defense => 30,
+      :initial_task_force => "16",
+      :arrival_days => 7,
+      :defense_factor => 14,
+      :current_cargo_troops => 0,
+      :current_cargo_supplies => 0,
+      :current_cargo_aircraft => 0
+    }
+  }
+    
+  before( :each ) do
+    @ship_combat = Unit.new( ship_combat_params )
+    @group_port = Group.new( group_port_params )
+    @group_transport = Group.new( group_transport_params )
+    @group_combat = Group.new( group_combat_params )
+  end
+
+  it "is valid" do
+    @group_combat.should_not be_nil
+  end
+  
+  it "should have a name" do
+    @group_combat.name.should == "TF16"
+  end
+  
+  it "should have a gtype" do
+    @group_combat.gtype.should == Group::TYPE_GROUP_TASK_FORCE
+  end
+  
+  it "is a task force, it should have a mission" do
+    @group_combat.mission.should == Group::TASK_FORCE_MISSION_COMBAT
+  end
+  
+  it "should belong to a user" do
+    # TODO: fix the spec for user association testing
+    pending
+  end
+  
+  it "should have a location_x and location_y" do
+    @group_combat.location_x.should > 0 and @group_combat.location_y.should > 0
+  end
+  
+  it "should have a condition of active eletronic warfare" do
+    @group_combat.active_ew()
+    @group_combat.sensor_state.should == Group::SENSOR_STATE_ACTIVE_EW
+  end
+  
+  it "should have a condition of passive eletronic warfare" do
+    @group_combat.passive_ew()
+    @group_combat.sensor_state.should == Group::SENSOR_STATE_PASSIVE_EW
+  end
+  
+  it "is a task force, it should have an endurance" do
+    @group_combat.endurance.should == 60
+  end
+  
+end

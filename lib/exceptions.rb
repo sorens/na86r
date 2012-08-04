@@ -30,5 +30,8 @@ module Exceptions
       end
     end
   end
+
+  class NotMarshalData < StandardError
+  end
   
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725025012) do
+ActiveRecord::Schema.define(:version => 20120803070828) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -66,20 +66,6 @@ ActiveRecord::Schema.define(:version => 20120725025012) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.string   "gtype"
-    t.string   "mission"
-    t.integer  "sensor_state"
-    t.integer  "location_x"
-    t.integer  "location_y"
-    t.integer  "condition"
-    t.integer  "endurance"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "player_id"
-  end
-
   create_table "players", :force => true do |t|
     t.string   "ptype"
     t.integer  "user_id"
@@ -97,21 +83,6 @@ ActiveRecord::Schema.define(:version => 20120725025012) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-  end
-
-  create_table "units", :force => true do |t|
-    t.string   "guid"
-    t.string   "name"
-    t.string   "uclass"
-    t.string   "maker"
-    t.string   "number"
-    t.string   "utype"
-    t.integer  "version"
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "group_id"
-    t.string   "status"
   end
 
   create_table "users", :force => true do |t|

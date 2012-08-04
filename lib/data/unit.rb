@@ -1,36 +1,10 @@
 # Unit can be a ship or aircraft
 # 
 # TODO: add fields for aircraft in schema
-class Unit < ActiveRecord::Base
-  belongs_to :group
-  
-  include Parsed
-  include Exceptions
-  
-  after_initialize  :unit_init
-  after_save        :unit_save
-  
-  # fields that our data provides
-  MAIN_GUN            = "main_gun"
-  ANTI_AIRCRAFT       = "anti_aircraft"
-  MISSILE_DEFENSE     = "missile_defense"
-  MAX_SPEED           = "max_speed"
-  CARGO_CAPACITY      = "cargo_capacity"
-  DEFENSE_FACTOR      = "defense_factor"
-  INITIAL_TASK_FORCE  = "initial_task_force"
-  ARRIVAL_DAYS        = "arrival_days"
-  CURRENT_DAMAGE      = "current_damage"
-  MAX_DAMAGE          = "max_damage"
-  CURRENT_CARGO_S     = "current_cargo_supplies"
-  CURRENT_CARGO_T     = "current_cargo_troops"
-  CURRENT_CARGO_A     = "current_cargo_aircraft"
-  
-  # build an array of the fields that method_missing will
-  # use to access our data
-  ATTRIBUTE_ARRAY = [ MAIN_GUN, ANTI_AIRCRAFT, MISSILE_DEFENSE, MAX_SPEED,
-    CARGO_CAPACITY, DEFENSE_FACTOR, INITIAL_TASK_FORCE, ARRIVAL_DAYS, CURRENT_DAMAGE,
-    MAX_DAMAGE, CURRENT_CARGO_S, CURRENT_CARGO_T, CURRENT_CARGO_A]
-  
+class Unit
+
+  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group
+
   # unit status
   STATUS_UNKOWN       = "unknown"
   STATUS_SUNK         = "sunk"
@@ -41,13 +15,7 @@ class Unit < ActiveRecord::Base
   STATUS_DESTROYED    = "destroyed"
   STATUS_CRASHED      = "crashed"
   STATUS_IN_PORT      = "in_port"
-  
-  scope :sunk,        where( 'status = ?', STATUS_SUNK )
-  scope :available,   where( 'status = ?', STATUS_AVAILABLE )
-  scope :crippled,    where( 'status = ?', STATUS_CRIPPLED )
-  scope :scuttled,    where( 'status = ?', STATUS_SCUTTLED )
-  scope :in_pipeline, where( 'status = ?', STATUS_IN_PIPELINE )
-  
+
   #unit types
   TYPE_SHIP_COMBAT              = "ship_combat"
   TYPE_SHIP_BOMBARDMENT         = "ship_bombardment"
@@ -59,7 +27,31 @@ class Unit < ActiveRecord::Base
   TYPE_AIRCRAFT_TRANSPORT       = "aircraft_transport"
   TYPE_BASE_FLIGHT_OPERATIONS   = "base_flight_ops"
   TYPE_BASE_NAVAL               = "base_naval"
-  
+
+  # surface ship types
+  TYPE_SHIPS_SURFACE = [
+    TYPE_SHIP_COMBAT,
+    TYPE_SHIP_BOMBARDMENT,
+    TYPE_SHIP_AIRCRAFT_CARRIER,
+    TYPE_SHIP_TRANSPORT
+  ]
+
+  # status that represent an inactive unit
+  STATUS_INACTIVE = [
+    STATUS_SUNK,
+    STATUS_SCUTTLED,
+    STATUS_DESTROYED,
+    STATUS_CRASHED
+  ]
+
+  # status that represent an active unit
+  STATUS_ACTIVE = [
+    STATUS_AVAILABLE,
+    STATUS_CRIPPLED,
+    STATUS_IN_PORT,
+    STATUS_IN_PIPELINE
+  ]
+
   # max damage is special, it's based on the cargo capacity
   # of our unit in this version
   def max_damage
@@ -73,37 +65,39 @@ class Unit < ActiveRecord::Base
     Rails.logger.info "[#{self.display_name}] takes[#{value}] damage, current damage is now [#{self.current_damage}]"
     # update our status
     update_ship_status()
-    self.save
   end
   
   # is this unit active?
   def active?
-    return false if self.status == STATUS_SUNK or self.status == STATUS_DESTROYED
+    return false if STATUS_INACTIVE.include? self.status
+    return true
+  end
+
+  # is this a surface shio?
+  def surface_ship?
+    return false unless TYPE_SHIPS_SURFACE.include? self.utype
     return true
   end
   
   #
   def load_supplies( value )
-    raise CannotLoad.new( self, "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise NotEnoughCargoCapacity.new( self, "supplies" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise Exceptions::CannotLoad.new( self, "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "supplies" ) if value + remaining_cargo_capacity > self.cargo_capacity
     self.current_cargo_supplies = value
-    self.save
   end
   
   #
   def load_troops( value )
-    raise CannotLoad.new( self, "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise NotEnoughCargoCapacity.new( self, "troops" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise Exceptions::CannotLoad.new( self, "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "troops" ) if value + remaining_cargo_capacity > self.cargo_capacity
     self.current_cargo_troops = value
-    self.save
   end
   
   #
   def load_aircraft( value )
-    raise CannotLoad.new( self, "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
-    raise NotEnoughCargoCapacity.new( self, "aircraft" ) if (value + remaining_cargo_capacity) > self.cargo_capacity
+    raise Exceptions::CannotLoad.new( self, "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "aircraft" ) if value + remaining_cargo_capacity > self.cargo_capacity
     self.current_cargo_aircraft = value
-    self.save
   end
   
   #
@@ -114,56 +108,107 @@ class Unit < ActiveRecord::Base
   # attach this unit to the specified group
   def attach( group )
     if group
-      raise UnitAlreadyAttached.new( self, group ) if group.units.include? self
+      raise Exceptions::UnitAlreadyAttached.new( self, group ) if group.include_unit? self
       if can_unit_join_group?( group )
-        group.units << self
-        group.save
-        Rails.logger.info "[#{self.display_name}] attached to [#{group.display_name}] [#{self.group_id}]"
+        group.add_unit( self )
+        self.group = group
+        Rails.logger.info "[#{self.display_name}] attached to [#{self.group.display_name}]"
       end
     end
   end
   
-  # dettach this unit from the specified group
-  def unattach( group )
-    if group
-      raise UnitNotAttached.new( self, group ) unless group.units.include? self
-      group.units.delete self
-      group.save
-      Rails.logger.info "[#{self.display_name}] unattached from [#{group.display_name}]"
+  # scuttle a ship
+  def scuttle
+    if self.active?
+      if self.surface_ship?
+        # unattach it from its group
+        self.unattach
+        # mark its status as scuttled
+        self.status = STATUS_SCUTTLED
+      end
+    end
+  end
+
+  # dettach this unit from it's group
+  def unattach
+    if self.group
+      raise Exceptions::UnitNotAttached.new( self, self.group ) unless self.group.include_unit? self
+      Rails.logger.info "[#{self.display_name}] unattaching from [#{self.group.display_name}]"
+      self.group.remove_unit( self )
+      self.group = nil
+    else
+      raise Exceptions::UnitNotAttached.new( self, nil )
     end
   end
   
-  # display the unit's as an upcase GUID
+  # display the unit's as an upcase hull classification (hull symbol + hull number)
   def display_name
-    "#{self.guid.upcase}"
+    "#{self.hull_class.upcase}"
   end
-  
-  private
+
+  # the hull_class is the combination of the hull_symbol and hull_number
+  def hull_class
+    "#{self.hull_symbol}#{self.hull_number}"
+  end
+
+  def initialize( options )
+    @current_damage = 0
+    @defense_factor = 0
+    @main_gun = 0
+    @anti_aircraft = 0
+    @missile_defense = 0
+    @status = STATUS_UNKOWN
+    @current_cargo_troops = 0
+    @current_cargo_supplies = 0
+    @current_cargo_aircraft = 0
+    if options and options.is_a? Hash
+      @name = options[:name]
+      @hull_symbol = options[:hull_symbol]
+      @hull_number = options[:hull_number]
+      @max_speed = options[:max_speed]
+      @defense_factor = options[:defense_factor]
+      @main_gun = options[:main_gun]
+      @anti_aircraft = options[:anti_aircraft]
+      @missile_defense = options[:missile_defense]
+      @initial_task_force = options[:initial_task_force]
+      @arrival_days = options[:arrival_days]
+      @utype = options[:utype]
+      @cargo_capacity = options[:cargo_capacity]
+      @status = options[:status]
+    end
+  end
+
+  # compare units
+  def  ==(unit)
+    return self.hull_class == unit.hull_class
+  end
+ 
+private
 
   # be sure to load our JSON data into
   # into a hash that we can easily utilize
-  def unit_init
+  # def unit_init
 
-    # initialize our module
-    parsed_initialize
-    # add the attributes that we're expecting
-    ATTRIBUTE_ARRAY.each do |abute|
-      add_attribute( abute )
-    end
+  #   # initialize our module
+  #   parsed_initialize
+  #   # add the attributes that we're expecting
+  #   ATTRIBUTE_ARRAY.each do |abute|
+  #     add_attribute( abute )
+  #   end
     
-    # load our parsed data
-    load_parsed_data
-    # if this is a first time setup, make sure we set an initial
-    # current_damage of 0
-    if @parsed_data and ! @parsed_data.has_key?( CURRENT_DAMAGE )
-      self.current_damage = 0
-    end
-  end
+  #   # load our parsed data
+  #   load_parsed_data
+  #   # if this is a first time setup, make sure we set an initial
+  #   # current_damage of 0
+  #   if @parsed_data and ! @parsed_data.has_key?( CURRENT_DAMAGE )
+  #     self.current_damage = 0
+  #   end
+  # end
 
   # turn our hash into JSON data, ready for strorage
-  def unit_save
-    self.data = @parsed_data.to_json unless @parsed_data.nil?
-  end
+  # def unit_save
+  #   self.data = @parsed_data.to_json unless @parsed_data.nil?
+  # end
   
   # check to make sure this unit can join the group
   def can_unit_join_group?( group )
@@ -212,15 +257,15 @@ class Unit < ActiveRecord::Base
   # grab the string data in self.data and parse it as
   # JSON data. if valid, load it into our @parsed_data
   # attribute for ready use
-  def load_parsed_data
-    if @parsed_data.nil? and ! self.data.nil?
-      begin
-        @parsed_data = JSON.parse( self.data )
-      rescue JSON::ParserError
-        @parsed_data = nil
-      end
-    end
-  end
+  # def load_parsed_data
+  #   if @parsed_data.nil? and ! self.data.nil?
+  #     begin
+  #       @parsed_data = JSON.parse( self.data )
+  #     rescue JSON::ParserError
+  #       @parsed_data = nil
+  #     end
+  #   end
+  # end
   
   # update the ship status with respect to damage
   def update_ship_status
@@ -239,7 +284,9 @@ class Unit < ActiveRecord::Base
     
     if self.status == STATUS_SUNK
       # sunken ships must be removed from their current group
-      self.unattach( self.group ) if self.group
+      if self.group
+        unattach
+      end
     end
   end
 end

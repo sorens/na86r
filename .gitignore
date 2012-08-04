@@ -54,3 +54,11 @@ Thumbs.db
 # Redcar #
 ##########
 .redcar/*
+
+# Sublime #
+###########
+*.sublime*
+
+# Guard/Spork #
+###############
+Sporkfile.rb
