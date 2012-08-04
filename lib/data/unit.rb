@@ -3,7 +3,7 @@
 # TODO: add fields for aircraft in schema
 class Unit
 
-  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group
+  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed
 
   # unit status
   STATUS_UNKOWN       = "unknown"
@@ -51,6 +51,11 @@ class Unit
     STATUS_IN_PORT,
     STATUS_IN_PIPELINE
   ]
+
+  # unit max speed
+  UNIT_MAX_SPEED              = 30
+  # unit crippled (min) speed
+  UNIT_MIN_SPEED              = 5
 
   # max damage is special, it's based on the cargo capacity
   # of our unit in this version
@@ -161,6 +166,7 @@ class Unit
     @current_cargo_troops = 0
     @current_cargo_supplies = 0
     @current_cargo_aircraft = 0
+    @current_speed = 0
     if options and options.is_a? Hash
       @name = options[:name]
       @hull_symbol = options[:hull_symbol]

@@ -381,4 +381,8 @@ describe Unit do
     @ship_combat.active?.should be_false
   end
 
+  # it "should reduce its ordance as it fires weapons" do
+  #   @ship_combat.attach( enemy_fleet, )
+  # end
+
 end

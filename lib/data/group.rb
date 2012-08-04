@@ -72,6 +72,30 @@ class Group
   	end
   end
 
+  # the max speed of the group is the current speed
+  # of the slowest ship in the group. it should never
+  # be slower than the UNIT_MIN_SPEED, which is the
+  # speed for crippled ship
+  def max_speed
+    speed = Unit::UNIT_MAX_SPEED
+    if self.units
+      self.units.each do |unit|
+        speed = unit.current_speed if unit.current_speed < speed
+      end
+    end
+
+    # make sure we're not slower than the speed for crippled
+    speed = Unit::UNIT_MIN_SPEED if speed < Unit::UNIT_MIN_SPEED
+
+    return speed
+  end
+
+  # reduce endurance
+  def reduce_endurance( endurance=1 )
+    self.endurance = self.endurance - endurance
+    self.endurance = 0 if self.endurance < 0
+  end
+
   # initialize
   def initialize( options=nil )
   	@units ||= Array.new

@@ -121,5 +121,43 @@ describe Group do
   it "is a task force, it should have an endurance" do
     @group_combat.endurance.should == 60
   end
+
+  it "max speed of group is the curent speed of the slowest ship" do
+    @ship_combat.current_speed = 10
+    @ship_combat.attach @group_combat
+    @group_combat.max_speed.should == @ship_combat.current_speed
+  end
+
+  it "max speed should never be lower than crippled speed" do
+    @ship_combat.current_speed = 0
+    @ship_combat.attach @group_combat
+    @group_combat.max_speed.should == Unit::UNIT_MIN_SPEED
+  end
+
+  it "should reduce endurance" do
+    @ship_combat.attach @group_combat
+    @group_combat.reduce_endurance
+    @group_combat.endurance.should == 59
+  end
+
+  it "should reduce endurance multiple times" do
+    @ship_combat.attach @group_combat
+    @group_combat.reduce_endurance
+    @group_combat.reduce_endurance
+    @group_combat.reduce_endurance
+    @group_combat.endurance.should == 57
+  end
+
+  it "should reduce endurance by more than 1" do
+    @ship_combat.attach @group_combat
+    @group_combat.reduce_endurance 2
+    @group_combat.endurance.should == 58
+  end
+
+  it "endurance should not go below 0" do
+    @ship_combat.attach @group_combat
+    @group_combat.reduce_endurance 61
+    @group_combat.endurance.should == 0
+  end
   
 end
