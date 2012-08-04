@@ -23,7 +23,11 @@ module Exceptions
   
   class UnitNotAttached < UnitException
     def initialize( unit, group )
-      super( "#{unit.display_name} is not attached to #{group.display_name}" )
+      if group
+        super( "#{unit.display_name} is not attached to #{group.display_name}" )
+      else
+        super( "#{unit.display_name} is not attached to any group" )
+      end
     end
   end
   
