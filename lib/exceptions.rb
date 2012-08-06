@@ -31,7 +31,24 @@ module Exceptions
     end
   end
 
+  # raised when the class is not MarshalData
   class NotMarshalData < StandardError
+  end
+
+  # weapon system doesn't exist
+  class WeaponSystemInvalid < StandardError
+  end
+
+  # request to fire more ordance than allowed in a salvo
+  class WeaponMountSalvoLimit < StandardError
+  end
+
+  # weapon mount ordance has been depleted
+  class WeaponMountOrdanceDepleted < StandardError
+  end
+
+  # weapon mount salvo ordance has been depleted
+  class WeaponMountSalvoDepleted < StandardError
   end
   
 end
