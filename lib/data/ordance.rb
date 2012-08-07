@@ -119,8 +119,10 @@ class Ordance
 	TYPE_SEA_SPARROW				= "SEAP"
 	TYPE_SA_N_1						= "SAN1"
 	TYPE_SA_N_3						= "SAN3"
+	TYPE_SA_N_4						= "SAN4"
 	TYPE_SA_N_6						= "SAN6"
 	TYPE_SA_N_7						= "SAN7"
+	TYPE_SA_N_9						= "SAN9"
 
 	WEAPONS_SAM = [
 		TYPE_STANDARD,
@@ -130,7 +132,8 @@ class Ordance
 		TYPE_SA_N_1,
 		TYPE_SA_N_3,
 		TYPE_SA_N_6,
-		TYPE_SA_N_7
+		TYPE_SA_N_7,
+		TYPE_SA_N_9
 	]
 
 	WEAPONS_ALL = WEAPONS_ASW + WEAPONS_AST + WEAPONS_ASM + WEAPONS_SSM + WEAPONS_AAM + WEAPONS_SAM
@@ -189,8 +192,10 @@ class Ordance
 		Ordance.setup_ordance( TYPE_SEA_SPARROW, WEAPON_SAM, 10, 1, 1, 1, false )
 		Ordance.setup_ordance( TYPE_SA_N_1, WEAPON_SAM, 30, 1, 4, 1, false )
 		Ordance.setup_ordance( TYPE_SA_N_3, WEAPON_SAM, 40, 1, 4, 2, false )
+		Ordance.setup_ordance( TYPE_SA_N_4, WEAPON_SAM, 5, 1, 4, 1, false )
 		Ordance.setup_ordance( TYPE_SA_N_6, WEAPON_SAM, 80, 1, 4, 3, false )
 		Ordance.setup_ordance( TYPE_SA_N_7, WEAPON_SAM, 25, 1, 4, 4, false )
+		Ordance.setup_ordance( TYPE_SA_N_9, WEAPON_SAM, 5, 1, 4, 1, false )
 	end
 
 	# return the hash for a particular weapon
