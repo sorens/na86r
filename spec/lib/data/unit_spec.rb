@@ -381,6 +381,30 @@ describe Unit do
     @ship_combat.active?.should be_false
   end
 
+  it "should track cargo capacity for supplies" do
+    @ship_transport.load_supplies 2
+    @ship_transport.load_supplies 2
+    @ship_transport.load_supplies 2
+    @ship_transport.remaining_cargo_capacity.should == 0
+  end
+
+  it "should track cargo capacity for troops" do
+    @ship_transport.load_troops 2
+    @ship_transport.load_troops 2
+    @ship_transport.load_troops 2
+    @ship_transport.remaining_cargo_capacity.should == 0
+  end
+
+  it "should track cargo capacity for aircraft" do
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.load_aircraft( 12 )
+    @ship_carrier.remaining_cargo_capacity.should == 0
+  end
+
   # it "should reduce its ordance as it fires weapons" do
   #   @ship_combat.attach( enemy_fleet, )
   # end

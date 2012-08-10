@@ -87,27 +87,27 @@ class Unit
   #
   def load_supplies( value )
     raise Exceptions::CannotLoad.new( self, "supplies" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise Exceptions::NotEnoughCargoCapacity.new( self, "supplies" ) if value + remaining_cargo_capacity > self.cargo_capacity
-    self.current_cargo_supplies = value
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "supplies" ) if value  > self.remaining_cargo_capacity
+    self.current_cargo_supplies = self.current_cargo_supplies + value
   end
   
   #
   def load_troops( value )
     raise Exceptions::CannotLoad.new( self, "troops" ) if self.utype != TYPE_SHIP_TRANSPORT
-    raise Exceptions::NotEnoughCargoCapacity.new( self, "troops" ) if value + remaining_cargo_capacity > self.cargo_capacity
-    self.current_cargo_troops = value
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "troops" ) if value  > self.remaining_cargo_capacity
+    self.current_cargo_troops = self.current_cargo_troops + value
   end
   
   #
   def load_aircraft( value )
     raise Exceptions::CannotLoad.new( self, "aircraft" ) if self.utype != TYPE_SHIP_AIRCRAFT_CARRIER
-    raise Exceptions::NotEnoughCargoCapacity.new( self, "aircraft" ) if value + remaining_cargo_capacity > self.cargo_capacity
-    self.current_cargo_aircraft = value
+    raise Exceptions::NotEnoughCargoCapacity.new( self, "aircraft" ) if value  > self.remaining_cargo_capacity
+    self.current_cargo_aircraft = self.current_cargo_aircraft + value
   end
   
   #
   def remaining_cargo_capacity
-    self.current_cargo_troops + self.current_cargo_supplies + self.current_cargo_aircraft
+    self.cargo_capacity - (self.current_cargo_troops + self.current_cargo_supplies + self.current_cargo_aircraft)
   end
   
   # attach this unit to the specified group
