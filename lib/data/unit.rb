@@ -3,7 +3,7 @@
 # TODO: add fields for aircraft in schema
 class Unit
 
-  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed
+  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed, :electronic_warfare, :sonar
 
   # unit status
   STATUS_UNKOWN       = "unknown"
@@ -153,7 +153,9 @@ class Unit
 
   # the hull_class is the combination of the hull_symbol and hull_number
   def hull_class
-    "#{self.hull_symbol}#{self.hull_number}"
+    return "#{self.hull_symbol}-#{self.hull_number}" if self.hull_symbol.present? and self.hull_number.present?
+    return "#{self.hull_symbol}-#{self.name}" if self.hull_symbol.present? and self.name.present?
+    return "#{self.name}" if self.name.present?
   end
 
   def initialize( options )
@@ -168,25 +170,96 @@ class Unit
     @current_cargo_aircraft = 0
     @current_speed = 0
     if options and options.is_a? Hash
-      @name = options[:name]
-      @hull_symbol = options[:hull_symbol]
-      @hull_number = options[:hull_number]
-      @max_speed = options[:max_speed]
-      @defense_factor = options[:defense_factor]
-      @main_gun = options[:main_gun]
-      @anti_aircraft = options[:anti_aircraft]
-      @missile_defense = options[:missile_defense]
-      @initial_task_force = options[:initial_task_force]
-      @arrival_days = options[:arrival_days]
-      @utype = options[:utype]
-      @cargo_capacity = options[:cargo_capacity]
-      @status = options[:status]
+      @name = load_ship_data_from_options( options, "name" )
+      @hull_symbol = load_ship_data_from_options( options, "hull_symbol" )
+      @hull_number = load_ship_data_from_options( options, "hull_number" )
+      @max_speed = load_ship_data_from_options( options, "max_speed" )
+      @defense_factor = load_ship_data_from_options( options, "defense_factor" )
+      @main_gun = load_ship_data_from_options( options, "main_gun" )
+      @anti_aircraft = load_ship_data_from_options( options, "anti_aircraft" )
+      @missile_defense = load_ship_data_from_options( options, "missile_defense" )
+      @initial_task_force = load_ship_data_from_options( options, "initial_task_force" )
+      @arrival_days = load_ship_data_from_options( options, "arrival_days" )
+      @utype = load_ship_data_from_options( options, "utype" )
+      @cargo_capacity = load_ship_data_from_options( options, "cargo_capacity" )
+      @status = load_ship_data_from_options( options, "status" )
+      @electronic_warfare = load_ship_data_from_options( options, "electronic_warfare" )
+      @sonar = load_ship_data_from_options( options, "sonar" )
+      @utype = load_ship_data_from_options( options, "utype" )
     end
   end
+
+  # def to_s
+  #   "#{self.hull_symbol}, #{self.hull_number} #{self.name}, DMG: #{self.current_damage}/#{self.max_damage} SPEED: #{self.current_speed}/#{self.max_speed} TYPE: #{self.utype}"
+  # end
 
   # compare units
   def  ==(unit)
     return self.hull_class == unit.hull_class
+  end
+
+  def self.load_ships( file, ships )
+    Rails.logger.info "loading ships form [#{file}]"
+    begin
+    CSV.foreach( file, { :headers => :first_row, :return_headers => false } ) do |row|
+      unit = load_ship_row( row )
+      ships[unit.hull_class] = unit
+    end
+    rescue Exception => e
+      Rails.logger.error e.inspect
+    end
+  end
+
+  def load_ship_data_from_options( options, key )
+    value = options[key] if options.has_key? key
+    value = options[key.to_sym] if options.has_key? key.to_sym
+    return value
+  end
+
+  def self.load_ship_row( row )
+    options = {}
+    options["hull_symbol"] = load_ship_field("Class", row)
+    options["hull_number"] = load_ship_field("Hull #", row)
+    options["name"] = load_ship_field("Ship Name", row)
+    options["utype"] = load_ship_field("Unit Type", row)
+    options["class_name"] = load_ship_field("Class Name", row)
+    options["main_gun"] = load_ship_field("MG", row, true)
+    options["anti_aircraft"] = load_ship_field("AA", row, true)
+    options["missile_defense"] = load_ship_field("MD", row, true)
+    options["max_speed"] = load_ship_field("MS", row, true)
+    options["cargo_capacity"] = load_ship_field("CC", row, true)
+    options["defense_factor"] = load_ship_field("DF", row, true)
+    options["initial_task_force"] = load_ship_field("TF", row)
+    options["arrival_days"] = load_ship_field("ARV", row, true)
+    options["class_id"] = load_ship_field("Class ID", row)
+    options["id"] = load_ship_field("ID", row)
+    options["electronic_warfare"] = load_ship_field("EW", row, true)
+    options["sonar"] = load_ship_field("SONAR", row, true)
+    options["ssm_type"] = load_ship_field("SSM Type", row)
+    options["ssm_salvo_size"] = load_ship_field("SSM Salvo Size", row, true)
+    options["ssm_total"] = load_ship_field("SSM Total", row, true)
+    options["aws_type"] = load_ship_field("AWS Type", row)
+    options["aws_salvo_size"] = load_ship_field("AWS Salvo Size", row, true)
+    options["aws_total"] = load_ship_field("AWS Total", row, true)
+    options["ast_type"] = load_ship_field("AST Type", row)
+    options["ast_salvo_size"] = load_ship_field("AST Salvo Size", row, true)
+    options["ast_total"] = load_ship_field("AST Total", row, true)
+    options["helos"] = load_ship_field("HELOs", row, true)
+    options["air_recon"] = load_ship_field("AIR RECON", row, true)
+    options["air_ew"] = load_ship_field("AIR EW", row, true)
+    options["air_asw"] = load_ship_field("AIR ASW", row, true)
+    options["air_early_warning"] = load_ship_field("AIR EARLY WARNING", row)
+    unit = Unit.new options
+    unit
+  end
+
+  def self.load_ship_field( field_name, row, as_integer=false )
+    value = row[field_name]
+    if value.blank? or value == "" or value == "-"
+      return nil
+    end
+    return value.to_i if as_integer
+    return value.to_s 
   end
  
 private
@@ -256,7 +329,7 @@ private
         end
       end
     end
-    Rails.logger.info "[#{self.display_name}] can #{result ? '' : 'not '}attach to [#{group.display_name}]"
+    Rails.logger.info "[#{self.hull_class}] can #{result ? '' : 'not '}attach to [#{group.display_name}]"
     result
   end
   

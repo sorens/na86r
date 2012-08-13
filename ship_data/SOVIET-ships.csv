@@ -1,0 +1,142 @@
+Class,Hull #,Ship Name,Unit Type,Class Name,MG,AA,MD,MS,CC,DF,TF,ARV,Class ID,ID,EW,SONAR,SSM Type,SSM Salvo Size,SSM Total,SAM Type,SAM Salvo Size,SAM Total,ASW Type,ASW Salvo Size,ASW Total,AST Type,AST Salvo Size,AST Total,HELOs,AIR RECON,AIR EW,AIR ASW,AIR EARLY WARNING
+BASE,,MURMANSK,base_naval,,0,50,50,-,-,-,-,-,-,1,5,0,-,-,-,-,-,-,-,-,-,-,-,-,24,12,2,12,2
+BASE,,RIGA,base_naval,,0,50,50,-,-,-,-,-,-,2,5,0,-,-,-,-,-,-,-,-,-,-,-,-,24,12,2,12,2
+BASE,,HAMBURG,base_flight_ops,,0,50,50,-,-,-,-,-,-,3,4,0,-,-,-,-,-,-,-,-,-,-,-,-,12,12,2,12,2
+BASE,,BERGEN,base_flight_ops,,0,50,0,-,-,-,-,-,-,4,4,0,-,-,-,-,-,-,-,-,-,-,-,-,12,12,2,12,2
+BASE,,FAROES,base_flight_ops,,0,30,0,-,-,-,-,-,-,5,4,0,-,-,-,-,-,-,-,-,-,-,-,-,12,0,0,0,0
+BASE,,ICELAND,base_flight_ops,,0,30,0,-,-,-,-,-,-,6,4,0,-,-,-,-,-,-,-,-,-,-,-,-,12,0,0,0,0
+CVG,,KIEV,ship_aircraft_carrier,Kiev,0,4,94,30,15,50,1,0,3,7,5,2,SS-N-12,8,24,SA-N-3,2,72,FRAS-1,2,2,533M TORP,10,10,23,0,0,0,0
+CVG,,MINSK,ship_aircraft_carrier,Kiev,0,4,94,30,15,50,1,0,3,8,5,2,SS-N-12,8,24,SA-N-4,2,72,FRAS-2,2,2,533M TORP,10,10,23,0,0,0,0
+CGN,,KIROV,ship_combat,Kirov,0,2,94,35,0,50,1,0,16,9,5,2,SS-N-19,20,20,SA-N-6,8,96,SS-N-14,2,20,533M TORP,2,10,3,0,0,0,0
+CGN,,FRUNZE,ship_combat,Kirov,0,2,94,35,0,50,1,0,16,10,5,2,SS-N-20,20,20,SA-N-7,8,96,SS-N-14,2,20,533M TORP,2,10,3,0,0,0,0
+CGN,,KALININ,ship_combat,Kirov,0,2,94,35,0,50,1,0,16,11,5,2,SS-N-20,20,20,SA-N-8,8,96,SS-N-15,2,20,533M TORP,2,10,3,0,0,0,0
+CG,,KUIBISHEV,ship_combat,,0,2,54,35,0,50,1,0,29,12,5,1,SS-N-12,12,12,SA-N-6,-,-,SS-N-14,-,-,-,-,-,2,0,0,0,0
+CG,,KERCH,ship_combat,Kara,0,4,54,35,0,12,1,0,21,13,4,2,-,-,-,SA-N-3,2,40,SS-N-14,2,8,533M TORP,2,10,1,0,0,0,0
+CG,,TASHKENT,ship_combat,Kara,0,4,54,35,0,12,1,0,21,14,4,2,-,-,-,SA-N-3,2,40,SS-N-14,2,8,533M TORP,2,10,1,0,0,0,0
+CG,,ISAKOV,ship_combat,Kresta II,0,4,40,35,0,10,1,0,22,15,4,1,-,-,-,SA-N-3,4,40,SS-N-14,2,8,533M TORP,2,10,1,0,0,0,0
+CG,,VARYAG,ship_combat,Kynda,0,4,0,35,0,9,1,0,24,16,4,1,SS-N-3,8,16,SA-N-1,4,24,-,-,-,533M TORP,2,6,0,0,0,0,0
+CG,,DROZD,ship_combat,Kresta I,0,4,40,35,0,10,1,0,23,17,4,1,SS-N-3,4,4,SA-N-1,4,44,-,-,-,533M TORP,2,10,1,0,0,0,0
+CL,,ALEKSANDR NEVSKI,ship_combat,Sverdlov,12,12,0,30,0,20,1,0,25,18,4,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+CL,,MIKHAIL KUTUZOV,ship_combat,Sverdlov,12,12,0,30,0,20,1,0,25,19,4,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+DDG,,VITSE-ADMIRAL KULAKOV,ship_combat,Udaloy,0,2,54,35,0,12,1,0,41,20,5,2,-,-,-,SA-N-9,4,64,SS-N-14,2,8,533M TORP,2,8,2,0,0,0,0
+DDG,,UDALOY,ship_combat,Udaloy,0,2,54,35,0,12,1,0,41,21,5,2,-,-,-,SA-N-9,4,64,SS-N-14,2,8,533M TORP,2,8,2,0,0,0,0
+DDG,,SOVREMENNYY,ship_combat,Sovremenny,0,4,40,35,0,12,1,0,42,22,5,1,SS-N-22,8,8,SA-N-7,2,44,-,-,-,533M TORP,2,4,1,0,0,0,0
+DDG,,OTCHAYANNY,ship_combat,Sovremenny,0,4,40,35,0,12,1,0,42,23,5,1,SS-N-22,8,8,SA-N-7,2,44,-,-,-,533M TORP,2,4,1,0,0,0,0
+DDG,,SMELY,ship_combat,Mod Kashin,0,4,40,35,0,8,1,0,43,24,4,2,SS-N-2C,4,4,SA-N-1,4,32,-,-,-,533M TORP,1,5,0,0,0,0,0
+DDG,,SDERZHANNY,ship_combat,Mod Kashin,0,4,40,35,0,8,1,0,43,25,4,2,SS-N-2C,4,4,SA-N-1,4,32,-,-,-,533M TORP,1,5,0,0,0,0,0
+DDG,,STROYNY,ship_combat,Mod Kashin,0,4,40,35,0,8,1,0,43,26,4,2,SS-N-2C,4,4,SA-N-1,4,32,-,-,-,533M TORP,1,5,0,0,0,0,0
+DDG,,OGNEVOY,ship_combat,Mod Kashin,0,4,40,35,0,8,1,0,43,27,4,2,SS-N-2C,4,4,SA-N-1,4,32,-,-,-,533M TORP,1,5,0,0,0,0,0
+DDG,,SLAVNYY,ship_combat,Mod Kashin,0,4,40,35,0,8,1,0,43,28,4,2,SS-N-2C,4,4,SA-N-1,4,32,-,-,-,533M TORP,1,5,0,0,0,0,0
+DDG,,UPORNY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,29,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,ZHGUCHY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,30,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,ZORKY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,31,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,GORDY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,32,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,DERZKY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,33,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,BOYKY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,34,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DDG,,GNEVNY,ship_combat,Kanin,0,8,8,35,0,8,1,0,44,35,4,1,-,-,-,SA-N-1,2,32,-,-,-,533M TORP,2,10,0,0,0,0,0
+DD,,SVETLYY,ship_combat,Mod Kotlin,0,4,16,35,0,7,1,0,45,36,2,1,-,-,-,-,-,-,-,-,-,533M TORP,2,10,0,0,0,0,0
+DD,,VESKIY,ship_combat,Mod Kotlin,0,4,16,35,0,7,1,0,45,37,2,1,-,-,-,-,-,-,-,-,-,533M TORP,2,10,0,0,0,0,0
+FFG,,BODRYY,ship_combat,Krivak I,0,2,14,30,0,8,1,0,51,38,4,2,-,-,-,SA-N-4,2,40,SS-N-14,2,4,533M TORP,2,8,0,0,0,0,0
+FFG,,DOSTOYNYY,ship_combat,Krivak I,0,2,14,30,0,8,1,0,51,39,4,2,-,-,-,SA-N-4,2,40,SS-N-14,2,4,533M TORP,2,8,0,0,0,0,0
+FFG,,LADNYY,ship_combat,Krivak I,0,2,14,30,0,8,1,0,51,40,4,2,-,-,-,SA-N-4,2,40,SS-N-14,2,4,533M TORP,2,8,0,0,0,0,0
+FFG,,RAZUMNYY,ship_combat,Krivak I,0,2,14,30,0,8,1,0,51,41,4,2,-,-,-,SA-N-4,2,40,SS-N-14,2,4,533M TORP,2,8,0,0,0,0,0
+FFG,,ZADORNYY,ship_combat,Krivak I,0,2,14,30,0,8,1,0,51,42,4,2,-,-,-,SA-N-4,2,40,SS-N-14,2,4,533M TORP,2,8,0,0,0,0,0
+FF,,AMETIST,ship_combat,Grisha II,0,2,17,35,0,5,1,0,52,43,3,1,-,-,-,-,-,-,-,-,-,533M TORP,2,4,0,0,0,0,0
+FF,,IZUMRUD,ship_combat,Grisha II,0,2,17,35,0,5,1,0,52,44,3,1,-,-,-,-,-,-,-,-,-,533M TORP,2,4,0,0,0,0,0
+FF,,RUBIN,ship_combat,Grisha II,0,2,17,35,0,5,1,0,52,45,3,1,-,-,-,-,-,-,-,-,-,533M TORP,2,4,0,0,0,0,0
+FF,,SAFFIR,ship_combat,Grisha II,0,2,17,35,0,5,1,0,52,46,3,1,-,-,-,-,-,-,-,-,-,533M TORP,2,4,0,0,0,0,0
+FF,,ZHEMCHUG,ship_combat,Grisha II,0,2,17,35,0,5,1,0,52,47,3,1,-,-,-,-,-,-,-,-,-,533M TORP,2,4,0,0,0,0,0
+FF,,BARSUK,ship_combat,Riga,0,4,4,30,0,5,1,0,53,48,3,1,-,-,-,-,-,-,-,-,-,533M TORP,1,2,0,0,0,0,0
+FF,,BOBR,ship_combat,Riga,0,4,4,30,0,5,1,0,53,49,3,1,-,-,-,-,-,-,-,-,-,533M TORP,1,2,0,0,0,0,0
+FF,,BUYVOL,ship_combat,Riga,0,4,4,30,0,5,1,0,53,50,3,1,-,-,-,-,-,-,-,-,-,533M TORP,1,2,0,0,0,0,0
+FF,,GEPARD,ship_combat,Riga,0,4,4,30,0,5,1,0,53,51,3,1,-,-,-,-,-,-,-,-,-,533M TORP,1,2,0,0,0,0,0
+AP,,APSHERON,ship_transport,,0,0,2,15,4,7,1,0,62,52,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,BASKUNCHAK,ship_transport,,0,0,2,15,4,7,1,0,62,53,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,DAURIYA,ship_transport,,0,0,2,15,4,7,1,0,62,54,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,DIKSON,ship_transport,,0,0,2,15,4,7,1,0,62,55,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,DONBASS,ship_transport,,0,0,2,15,4,7,1,0,62,56,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,SEVAN,ship_transport,,0,0,2,15,4,7,1,0,62,57,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,TAMAN,ship_transport,,0,0,2,15,4,7,1,0,62,58,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+AP,,YAMAL,ship_transport,,0,0,2,15,4,7,1,0,62,59,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LPD,,IVAN ROGOV,ship_transport,,0,2,47,20,6,16,1,0,66,60,4,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LPD,,MAKSIM GORIKI,ship_transport,,0,2,47,20,6,16,1,0,66,61,4,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,TORTSEV,ship_transport,,0,4,0,15,4,6,1,0,67,62,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,SHAKHTER,ship_transport,,0,4,0,15,4,6,1,0,67,63,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,PRESNYA,ship_transport,,0,4,0,15,4,6,1,0,67,64,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,FILCHENKOV,ship_transport,,0,4,0,15,4,6,1,0,67,65,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,VILKOV,ship_transport,,0,4,0,15,4,6,1,0,67,66,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,OBYEKOV,ship_transport,,0,4,0,15,4,6,1,0,67,67,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,ILICHYEV,ship_transport,,0,4,0,15,4,6,1,0,67,68,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,LAZO,ship_transport,,0,4,0,15,4,6,1,0,67,69,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,K. KOSMOLETS,ship_transport,,0,4,0,15,4,6,1,0,67,70,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+LST,,V. KOSMOLETS,ship_transport,,0,4,0,15,4,6,1,0,67,71,0,0,-,-,-,-,-,-,-,-,-,-,-,-,0,0,0,0,0
+SSNG,,O1,ship_submarine,Oscar,0,0,0,35,0,40,2,20,71,72,4,3,SS-N-19,24,24,-,-,-,-,-,-,533M TORP,6,18,0,0,0,0,0
+SSNG,,O2,ship_submarine,Oscar,0,0,0,35,0,40,2,20,71,73,4,3,SS-N-19,24,24,-,-,-,-,-,-,533M TORP,6,18,0,0,0,0,0
+SSNG,,C2,ship_submarine,Charlie,0,0,0,25,0,30,2,20,72,74,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C4,ship_submarine,Charlie,0,0,0,25,0,30,2,20,72,75,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C5,ship_submarine,Charlie,0,0,0,25,0,30,2,20,72,76,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C6,ship_submarine,Charlie,0,0,0,25,0,30,7,0,72,77,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C8,ship_submarine,Charlie,0,0,0,25,0,30,7,0,72,78,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C9,ship_submarine,Charlie,0,0,0,25,0,30,7,0,72,79,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C12,ship_submarine,Charlie,0,0,0,25,0,30,7,0,72,80,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C13,ship_submarine,Charlie,0,0,0,25,0,30,7,0,72,81,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C14,ship_submarine,Charlie,0,0,0,25,0,30,2,20,72,82,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,C15,ship_submarine,Charlie,0,0,0,25,0,30,2,20,72,83,4,3,SS-N-7,8,8,-,-,-,-,-,-,533M TORP,6,14,0,0,0,0,0
+SSNG,,E12,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,84,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E13,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,85,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E14,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,86,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E15,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,87,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E16,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,88,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E17,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,89,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E18,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,90,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E19,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,91,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E20,ship_submarine,Echo,0,0,0,20,0,30,8,0,73,92,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E21,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,93,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E22,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,94,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E23,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,95,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E25,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,96,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E26,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,97,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E28,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,98,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSNG,,E29,ship_submarine,Echo,0,0,0,20,0,30,2,20,73,99,2,2,SS-N-12,8,8,-,-,-,400M TORP,2,10,533M TORP,6,10,0,0,0,0,0
+SSN,,A1,ship_submarine,Alfa,0,0,0,45,0,40,1,10,74,100,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,6,20,0,0,0,0,0
+SSN,,A2,ship_submarine,Alfa,0,0,0,45,0,40,1,10,74,101,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,6,20,0,0,0,0,0
+SSN,,A3,ship_submarine,Alfa,0,0,0,45,0,40,1,10,74,102,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,6,20,0,0,0,0,0
+SSN,,A4,ship_submarine,Alfa,0,0,0,45,0,40,1,10,74,103,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,6,20,0,0,0,0,0
+SSN,,A5,ship_submarine,Alfa,0,0,0,45,0,40,1,10,74,104,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,6,20,0,0,0,0,0
+SSN,,V2,ship_submarine,Victor,0,0,0,30,0,30,1,10,75,105,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V3,ship_submarine,Victor,0,0,0,30,0,30,1,10,75,106,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V4,ship_submarine,Victor,0,0,0,30,0,30,1,10,75,107,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V5,ship_submarine,Victor,0,0,0,30,0,30,1,10,75,108,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V6,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,109,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V7,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,110,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V8,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,111,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V9,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,112,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V10,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,113,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V11,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,114,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V12,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,115,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V13,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,116,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V14,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,117,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V15,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,118,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V16,ship_submarine,Victor,0,0,0,30,0,30,9,0,75,119,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V17,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,120,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V18,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,121,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V19,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,122,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V20,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,123,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V21,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,124,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V22,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,125,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V23,ship_submarine,Victor,0,0,0,30,0,30,1,0,75,126,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V24,ship_submarine,Victor,0,0,0,30,0,30,1,20,75,127,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V25,ship_submarine,Victor,0,0,0,30,0,30,1,20,75,128,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V29,ship_submarine,Victor,0,0,0,30,0,30,1,20,75,129,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V30,ship_submarine,Victor,0,0,0,30,0,30,1,20,75,130,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SSN,,V31,ship_submarine,Victor,0,0,0,30,0,30,1,20,75,131,4,3,-,-,-,-,-,-,SS-N-16,2,20,533M TORP,4,20,0,0,0,0,0
+SS,,T3,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,132,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T4,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,133,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T5,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,134,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T6,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,135,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T7,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,136,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T8,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,137,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T9,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,138,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T10,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,139,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+SS,,T11,ship_submarine,Tango,0,0,0,15,0,10,2,0,76,140,4,2,-,-,-,-,-,-,-,-,-,533M TORP,6,24,0,0,0,0,0
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

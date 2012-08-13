@@ -8,11 +8,6 @@ describe GameData do
 		@resource = GameData.new
 	end
 
-	it "should support units" do
-		@resource.respond_to?( "units" ).should be_true
-		@resource.units.class.should == Hash
-	end
-
 	it "should support ships sunk" do
 		@resource.respond_to?( "sunk" ).should be_true
 		@resource.sunk.class.should == Hash
@@ -49,9 +44,6 @@ describe GameData do
 	end
 
 	it "should serialize and restore data" do
-		@resource.units["1"] = "AAAA"
-		@resource.units["2"] = "BBBB"
-		@resource.units["3"] = "CCCC"
 		@resource.sunk["1"] = "DDDD"
 		@resource.sunk["2"] = "EEEE"
 		@resource.sunk["3"] = "FFFF"
@@ -75,9 +67,6 @@ describe GameData do
 
 		gd = GameData.factory data
 		gd.should_not be_nil
-		gd.units["1"].should == "AAAA"
-		gd.units["2"].should == "BBBB"
-		gd.units["3"].should == "CCCC"
 		gd.sunk["1"].should == "DDDD"
 		gd.sunk["2"].should == "EEEE"
 		gd.sunk["3"].should == "FFFF"
@@ -97,9 +86,51 @@ describe GameData do
 		gd.aar.include?( "QQQQ" ).should be_true
 	end
 
-	it "should allow setting a unit" do
-		@resource.respond_to?( "add_unit" ).should be_true
-		@resource.add_unit( "XXXX" )
-		@resource.units.values.include?( "XXXX" ).should be_true
+	it "should support a hash of NATO units" do
+		GameData.respond_to?( "nato_ships" ).should be_true
+		GameData.nato_ships.class.should == Hash
+	end
+
+	it "should support a hash of SOVIET units" do
+		GameData.respond_to?( "soviet_ships" ).should be_true
+		GameData.soviet_ships.class.should == Hash
+	end
+
+	it "should load NATO ship units from CSV data" do
+		ns = GameData.nato_ships
+		nimitz = ns["CVN-68"]
+		nimitz.class.should == Unit
+		nimitz.surface_ship?.should be_true
+		nimitz.main_gun.should == 0
+		nimitz.anti_aircraft.should == 0
+		nimitz.missile_defense.should == 75
+		nimitz.max_speed.should == 30
+		nimitz.cargo_capacity.should ==72
+		nimitz.defense_factor.should == 97
+		nimitz.initial_task_force.should == "16"
+		nimitz.arrival_days.should == 7
+		nimitz.hull_number.should == "68"
+		nimitz.hull_symbol.should == "CVN"
+	end
+
+	it "should load the ship data only once" do
+		GameData.ship_data_loaded?.should be_true
+	end
+
+	it "should load SOVIET ship units from CSV data" do
+		ss = GameData.soviet_ships
+		kiev = ss["CVG-KIEV"]
+		kiev.class.should == Unit
+		kiev.surface_ship?.should be_true
+		kiev.main_gun.should == 0
+		kiev.anti_aircraft.should == 4
+		kiev.missile_defense.should == 94
+		kiev.max_speed.should == 30
+		kiev.cargo_capacity.should ==15
+		kiev.defense_factor.should == 50
+		kiev.initial_task_force.should == "1"
+		kiev.arrival_days.should == 0
+		kiev.hull_number.should == nil
+		kiev.hull_symbol.should == "CVG"
 	end
 end

@@ -21,7 +21,9 @@ describe Unit do
       :defense_factor => 97,
       :current_cargo_troops => 0,
       :current_cargo_supplies => 0,
-      :current_cargo_aircraft => 0
+      :current_cargo_aircraft => 0,
+      :electronic_warfare => 6,
+      :sonar => 0
     }
   }
     
@@ -44,7 +46,9 @@ describe Unit do
       :defense_factor => 14,
       :current_cargo_troops => 0,
       :current_cargo_supplies => 0,
-      :current_cargo_aircraft => 0
+      :current_cargo_aircraft => 0,
+      :electronic_warfare => 4,
+      :sonar => 0
     }
   }
     
@@ -67,7 +71,9 @@ describe Unit do
   #     :defense_factor => 14,
   #     :current_cargo_troops => 0,
   #     :current_cargo_supplies => 0,
-  #     :current_cargo_aircraft => 0
+  #     :current_cargo_aircraft => 0,
+  #     :electronic_warfare => 0,
+  #     :sonar => 0
   #   }
   # }
 
@@ -90,7 +96,9 @@ describe Unit do
       :defense_factor => 30,
       :current_cargo_troops => 0,
       :current_cargo_supplies => 0,
-      :current_cargo_aircraft => 0
+      :current_cargo_aircraft => 0,
+      :electronic_warfare => 5,
+      :sonar => 4
     }
   }
     
@@ -113,7 +121,9 @@ describe Unit do
       :defense_factor => 14,
       :current_cargo_troops => 0,
       :current_cargo_supplies => 0,
-      :current_cargo_aircraft => 0
+      :current_cargo_aircraft => 0,
+      :electronic_warfare => 4,
+      :sonar => 1
     }
   }
     
@@ -197,7 +207,7 @@ describe Unit do
   end
   
   it "should have a hull classification" do
-    @ship_carrier.hull_class.should == "#{ship_carrier_params[:hull_symbol]}#{ship_carrier_params[:hull_number]}"
+    @ship_carrier.hull_class.should == "#{ship_carrier_params[:hull_symbol]}-#{ship_carrier_params[:hull_number]}"
   end
   
   # it "should belong to a player" do
@@ -409,4 +419,17 @@ describe Unit do
   #   @ship_combat.attach( enemy_fleet, )
   # end
 
+  it "should have an electronic_warfare value" do
+    @ship_carrier.electronic_warfare.should == ship_carrier_params[:electronic_warfare]
+    @ship_transport.electronic_warfare.should == ship_transport_params[:electronic_warfare]
+    @ship_combat.electronic_warfare.should == ship_combat_params[:electronic_warfare]
+    @ship_submarine.electronic_warfare.should == ship_submarine_params[:electronic_warfare]
+  end
+
+  it "should have a sonar value" do
+    @ship_carrier.sonar.should == ship_carrier_params[:sonar]
+    @ship_transport.sonar.should == ship_transport_params[:sonar]
+    @ship_combat.sonar.should == ship_combat_params[:sonar]
+    @ship_submarine.sonar.should == ship_submarine_params[:sonar]
+  end
 end

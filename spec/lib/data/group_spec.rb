@@ -72,7 +72,9 @@ describe Group do
       :defense_factor => 14,
       :current_cargo_troops => 0,
       :current_cargo_supplies => 0,
-      :current_cargo_aircraft => 0
+      :current_cargo_aircraft => 0,
+      :electronic_warfare => 4,
+      :sonar => 1
     }
   }
     
