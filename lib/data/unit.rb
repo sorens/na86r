@@ -3,7 +3,7 @@
 # TODO: add fields for aircraft in schema
 class Unit
 
-  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed, :electronic_warfare, :sonar
+  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed, :electronic_warfare, :sonar, :class_id, :id
 
   # unit status
   STATUS_UNKOWN       = "unknown"
@@ -173,25 +173,26 @@ class Unit
       @name = load_ship_data_from_options( options, "name" )
       @hull_symbol = load_ship_data_from_options( options, "hull_symbol" )
       @hull_number = load_ship_data_from_options( options, "hull_number" )
-      @max_speed = load_ship_data_from_options( options, "max_speed" )
-      @defense_factor = load_ship_data_from_options( options, "defense_factor" )
-      @main_gun = load_ship_data_from_options( options, "main_gun" )
-      @anti_aircraft = load_ship_data_from_options( options, "anti_aircraft" )
-      @missile_defense = load_ship_data_from_options( options, "missile_defense" )
+      @max_speed = load_ship_data_from_options( options, "max_speed", true )
+      @defense_factor = load_ship_data_from_options( options, "defense_factor", true )
+      @main_gun = load_ship_data_from_options( options, "main_gun", true )
+      @anti_aircraft = load_ship_data_from_options( options, "anti_aircraft", true )
+      @missile_defense = load_ship_data_from_options( options, "missile_defense", true )
       @initial_task_force = load_ship_data_from_options( options, "initial_task_force" )
-      @arrival_days = load_ship_data_from_options( options, "arrival_days" )
+      @arrival_days = load_ship_data_from_options( options, "arrival_days", true )
       @utype = load_ship_data_from_options( options, "utype" )
-      @cargo_capacity = load_ship_data_from_options( options, "cargo_capacity" )
+      @cargo_capacity = load_ship_data_from_options( options, "cargo_capacity", true )
       @status = load_ship_data_from_options( options, "status" )
-      @electronic_warfare = load_ship_data_from_options( options, "electronic_warfare" )
-      @sonar = load_ship_data_from_options( options, "sonar" )
-      @utype = load_ship_data_from_options( options, "utype" )
+      @electronic_warfare = load_ship_data_from_options( options, "electronic_warfare", true )
+      @sonar = load_ship_data_from_options( options, "sonar", true )
+      @class_id = load_ship_data_from_options( options, "class_id" )
+      @id = load_ship_data_from_options( options, "id" )
     end
   end
 
-  # def to_s
-  #   "#{self.hull_symbol}, #{self.hull_number} #{self.name}, DMG: #{self.current_damage}/#{self.max_damage} SPEED: #{self.current_speed}/#{self.max_speed} TYPE: #{self.utype}"
-  # end
+  def to_summary
+    "#{("%-30s" % self.hull_class)}#{"%2s" % self.main_gun}   #{"%2s" % self.anti_aircraft}   #{"%2s" % self.missile_defense}   #{"%2s" % self.max_speed}   #{"%2s" % self.cargo_capacity}   #{"%2s" % self.defense_factor}   #{"%2s" % self.initial_task_force}     #{"%2s" % self.arrival_days}      #{"%2s" % self.class_id}   #{"%3s" % self.id}"
+  end
 
   # compare units
   def  ==(unit)
@@ -203,20 +204,28 @@ class Unit
     begin
     CSV.foreach( file, { :headers => :first_row, :return_headers => false } ) do |row|
       unit = load_ship_row( row )
-      ships[unit.hull_class] = unit
+      unless unit.nil?
+        ships[unit.hull_class] = unit
+        Rails.logger.info unit.to_summary
+      end
     end
     rescue Exception => e
       Rails.logger.error e.inspect
     end
   end
 
-  def load_ship_data_from_options( options, key )
+  def load_ship_data_from_options( options, key, as_integer=false )
+    value = 0 if as_integer
+    value = nil unless as_integer
     value = options[key] if options.has_key? key
     value = options[key.to_sym] if options.has_key? key.to_sym
+    value = value.to_i if as_integer
+    value = value.to_s unless as_integer or value.nil?
     return value
   end
 
   def self.load_ship_row( row )
+    return nil if row["Class"] == "TOTALS"
     options = {}
     options["hull_symbol"] = load_ship_field("Class", row)
     options["hull_number"] = load_ship_field("Hull #", row)

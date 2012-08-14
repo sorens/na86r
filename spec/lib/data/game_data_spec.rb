@@ -119,7 +119,7 @@ describe GameData do
 
 	it "should load SOVIET ship units from CSV data" do
 		ss = GameData.soviet_ships
-		kiev = ss["CVG-KIEV"]
+		kiev = ss["CVG-Kiev"]
 		kiev.class.should == Unit
 		kiev.surface_ship?.should be_true
 		kiev.main_gun.should == 0
