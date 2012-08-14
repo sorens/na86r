@@ -117,6 +117,7 @@ class Ordance
 	TYPE_SEADART					= "SEAD"
 	TYPE_SEASLUG					= "SEAS"
 	TYPE_SEA_SPARROW				= "SEAP"
+	TYPE_SEACAT						= "SEAC"
 	TYPE_SA_N_1						= "SAN1"
 	TYPE_SA_N_3						= "SAN3"
 	TYPE_SA_N_4						= "SAN4"
@@ -128,6 +129,7 @@ class Ordance
 		TYPE_STANDARD,
 		TYPE_SEADART,
 		TYPE_SEASLUG,
+		TYPE_SEACAT,
 		TYPE_SEA_SPARROW,
 		TYPE_SA_N_1,
 		TYPE_SA_N_3,
@@ -189,6 +191,7 @@ class Ordance
 		Ordance.setup_ordance( TYPE_STANDARD, WEAPON_SAM, 50, 1, 4, 4, false )
 		Ordance.setup_ordance( TYPE_SEADART, WEAPON_SAM, 50, 1, 4, 2, false )
 		Ordance.setup_ordance( TYPE_SEASLUG, WEAPON_SAM, 30, 1, 4, 1, false )
+		Ordance.setup_ordance( TYPE_SEACAT, WEAPON_SAM, 5, 1, 1, 1, false )
 		Ordance.setup_ordance( TYPE_SEA_SPARROW, WEAPON_SAM, 10, 1, 1, 1, false )
 		Ordance.setup_ordance( TYPE_SA_N_1, WEAPON_SAM, 30, 1, 4, 1, false )
 		Ordance.setup_ordance( TYPE_SA_N_3, WEAPON_SAM, 40, 1, 4, 2, false )
