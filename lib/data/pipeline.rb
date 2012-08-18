@@ -26,7 +26,7 @@ class Pipeline
 		if unit and unit.is_a? Unit
 			if unit.status == Unit::STATUS_IN_PIPELINE or unit.status == Unit::STATUS_AVAILABLE
 				unless self.ships.member?( unit.hull_class )
-					self.ships[unit.hull_class] = unit.dup
+					self.ships[unit.hull_class] = unit
 				end
 			end
 		end

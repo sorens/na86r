@@ -152,7 +152,7 @@ describe Pipeline do
 		}
 	}
 
-	before( :all ) do
+	before( :each ) do
 		#@ships = GameData.nato_ships
 		@game = GameData.new
 		@unit01 = Unit.new( ship_carrier_params )
@@ -162,13 +162,13 @@ describe Pipeline do
 		@unit05 = Unit.new( ship_combat_params_02 )
 		@unit06 = Unit.new( ship_combat_params_03 )
 		@ships = {}
+		@ships_array = [@unit01,@unit02,@unit03,@unit04,@unit05,@unit06]
 		@ships.store( @unit01.hull_class, @unit01 )
 		@ships.store( @unit02.hull_class, @unit02 )
 		@ships.store( @unit03.hull_class, @unit03 )
 		@ships.store( @unit04.hull_class, @unit04 )
 		@ships.store( @unit05.hull_class, @unit05 )
 		@ships.store( @unit06.hull_class, @unit06 )
-		PIPELINE_SPEC_UNITS = [@unit01,@unit02,@unit03,@unit04,@unit05,@unit06]
 	end
 
 	it "should be valid" do
@@ -194,7 +194,7 @@ describe Pipeline do
 		pipeline.add_unit( @unit04 )
 		pipeline.add_unit( @unit05 )
 		pipeline.add_unit( @unit06 )
-		pipeline.count.should == PIPELINE_SPEC_UNITS.count
+		pipeline.count.should == @ships_array.count
 		pipeline.ships.member?( @unit01.hull_class ).should be_true
 		pipeline.ships.member?( @unit02.hull_class ).should be_true
 		pipeline.ships.member?( @unit03.hull_class ).should be_true
@@ -245,7 +245,7 @@ describe Pipeline do
 	it "should return all of the ships available" do
 		pipeline = Pipeline.factory( @ships )
 		ships = pipeline.ships_in_days
-		ships.count.should == PIPELINE_SPEC_UNITS.count
+		ships.count.should == @ships_array.count
 		ships.include?( @unit01 ).should be_true
 		ships.include?( @unit02 ).should be_true
 		ships.include?( @unit03 ).should be_true
@@ -340,20 +340,33 @@ describe Pipeline do
 
 	it "should decrease the pipeline time by 0.5 days for each turn" do
 		pipeline = Pipeline.factory( @ships )
-		pipeline.next_turn
-		PIPELINE_SPEC_UNITS.each do |ship|
-			if ship.arrival_days > 0
-				pipeline.ships[ship.hull_class].arrival_days.should == ship.arrival_days - 0.5
-			else
-				pipeline.ships[ship.hull_class].arrival_days.should == ship.arrival_days
-			end
+		current_days = {}
+		pipeline.ships.values do |ship| 
+			current_days[ship.hull_class] = ship.arrival_days
 		end
 		pipeline.next_turn
-		PIPELINE_SPEC_UNITS.each do |ship|
-			if ship.arrival_days > 0
-				pipeline.ships[ship.hull_class].arrival_days.should == ship.arrival_days - 1.0
+		current_days.keys.each do |key|
+			if current_days[key] > 0
+				pipeline.ships[key].arrival_days.should == current_days[key] - 0.5
 			else
-				pipeline.ships[ship.hull_class].arrival_days.should == ship.arrival_days
+				pipeline.ships[key].arrival_days.should == current_days[key]
+			end
+		end
+	end
+
+	it "should decrease the pipeline time by 1.0 days" do
+		pipeline = Pipeline.factory( @ships )
+		current_days = {}
+		pipeline.ships.values do |ship| 
+			current_days[ship.hull_class] = ship.arrival_days
+		end
+		pipeline.next_turn
+		pipeline.next_turn
+		current_days.keys.each do |key|
+			if current_days[key] > 0
+				pipeline.ships[key].arrival_days.should == current_days[key] - 1.0
+			else
+				pipeline.ships[key].arrival_days.should == current_days[key]
 			end
 		end
 	end
