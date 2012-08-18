@@ -38,6 +38,11 @@ describe GameData do
 		@resource.game_time.class.should == Time
 	end
 
+	it "should support game start time" do
+		@resource.respond_to?( "game_start_time" ).should be_true
+		@resource.game_start_time.class.should == Time
+	end
+
 	it "should suppot after action reports" do
 		@resource.respond_to?( "aar" ).should be_true
 		@resource.aar.class.should == Array
@@ -133,4 +138,47 @@ describe GameData do
 		kiev.hull_number.should == nil
 		kiev.hull_symbol.should == "CVG"
 	end
+
+	it "should put delayed NATO ships into the pipeline" do
+		ns = GameData.nato_ships
+	end
+
+	it "should return the current game time" do
+		@resource.game_time.should == Time.parse( GameData::GAME_STARTING_TIME )
+	end
+
+	it "should return the current game starting time" do
+		@resource.game_start_time.should == Time.parse( GameData::GAME_STARTING_TIME )
+	end
+
+	it "should track the number of turns" do
+		@resource.turn_count.should == 0
+		turns = 13
+		@resource.advance_turns(turns)
+		@resource.turn_count.should == turns
+	end
+
+	it "should advance the game one turn" do
+		@resource.next_turn
+		@resource.game_time.should == @resource.game_start_time + GameData::ONE_TURN_IN_HOURS.hours
+		@resource.game_start_time.should == Time.parse( GameData::GAME_STARTING_TIME )
+		@resource.turn_count.should == 1
+	end
+
+	it "should advance the game two turns" do
+		@resource.next_turn
+		@resource.next_turn
+		@resource.game_time.should == @resource.game_start_time + (GameData::ONE_TURN_IN_HOURS * 2).hours
+		@resource.game_start_time.should == Time.parse( GameData::GAME_STARTING_TIME )
+		@resource.turn_count.should == 2
+	end
+
+	it "should advance many turns" do
+		turns = 13
+		@resource.advance_turns(turns)
+		@resource.game_time.should == @resource.game_start_time + (GameData::ONE_TURN_IN_HOURS * turns).hours 
+		@resource.game_start_time.should == Time.parse( GameData::GAME_STARTING_TIME )
+		@resource.turn_count.should == 13
+	end
+
 end
