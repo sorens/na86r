@@ -31,6 +31,16 @@ class WeaponMount
 		self.remaining_salvo = self.max_salvo
 	end
 
+	# what kind of weapon is this?
+	def weapon_class
+		return self.ordance.ordance_class
+	end
+
+	# weapon range
+	def weapon_range
+		return self.ordance.range
+	end
+
 	private
 
 	def use_ordance( amount )

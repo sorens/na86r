@@ -3,7 +3,11 @@
 # TODO: add fields for aircraft in schema
 class Unit
 
-  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity, :defense_factor, :initial_task_force, :arrival_days, :current_damage, :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft, :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed, :electronic_warfare, :sonar, :class_id, :id
+  attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity
+  attr_accessor :defense_factor, :initial_task_force, :arrival_days, :current_damage
+  attr_accessor :max_damage, :current_cargo_supplies, :current_cargo_troops, :current_cargo_aircraft
+  attr_accessor :name, :hull_symbol, :hull_number, :current_damage, :status, :utype, :group, :current_speed
+  attr_accessor :electronic_warfare, :sonar, :class_id, :id, :weapons
 
   # unit status
   STATUS_UNKOWN       = "unknown"
@@ -51,6 +55,9 @@ class Unit
     STATUS_IN_PORT,
     STATUS_IN_PIPELINE
   ]
+
+  # load as an integer
+  LOAD_AS_INTEGER             = true
 
   # unit max speed
   UNIT_MAX_SPEED              = 30
@@ -158,7 +165,25 @@ class Unit
     return "#{self.name}" if self.name.present?
   end
 
+  # attach a weapon system
+  def attach_weapon( weapon_mount )
+    @weapons << weapon_mount unless @weapons.include? weapon_mount
+  end
+
+  def weapons( ordance_class, range )
+    mounts_by_class = []
+    mounts_by_class = @weapons.reject do |weapon|
+      weapon.weapon_class != ordance_class
+    end
+
+    mounts_by_range = mounts_by_class.reject do |weapon|
+      range > weapon.weapon_range
+    end
+    return mounts_by_range
+  end
+
   def initialize( options )
+    @weapons = []
     @current_damage = 0
     @defense_factor = 0
     @main_gun = 0
@@ -173,18 +198,18 @@ class Unit
       @name = load_ship_data_from_options( options, "name" )
       @hull_symbol = load_ship_data_from_options( options, "hull_symbol" )
       @hull_number = load_ship_data_from_options( options, "hull_number" )
-      @max_speed = load_ship_data_from_options( options, "max_speed", true )
-      @defense_factor = load_ship_data_from_options( options, "defense_factor", true )
-      @main_gun = load_ship_data_from_options( options, "main_gun", true )
-      @anti_aircraft = load_ship_data_from_options( options, "anti_aircraft", true )
-      @missile_defense = load_ship_data_from_options( options, "missile_defense", true )
+      @max_speed = load_ship_data_from_options( options, "max_speed", LOAD_AS_INTEGER )
+      @defense_factor = load_ship_data_from_options( options, "defense_factor", LOAD_AS_INTEGER )
+      @main_gun = load_ship_data_from_options( options, "main_gun", LOAD_AS_INTEGER )
+      @anti_aircraft = load_ship_data_from_options( options, "anti_aircraft", LOAD_AS_INTEGER )
+      @missile_defense = load_ship_data_from_options( options, "missile_defense", LOAD_AS_INTEGER )
       @initial_task_force = load_ship_data_from_options( options, "initial_task_force" )
-      @arrival_days = load_ship_data_from_options( options, "arrival_days", true )
+      @arrival_days = load_ship_data_from_options( options, "arrival_days", LOAD_AS_INTEGER )
       @utype = load_ship_data_from_options( options, "utype" )
-      @cargo_capacity = load_ship_data_from_options( options, "cargo_capacity", true )
+      @cargo_capacity = load_ship_data_from_options( options, "cargo_capacity", LOAD_AS_INTEGER )
       @status = load_ship_data_from_options( options, "status" )
-      @electronic_warfare = load_ship_data_from_options( options, "electronic_warfare", true )
-      @sonar = load_ship_data_from_options( options, "sonar", true )
+      @electronic_warfare = load_ship_data_from_options( options, "electronic_warfare", LOAD_AS_INTEGER )
+      @sonar = load_ship_data_from_options( options, "sonar", LOAD_AS_INTEGER )
       @class_id = load_ship_data_from_options( options, "class_id" )
       @id = load_ship_data_from_options( options, "id" )
     end
@@ -212,6 +237,10 @@ class Unit
     rescue Exception => e
       Rails.logger.error e.inspect
     end
+  end
+
+  def load_ship_data_from_options_as_integer( options, key )
+    return load_ship_data_from_options( options, key, LOAD_AS_INTEGER )
   end
 
   def load_ship_data_from_options( options, key, as_integer=false )
