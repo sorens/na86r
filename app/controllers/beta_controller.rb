@@ -1,29 +1,42 @@
 class BetaController < Devise::RegistrationsController
+
+  before_filter   :confirm_beta_key
+  before_filter   :confirm_email
+
+  expose( :beta_key ) do
+    BetaKey.find_by_assigned_to!( params[:user][:email] ) if params[:user] and params[:user][:email]
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    Rails.logger.error "beta key was not found [#{exception.message}]"
+    redirect_to( new_registration_path(resource_name), :alert => "{#{params[:user][:email]}} has not been invited." ) and return
+  end
+
   def create
-    Rails.logger.info "user [#{params[:user][:email]}]" unless params[:user][:email].blank?
-    
-    if params[:user][:beta_key].blank?
-      redirect_to( new_registration_path(resource_name), :alert => "invalid beta key." )
-    elsif params[:user][:email].blank?
-      redirect_to( new_registration_path(resource_name), :alert => "please enter a valid email address." )
+    if beta_key.key != params[:user][ :beta_key ]
+      beta_key.active = BetaKey::STATE_DISABLED
+      beta_key.save!
+      redirect_to( new_registration_path(resource_name), :alert => "your email does not match your beta key. deactivating your beta key." ) and return
     else
-      bk = BetaKey.find_beta_key( params[:user][:email] )
-      if bk.nil? or bk.key.nil?
-        redirect_to( new_registration_path(resource_name), :alert => "{#{params[:user][:email]}} has not been invited." )
-      else
-        if bk.key != params[:user][ :beta_key ]
-          bk.active = BetaKey::STATE_DISABLED
-          bk.save!
-          redirect_to( new_registration_path(resource_name), :alert => "your email does not match your beta key. deactivating your beta key." )
-        else
-          super
-          bk.active = BetaKey::STATE_USED
-          bk.activated_at = DateTime.now
-          bk.save!
-          redirect_to welcome_index_path, :notice => "welcome."
-        end
-      end
+      beta_key.active = BetaKey::STATE_USED
+      beta_key.activated_at = DateTime.now
+      beta_key.save!
+      session["#{resource_name}_return_to"] = welcome_index_path
+      super
     end
-    
+  end
+
+  private
+
+  def confirm_beta_key
+    if params[:user] and params[:user][:beta_key].blank?
+      redirect_to( new_registration_path(resource_name), :alert => "please enter a valid beta key." ) and return
+    end
+  end
+
+  def confirm_email
+    if params[:user] and params[:user][:email].blank?
+      redirect_to( new_registration_path(resource_name), :alert => "please enter a valid email address." ) and return
+    end
   end
 end

@@ -11,7 +11,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  require '/Users/sorens/.rvm/gems/ruby-1.9.2-p320@rails3/gems/guard-rspec-1.2.1/lib/guard/rspec/formatters/notification_rspec'
+  # require '/Users/sorens/.rvm/gems/ruby-1.9.2-p320@rails3/gems/guard-rspec-1.2.1/lib/guard/rspec/formatters/notification_rspec'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
