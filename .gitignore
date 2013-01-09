@@ -62,3 +62,6 @@ Thumbs.db
 # Guard/Spork #
 ###############
 Sporkfile.rb
+
+# POW @
+.powrc
