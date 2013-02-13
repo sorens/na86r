@@ -1,3 +1,5 @@
+require 'CSV'
+
 # Unit can be a ship or aircraft
 # 
 # TODO: add fields for aircraft in schema
