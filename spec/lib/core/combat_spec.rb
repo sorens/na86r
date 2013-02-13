@@ -1,0 +1,406 @@
+require 'spec_helper'
+
+describe Combat do
+
+	let( :group_01_combat_params ) { options =
+		{
+			:gtype => Group::TYPE_GROUP_TASK_FORCE,
+			:name => "TF16",
+			:mission => Group::TASK_FORCE_MISSION_COMBAT,
+			:endurance => 60,
+			:location_x => 1,
+			:location_y => 1
+		}
+	}
+
+	let( :group_02_combat_params ) { options =
+		{
+			:gtype => Group::TYPE_GROUP_TASK_FORCE,
+			:name => "TF01",
+			:mission => Group::TASK_FORCE_MISSION_COMBAT,
+			:endurance => 60,
+			:location_x => 1,
+			:location_y => 1
+		}
+	}
+
+	let( :ship_cgn_texas ) { options =
+		{
+			:name => "Texas",
+			:hull_symbol => "CGN",
+			:hull_number => "39",
+			:maker => nil,
+			:utype => Unit::TYPE_SHIP_COMBAT,
+			:version => 1,
+			:status => Unit::STATUS_AVAILABLE,
+			:max_speed => 35,
+			:cargo_capacity => 0,
+			:main_gun => 0,
+			:anti_aircraft => 2,
+			:missile_defense => 30,
+			:initial_task_force => "16",
+			:arrival_days => 0,
+			:defense_factor => 14,
+			:current_cargo_troops => 0,
+			:current_cargo_supplies => 0,
+			:current_cargo_aircraft => 0,
+			:electronic_warfare => 4,
+			:sonar => 1
+		}
+	}
+
+	let( :ship_cgn_arkansas ) { options =
+		{
+			:name => "Arkansas",
+			:hull_symbol => "CGN",
+			:hull_number => "41",
+			:maker => nil,
+			:utype => Unit::TYPE_SHIP_COMBAT,
+			:version => 1,
+			:status => Unit::STATUS_AVAILABLE,
+			:max_speed => 35,
+			:cargo_capacity => 0,
+			:main_gun => 0,
+			:anti_aircraft => 2,
+			:missile_defense => 30,
+			:initial_task_force => "16",
+			:arrival_days => 0,
+			:defense_factor => 14,
+			:current_cargo_troops => 0,
+			:current_cargo_supplies => 0,
+			:current_cargo_aircraft => 0,
+			:electronic_warfare => 4,
+			:sonar => 1
+		}
+	}
+
+	let( :ship_cgn_kirov ) { options =
+		{
+			:name => "Kirov",
+			:hull_symbol => "CGN",
+			:hull_number => "",
+			:maker => nil,
+			:utype => Unit::TYPE_SHIP_COMBAT,
+			:version => 1,
+			:status => Unit::STATUS_AVAILABLE,
+			:max_speed => 35,
+			:cargo_capacity => 0,
+			:main_gun => 0,
+			:anti_aircraft => 2,
+			:missile_defense => 94,
+			:initial_task_force => "1",
+			:arrival_days => 0,
+			:defense_factor => 50,
+			:current_cargo_troops => 0,
+			:current_cargo_supplies => 0,
+			:current_cargo_aircraft => 0,
+			:electronic_warfare => 5,
+			:sonar => 2
+		}
+	}
+
+	let( :ship_cgn_frunze ) { options =
+		{
+			:name => "Frunze",
+			:hull_symbol => "CGN",
+			:hull_number => "164",
+			:maker => nil,
+			:utype => Unit::TYPE_SHIP_COMBAT,
+			:version => 1,
+			:status => Unit::STATUS_AVAILABLE,
+			:max_speed => 35,
+			:cargo_capacity => 0,
+			:main_gun => 0,
+			:anti_aircraft => 2,
+			:missile_defense => 94,
+			:initial_task_force => "1",
+			:arrival_days => 0,
+			:defense_factor => 50,
+			:current_cargo_troops => 0,
+			:current_cargo_supplies => 0,
+			:current_cargo_aircraft => 0,
+			:electronic_warfare => 5,
+			:sonar => 2
+		}
+	}
+
+	before( :each ) do
+		@resource = GameData.new
+		@group_combat_01 = Group.new( group_01_combat_params )
+		@group_combat_02 = Group.new( group_02_combat_params )
+		@texas = Unit.new( ship_cgn_texas )
+		@arkansas = Unit.new( ship_cgn_arkansas )
+		@kirov = Unit.new( ship_cgn_kirov )
+		ssn19 = Ordance.system( Ordance::TYPE_SS_N_19 )
+		@frunze = Unit.new( ship_cgn_frunze )
+		@group_combat_01.add_unit @texas
+		@group_combat_01.add_unit @arkansas
+		@group_combat_02.add_unit @kirov
+		@group_combat_02.add_unit @frunze
+	end
+
+	# Combat.surface_attack( @group_combat_01, salvos, @group_combat_02, { :resolve => hitOne } )
+
+	context "missiles" do
+		context "target: surface group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					Combat.surface_attack( @group_combat_01, salvos, @group_combat_02, { :resolve => hitOne } )
+				end
+				it "should miss a unit" do
+					pending
+				end
+				it "should be intercepted" do
+					pending
+				end
+				it "should be jammed" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+				it "should be intercepted" do
+					pending
+				end
+				it "should be jammed" do
+					pending
+				end
+			end
+			context "source: submarine group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+				it "should be intercepted" do
+					pending
+				end
+				it "should be jammed" do
+					pending
+				end
+			end
+		end
+		context "target: submarine group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: submarine group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+		end
+		context "target: air group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+				it "should be intercepted" do
+					pending
+				end
+				it "should be jammed" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+				it "should be intercepted" do
+					pending
+				end
+				it "should be jammed" do
+					pending
+				end
+			end
+		end
+	end
+
+	context "torpedoes" do
+		context "target: surface group" do
+			context "source: submarine group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+		end
+		context "target: submarine group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: submarine group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+		end
+	end
+
+	context "projectiles" do
+		context "target: surface group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: submarine group" do
+				it "should throw InvalidCombatError" do
+					pending
+				end
+			end
+		end
+		context "target: submarine group" do
+			context "source: surface group" do
+				it "should throw InvalidCombatError" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should throw InvalidCombatError" do
+					pending
+				end
+			end
+			context "source: submarine group" do
+				it "should throw InvalidCombatError" do
+					pending
+				end
+			end
+		end
+		context "target: air group" do
+			context "source: surface group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+			context "source: air group" do
+				it "should hit a unit" do
+					pending
+				end
+				it "should miss a unit" do
+					pending
+				end
+			end
+		end
+	end
+
+	context "aircraft" do
+		context "LR-CAP" do
+			context "launch inside LR-CAP range" do
+				it "should be intercepted" do
+					pending
+				end
+			end
+			context "launch outside LR-CAP range" do
+				it "should not be intercepted" do
+					pending
+				end
+			end
+		end
+		context "CAP" do
+			context "launch inside CAP range" do
+				it "should be intercepted" do
+					pending
+				end
+			end
+			context "launch outside CAP range" do
+				it "should be not be intercepted" do
+					pending
+				end
+			end
+		end
+		context "range 0" do
+			it "should be engaged by surface units" do
+				pending
+			end
+		end
+	end
+
+	context "surface group v. surface group" do
+		it "should fire missiles" do
+			#@group_combat_01.mounts[0].fire( :all, @group_combat_02 )
+			#Combat.surface_group_attack( @group1, @group2 )
+			pending
+		end
+
+		it "should allow a surface fleet to fire a SAM at an incoming missile" do
+			pending
+		end
+
+		it "should allow a surface fleet to fire a torpedo at a submarine" do
+			pending
+		end
+
+		it "should allow a surface fleet to fire SSM at another surface fleet" do
+			pending
+		end
+
+		it "should allow a surface fleet to fire SAM at an incoming aircraft" do
+			pending
+		end
+
+		it "should allow a submarine fleet to fire torpedoes at a surface fleet" do
+			pending
+		end
+
+		it "should allo a submarine fleet to fire torpedoes at a submarine fleet" do
+			pending
+		end
+
+		it "shoulw allow a submarine fleet to fire SSM missiles at a surface fleet" do
+			pending
+		end
+	end
+end
