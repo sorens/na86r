@@ -3,7 +3,7 @@ require 'CSV'
 # Unit can be a ship or aircraft
 # 
 # TODO: add fields for aircraft in schema
-class Unit
+class Unit < GameUnit
 
   attr_accessor :main_gun, :anti_aircraft, :missile_defense, :max_speed, :cargo_capacity
   attr_accessor :defense_factor, :initial_task_force, :arrival_days, :current_damage
@@ -172,10 +172,10 @@ class Unit
     @weapons << weapon_mount unless @weapons.include? weapon_mount
   end
 
-  def weapons( ordance_class, range )
+  def weapons( ordnance_class, range )
     mounts_by_class = []
     mounts_by_class = @weapons.reject do |weapon|
-      weapon.weapon_class != ordance_class
+      weapon.weapon_class != ordnance_class
     end
 
     mounts_by_range = mounts_by_class.reject do |weapon|
@@ -185,6 +185,7 @@ class Unit
   end
 
   def initialize( options )
+    super()
     @weapons = []
     @current_damage = 0
     @defense_factor = 0

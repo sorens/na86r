@@ -1,32 +1,44 @@
 module Exceptions
+
+  class GameUnitException < StandardError
+    attr_accessor :game_unit
+    def initialize( game_unit=nil, msg=nil )
+      @game_unit = game_unit
+      msg = "[#{@game_unit.class} <#{@game_unit.uuid}>]: #{msg}"
+      super( msg ) unless msg.nil?
+    end
+  end
   
-  class UnitException < StandardError
+  class UnitException < GameUnitException
+    def initialize( game_unit=nil, msg=nil )
+      super(game_unit, msg)
+    end
   end
   
   class CannotLoad < UnitException
     def initialize( unit, msg )
-      super( "cannot load #{msg} into #{unit.display_name}" )
+      super( unit, "cannot load #{msg} into #{unit.display_name}" )
     end
   end
   
   class NotEnoughCargoCapacity < UnitException
     def initialize( unit, msg )
-      super( "too many #{msg} for #{unit.display_name}" )
+      super( unit, "too many #{msg} for #{unit.display_name}" )
     end
   end
   
   class UnitAlreadyAttached < UnitException
     def initialize( unit, group )
-      super( "#{unit.display_name} already attached to #{group.display_name}" )
+      super( unit, "#{unit.display_name} already attached to #{group.display_name}" )
     end
   end
   
   class UnitNotAttached < UnitException
     def initialize( unit, group )
       if group
-        super( "#{unit.display_name} is not attached to #{group.display_name}" )
+        super( unit, "#{unit.display_name} is not attached to #{group.display_name}" )
       else
-        super( "#{unit.display_name} is not attached to any group" )
+        super( unit, "#{unit.display_name} is not attached to any group" )
       end
     end
   end
@@ -39,16 +51,20 @@ module Exceptions
   class WeaponSystemInvalid < StandardError
   end
 
-  # request to fire more ordance than allowed in a salvo
+  # request to fire more ordnance than allowed in a salvo
   class WeaponMountSalvoLimit < StandardError
   end
 
-  # weapon mount ordance has been depleted
-  class WeaponMountOrdanceDepleted < StandardError
+  # weapon mount ordnance has been depleted
+  class WeaponMountordnanceDepleted < StandardError
   end
 
-  # weapon mount salvo ordance has been depleted
+  # weapon mount salvo ordnance has been depleted
   class WeaponMountSalvoDepleted < StandardError
+  end
+
+  # not enough elements
+  class NotEnoughElements < GameUnitException
   end
   
 end

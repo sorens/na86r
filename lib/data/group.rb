@@ -4,7 +4,7 @@
 # TODO: need to add attr fields for aircraft in schema
 # TODO: fix the user association
 # TODO: conditions?
-class Group
+class Group < GameUnit
 
   attr_accessor :units, :name, :mission, :sensor_state, :gtype, :location_x, :location_y, :endurance
 
@@ -98,6 +98,7 @@ class Group
 
   # initialize
   def initialize( options=nil )
+    super()
   	@units ||= Array.new
   	@location_x = 0
   	@location_y = 0

@@ -179,12 +179,12 @@ describe Unit do
   }
 
   before( :each ) do
-    Ordance.setup
+    Ordnance.setup
     @ship_combat = Unit.new( ship_combat_params )
-    @ship_combat.attach_weapon( WeaponMount.new( Ordance::TYPE_HARPOON_SSM, 8, 16 ) )
-    @ship_combat.attach_weapon( WeaponMount.new( Ordance::TYPE_STANDARD, 4, 68 ) )
-    @ship_combat.attach_weapon( WeaponMount.new( Ordance::TYPE_ASROC, 1, 20 ) )
-    @ship_combat.attach_weapon( WeaponMount.new( Ordance::TYPE_MK46_TORPEDO, 2, 6 ) )
+    @ship_combat.attach_weapon( WeaponMount.new( Ordnance::TYPE_HARPOON_SSM, 8, 16 ) )
+    @ship_combat.attach_weapon( WeaponMount.new( Ordnance::TYPE_STANDARD, 4, 68 ) )
+    @ship_combat.attach_weapon( WeaponMount.new( Ordnance::TYPE_ASROC, 1, 20 ) )
+    @ship_combat.attach_weapon( WeaponMount.new( Ordnance::TYPE_MK46_TORPEDO, 2, 6 ) )
     @ship_carrier = Unit.new( ship_carrier_params )
     @ship_transport = Unit.new( ship_transport_params )
     @ship_submarine = Unit.new( ship_submarine_params )
@@ -442,39 +442,39 @@ describe Unit do
 
   context "weapon mounts" do
     it "should return SSM weapons with range of 110 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_SSM, 110 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_SSM, 110 )
       weapons.count.should == 1
-      weapons.first.weapon_class.should == Ordance::WEAPON_SSM
+      weapons.first.weapon_class.should == Ordnance::WEAPON_SSM
     end
     it "should return SAM weapons with range of 50 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_SAM, 50 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_SAM, 50 )
       weapons.count.should == 1
-      weapons.first.weapon_class.should == Ordance::WEAPON_SAM
+      weapons.first.weapon_class.should == Ordnance::WEAPON_SAM
     end
     it "should return AST weapons with range of 10 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_AST, 10 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_AST, 10 )
       weapons.count.should == 1
-      weapons.first.weapon_class.should == Ordance::WEAPON_AST
+      weapons.first.weapon_class.should == Ordnance::WEAPON_AST
     end
     it "should return ASW weapons with range of 20 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_ASW, 20 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_ASW, 20 )
       weapons.count.should == 1
-      weapons.first.weapon_class.should == Ordance::WEAPON_ASW
+      weapons.first.weapon_class.should == Ordnance::WEAPON_ASW
     end
     it "should return no SSM weapons with range greater than 110 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_SSM, 120 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_SSM, 120 )
       weapons.count.should == 0
     end
     it "should return no SAM weapons with range greater than 50 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_SAM, 60 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_SAM, 60 )
       weapons.count.should == 0
     end
     it "should return no AST weapons with range greater than 10 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_AST, 20 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_AST, 20 )
       weapons.count.should == 0
     end
     it "should return no ASW weapons with range greater than 20 KM" do
-      weapons = @ship_combat.weapons( Ordance::WEAPON_ASW, 30 )
+      weapons = @ship_combat.weapons( Ordnance::WEAPON_ASW, 30 )
       weapons.count.should == 0
     end
   end

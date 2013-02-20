@@ -124,37 +124,45 @@ describe Combat do
 		}
 	}
 
+	let( :group_combat_01 )		{ Group.new( group_01_combat_params ) }
+	let( :group_combat_02 )		{ Group.new( group_02_combat_params ) }
+	let( :texas )				{ Unit.new( ship_cgn_texas ) }
+	let( :arkansas )			{ Unit.new( ship_cgn_arkansas ) }
+	let( :kirov )				{ Unit.new( ship_cgn_kirov ) }
+	let( :ssn19 )				{ Ordnance.system( Ordnance::TYPE_SS_N_19 ) }
+	let( :harpoon_ssm )			{ Ordnance.system( Ordnance::TYPE_HARPOON_SSM ) }
+	let( :frunze )				{ Unit.new( ship_cgn_frunze ) }
+	let( :salvo )				{ Salvo.new( harpoon_ssm, 4, group_combat_02, group_combat_01 ) }
+
 	before( :each ) do
+		Ordnance.setup
 		@resource = GameData.new
-		@group_combat_01 = Group.new( group_01_combat_params )
-		@group_combat_02 = Group.new( group_02_combat_params )
-		@texas = Unit.new( ship_cgn_texas )
-		@arkansas = Unit.new( ship_cgn_arkansas )
-		@kirov = Unit.new( ship_cgn_kirov )
-		ssn19 = Ordance.system( Ordance::TYPE_SS_N_19 )
-		@frunze = Unit.new( ship_cgn_frunze )
-		@group_combat_01.add_unit @texas
-		@group_combat_01.add_unit @arkansas
-		@group_combat_02.add_unit @kirov
-		@group_combat_02.add_unit @frunze
+		group_combat_01.add_unit texas
+		# @group_combat_01.add_unit @arkansas
+		group_combat_02.add_unit kirov
+		# @group_combat_02.add_unit @frunze
 	end
 
-	# Combat.surface_attack( @group_combat_01, salvos, @group_combat_02, { :resolve => hitOne } )
+	# Combat.surface_attack( @group_combat_01, salvo, @group_combat_02, { :resolve => hitOne } )
 
 	context "missiles" do
 		context "target: surface group" do
 			context "source: surface group" do
 				it "should hit a unit" do
-					Combat.surface_attack( @group_combat_01, salvos, @group_combat_02, { :resolve => hitOne } )
+					Combat.surface_attack( group_combat_01, salvo, group_combat_02, { :resolve => :hit_one } )
+					group_combat_02.units[0].current_damage.should == salvo.ordnance.damage
 				end
 				it "should miss a unit" do
-					pending
+					Combat.surface_attack( group_combat_01, salvo, group_combat_02, { :resolve => :miss_one } )
+					salvo.number_misses.should == 1
 				end
 				it "should be intercepted" do
-					pending
+					Combat.surface_attack( group_combat_01, salvo, group_combat_02, { :resolve => :intercept_one } )
+					salvo.number_intercepts.should == 1
 				end
 				it "should be jammed" do
-					pending
+					Combat.surface_attack( group_combat_01, salvo, group_combat_02, { :resolve => :jam_one } )
+					salvo.number_jammed.should == 1
 				end
 			end
 			context "source: air group" do

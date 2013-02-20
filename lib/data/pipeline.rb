@@ -1,6 +1,6 @@
 # Pipeline helps manage those units which are not available at the start
 # of the game but instead are available at a later date
-class Pipeline
+class Pipeline < GameUnit
 
 	attr_accessor :ships
 
@@ -74,6 +74,7 @@ class Pipeline
 
 	private
 	def initialize
+		super()
 		@ships = {}
 	end
 

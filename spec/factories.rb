@@ -23,4 +23,6 @@ FactoryGirl.define do
 		end
 	end
 
+	factory :salvo do
+	end
 end

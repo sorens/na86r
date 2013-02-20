@@ -5,16 +5,16 @@ class WeaponMount
 	# fire max salvo size
 	MAX_SALVO_SIZE			= -1
 
-	attr_accessor :ordance, :max_salvo, :max_loadout, :remaining_salvo, :remaining, :ordance_fired
+	attr_accessor :ordnance, :max_salvo, :max_loadout, :remaining_salvo, :remaining, :ordnance_fired
 
 	# fire a salvo
 	def fire_salvo( salvo_size=MAX_SALVO_SIZE )
 		salvo_size = self.max_salvo if salvo_size == MAX_SALVO_SIZE
 		raise Exceptions::WeaponMountSalvoLimit if salvo_size > self.max_salvo
-		use_ordance( salvo_size )
+		use_ordnance( salvo_size )
 	end
 
-	# does this weapon mount have ordance remaining to fire in this salvo?
+	# does this weapon mount have ordnance remaining to fire in this salvo?
 	def is_salvo?
 		self.remaining_salvo > 0
 	end
@@ -26,41 +26,41 @@ class WeaponMount
 
 	# refit means fill our loadouts to max
 	def refit
-		self.ordance_fired = 0
+		self.ordnance_fired = 0
 		self.remaining = self.max_loadout
 		self.remaining_salvo = self.max_salvo
 	end
 
 	# what kind of weapon is this?
 	def weapon_class
-		return self.ordance.ordance_class
+		return self.ordnance.ordnance_class
 	end
 
 	# weapon range
 	def weapon_range
-		return self.ordance.range
+		return self.ordnance.range
 	end
 
 	private
 
-	def use_ordance( amount )
+	def use_ordnance( amount )
 		# sanity check
-		raise Exceptions::WeaponMountOrdanceDepleted if self.remaining == 0
+		raise Exceptions::WeaponMountordnanceDepleted if self.remaining == 0
 		raise Exceptions::WeaponMountSalvoDepleted if self.remaining_salvo == 0
 		raise Exceptions::WeaponMountSalvoLimit if self.remaining_salvo - amount < 0
 		raise Exceptions::WeaponMountLimit if self.remaining - amount < 0
 		self.remaining = self.remaining - amount
 		self.remaining_salvo = self.remaining_salvo - amount
-		self.ordance_fired = self.ordance_fired + amount
+		self.ordnance_fired = self.ordnance_fired + amount
 	end
 
-	def initialize( ordance_type, max_salvo=nil, max_loadout )
-		@ordance = Ordance.system( ordance_type )
+	def initialize( ordnance_type, max_salvo=nil, max_loadout )
+		@ordnance = Ordnance.system( ordnance_type )
 		@max_salvo = max_salvo unless max_salvo.nil?
-		@max_salvo = @ordance.salvo if max_salvo.nil?
+		@max_salvo = @ordnance.salvo if max_salvo.nil?
 		@max_loadout = max_loadout
 		@remaining_salvo = @max_salvo
 		@remaining = @max_loadout
-		@ordance_fired = 0
+		@ordnance_fired = 0
 	end
 end
