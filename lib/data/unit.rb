@@ -218,8 +218,12 @@ class Unit < GameUnit
     end
   end
 
+  def self.print_header( row )
+    "#{("%-30s" % row[4])}#{"%2s" % row[5]}   #{"%2s" % row[6]}   #{"%2s" % row[7]}   #{"%2s" % row[8]}   #{"%2s" % row[9]}   #{"%2s" % row[10]}   #{"%2s" % row[11]}     #{"%2s" % row[12]}  #{"%2s" % row[13]} #{"%3s" % row[14]}"
+  end
+
   def to_summary
-    "#{("%-30s" % self.hull_class)}#{"%2s" % self.main_gun}   #{"%2s" % self.anti_aircraft}   #{"%2s" % self.missile_defense}   #{"%2s" % self.max_speed}   #{"%2s" % self.cargo_capacity}   #{"%2s" % self.defense_factor}   #{"%2s" % self.initial_task_force}     #{"%2s" % self.arrival_days}      #{"%2s" % self.class_id}   #{"%3s" % self.id}"
+    "#{("%-30s" % self.hull_class)}#{"%2s" % self.main_gun}   #{"%2s" % self.anti_aircraft}   #{"%2s" % self.missile_defense}   #{"%2s" % self.max_speed}   #{"%2s" % self.cargo_capacity}   #{"%2s" % self.defense_factor}   #{"%2s" % self.initial_task_force}     #{"%2s" % self.arrival_days}      #{"%2s" % self.class_id}     #{"%3s" % self.id}"
   end
 
   # compare units
@@ -227,18 +231,25 @@ class Unit < GameUnit
     return self.hull_class == unit.hull_class
   end
 
-  def self.load_ships( file, ships )
-    Rails.logger.info "loading ships form [#{file}]"
+  def self.load_ships( file, ships, header )
+    Rails.logger.info "loading ships from [#{file}]"
     begin
-    CSV.foreach( file, { :headers => :first_row, :return_headers => false } ) do |row|
-      unit = load_ship_row( row )
-      unless unit.nil?
-        ships[unit.hull_class] = unit
-        Rails.logger.info unit.to_summary
+      CSV.foreach( file, { :headers => :first_row, :return_headers => true } ) do |row|
+        if row.header_row?
+          if header.empty?
+            row.headers.each {|h| header << h}
+          end
+        else
+          unit = load_ship_row( row )
+          unless unit.nil?
+            ships[unit.hull_class] = unit
+            # Rails.logger.info unit.to_summary
+          end
+        end
       end
-    end
     rescue Exception => e
       Rails.logger.error e.inspect
+      Rails.logger.error e.backtrace.join("\n\r")
     end
   end
 

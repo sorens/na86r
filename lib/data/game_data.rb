@@ -27,7 +27,9 @@ class GameData < MarshalData
 		@game_start_time = Time.parse game_start_time
 		@game_time = @game_start_time
 		@aar = []
-
+		@@header_row = []
+		@@nato_ships_hash = {}
+		@@soviet_ships_hash = {}
 		# load NATO and SOVIET ship data
 		GameData.load_ships
 	end
@@ -40,6 +42,11 @@ class GameData < MarshalData
 	# access to the SOVIET ships
 	def self.soviet_ships
 		@@soviet_ships_hash
+	end
+
+	# access to the header row
+	def self.header
+		@@header_row
 	end
 
 	# have we already loaded ship data?
@@ -69,12 +76,10 @@ private
 	# load the ship data
 	def self.load_ships
 		unless GameData.ship_data_loaded?
-			@@nato_ships_hash = {}
-			@@soviet_ships_hash = {}
 			nato_file = File.join( Rails.root, SHIP_DATA_DIR, "NATO-ships.csv" )
 			soviet_file = File.join( Rails.root, SHIP_DATA_DIR, "SOVIET-ships.csv" )
-			Unit.load_ships( nato_file, @@nato_ships_hash )
-			Unit.load_ships( soviet_file, @@soviet_ships_hash )
+			Unit.load_ships( nato_file, @@nato_ships_hash, @@header_row )
+			Unit.load_ships( soviet_file, @@soviet_ships_hash, @@header_row )
 		end
 	end
 end

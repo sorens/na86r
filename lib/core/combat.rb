@@ -4,15 +4,15 @@ class Combat
 
 		case params[:resolve]
 		when :normal
+			Combat::Normal.resolve( attacking_fleet, target_fleet, salvo )
 		when :hit_one
-			target_fleet.units[0].apply_damage( salvo.ordnance.damage )
-			salvo.hits(1)
+			Combat::HitOne.resolve( attacking_fleet, target_fleet, salvo )
 		when :miss_one
-			salvo.misses(1)
+			Combat::MissOne.resolve( attacking_fleet, target_fleet, salvo )
 		when :intercept_one
-			salvo.intercepts(1)
+			Combat::InterceptOne.resolve( attacking_fleet, target_fleet, salvo )
 		when :jam_one
-			salvo.jammed(1)
+			Combat::JamOne.resolve( attacking_fleet, target_fleet, salvo )
 		else
 		end
 	end

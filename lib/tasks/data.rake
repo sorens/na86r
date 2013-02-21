@@ -37,4 +37,18 @@ namespace :data do
       end
     end
   end
+
+  desc "print ship data tables"
+  task :ship_data => :environment do |t|
+    GameData.new
+    puts Unit.print_header( GameData.header )
+    GameData.nato_ships.to_a.each do |unit|
+      puts unit[1].to_summary
+    end
+    puts ""
+    puts Unit.print_header( GameData.header )
+    GameData.soviet_ships.to_a.each do |unit|
+      puts unit[1].to_summary
+    end
+  end
 end

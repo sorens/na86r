@@ -66,5 +66,12 @@ module Exceptions
   # not enough elements
   class NotEnoughElements < GameUnitException
   end
-  
+
+  # not configured
+  class NotConfigured < StandardError
+  end
+
+  # bad parameter
+  class BadParameter < StandardError
+  end  
 end
