@@ -65,3 +65,6 @@ Sporkfile.rb
 
 # POW @
 .powrc
+
+# Don't commit Gemfile.lock for now
+Gemfile.lock
