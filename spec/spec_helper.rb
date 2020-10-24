@@ -13,7 +13,7 @@
 # it.
 require "bundler/setup"
 require "uuidtools"
-require "naval_conflict"
+require 'na86'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

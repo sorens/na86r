@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # $LOAD_PATH.unshift File.expand_path( '../../lib', __FILE__ )
-# require 'naval_conflict'
+# require 'na86'
 
-@game = NavalConflict::Game.new( STDOUT )
+@game = NA86::Game.new( STDOUT )
 @game.start
 
 def interpret_setup_command( chr )

@@ -1,4 +1,4 @@
-NavalConflict::Application.configure do
+NA86::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -49,7 +49,7 @@ NavalConflict::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'navalconflict.com' }
+  config.action_mailer.default_url_options = { :host => 'NA86.com' }
 
   # Enable threaded mode
   # config.threadsafe!

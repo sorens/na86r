@@ -1,7 +1,7 @@
 #load our simple_logger
 SimpleLogger.load
 
-NavalConflict::Application.configure do
+NA86::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's

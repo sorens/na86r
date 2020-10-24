@@ -1,2 +1,2 @@
-NavalConflict::Application.configure do
+NA86::Application.configure do
 end
