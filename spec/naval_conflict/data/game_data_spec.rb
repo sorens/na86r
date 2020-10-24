@@ -32,7 +32,7 @@ describe NavalConflict::GameData do
 
     it "should support score" do
         @resource.respond_to?( "score" ).should be_truthy
-        @resource.score.class.should == Fixnum
+        @resource.score.class.should == Integer
     end
 
     it "should support game time" do
