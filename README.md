@@ -27,7 +27,7 @@ This game project is broken into four chief components:
 ## Install
 
 ```shell
-$ bundle install
+$ bin/setup
 $ rspec
 
 ...
