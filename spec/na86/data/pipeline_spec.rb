@@ -256,7 +256,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `C` (all combat type) ships available by any day in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "C" )
         ships.count.should == 3
@@ -268,7 +268,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `CG` (guided-missile cruisers) ships available by any day in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "CG" )
         ships.count.should == 2
@@ -280,7 +280,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `CV` (aircraft carriers) ships available by any day in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "CV" )
         ships.count.should == 1
@@ -292,7 +292,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `L` (landing craft) ships available by any day in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "L" )
         ships.count.should == 1
@@ -304,7 +304,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `C` (all combat) ships available by seven days in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "C", 7 )
         ships.count.should == 2
@@ -316,7 +316,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `C` (all combat) ships available by zero days in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "C", 0 )
         ships.count.should == 0
@@ -328,7 +328,7 @@ describe NA86::Pipeline do
         ships.include?( @unit06 ).should_not be_truthy
     end
 
-    it "should return ships of the specified type available by days in the future" do
+    it "should return `D` (destroyers) ships available by zero days in the future" do
         pipeline = NA86::Pipeline.factory( @ships )
         ships = pipeline.ships_by_type_in_days( "D", 0 )
         ships.count.should == 1
