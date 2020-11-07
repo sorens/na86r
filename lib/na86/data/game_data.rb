@@ -3,7 +3,7 @@ module NA86
     class GameData < MarshalData
 
         # where is the ship data?
-        SHIP_DATA_DIR               = "ship_data"
+        SHIP_DATA_DIR               = "data"
 
         # one turn in hours
         ONE_TURN_IN_HOURS           = 12

@@ -104,5 +104,5 @@ RSpec.configure do |config|
 end
 
 def data(file)
-  File.expand_path(File.join(File.dirname(__FILE__), '../ship_data/', file))
+  File.expand_path(File.join(File.dirname(__FILE__), '../data/', file))
 end
