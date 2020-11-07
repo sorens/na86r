@@ -456,7 +456,7 @@ RSpec.describe "Combat" do
             fail 
         end
 
-        it "should allo a submarine fleet to fire torpedoes at a submarine fleet" do
+        it "should allow a submarine fleet to fire torpedoes at a submarine fleet" do
             pending "not yet implemented"
             fail 
         end
