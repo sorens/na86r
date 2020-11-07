@@ -22,9 +22,15 @@ require 'logger'
 
 module NA86
     attr :_logger
+    @@_path = "log/na86.log"
+
+    def NA86.initialize(path="")
+        @@_path = path if !path.empty?
+    end
+    
     def NA86.logger()
         if @_logger.nil?
-            @_logger = Logger.new("log/na86.log")
+            @_logger = Logger.new(@@_path)
             @_logger.level = Logger::INFO
         end
         @_logger
