@@ -30,7 +30,7 @@ RSpec.describe NA86::Aircraft do
             :cap_dogfight_ew_max => 70,
             :cap_dogfight_avg => 25,
             :cap_dogfight_max => 50,
-            :utype => NA86::Unit::TYPE_AIRCRAFT_COMBAT
+            :utype => NA86::Aircraft::TYPE_AIRCRAFT_COMBAT
         }
     }
 

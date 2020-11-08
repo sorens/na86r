@@ -1,6 +1,8 @@
 require 'na86/model_uuid'
 require 'na86/core/resolution'
 require 'na86/core/choose_unit'
+require 'na86/core/squadron'
+require 'na86/core/sortie'
 require 'na86/core/combat'
 require 'na86/core/combat/hit_one'
 require 'na86/core/combat/intercept_one'

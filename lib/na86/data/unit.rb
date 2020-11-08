@@ -29,9 +29,6 @@ module NA86
     TYPE_SHIP_AIRCRAFT_CARRIER    = "ship_aircraft_carrier"
     TYPE_SHIP_TRANSPORT           = "ship_transport"
     TYPE_SHIP_SUBMARINE           = "ship_submarine"
-    TYPE_AIRCRAFT_COMBAT          = "aircraft_combat"
-    TYPE_AIRCRAFT_UTIL            = "aircraft_util"
-    TYPE_AIRCRAFT_TRANSPORT       = "aircraft_transport"
     TYPE_BASE_FLIGHT_OPERATIONS   = "base_flight_ops"
     TYPE_BASE_NAVAL               = "base_naval"
 

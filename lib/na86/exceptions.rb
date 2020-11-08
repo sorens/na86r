@@ -43,6 +43,25 @@ module NA86
       end
     end
 
+    class AircraftException < GameUnitException
+      def initialize(aircraft=nil, msg=nil)
+        super(aircraft, msg)
+      end
+    end
+
+    class SquadronException < GameUnitException
+      def initialize(squadron=nil, msg=nil)
+        super(squadron, msg)
+      end
+    end
+
+    class MissilesExhaustedException < SquadronException
+      def initialize(squadron, msg)
+        msg = "#{squadron.aircraft.designation} missiles exhausted" if msg.nil?
+        super(squadron, msg)
+      end
+    end
+
     # raised when the class is not MarshalData
     class NotMarshalData < StandardError
     end
